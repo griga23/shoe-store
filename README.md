@@ -36,7 +36,9 @@ CREATE TABLE order_customer(
   zip_code STRING,
   country STRING,
   country_code STRING);
+```
 
+```
  INSERT INTO order_customer(
   order_id,
   product_id,
