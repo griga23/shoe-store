@@ -1,21 +1,28 @@
 # shoe-store
 Shoe Store Loyalty Engine - Flink SQL Workshop
 
-# Kafka Topics
+## Kafka
+
+### Kafka Topics
 -create new topics with 1 partition: shoe_customers, shoe_products, shoe_orders
 
-# Data Sources
+### Data Sources
 Using Datagen with following templates:
-Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
-Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
-Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
+  * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
+  * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
+  * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
 
-# Select Basics
+## Flink
+
+### Select Basics
+```
 select * from shoe_products;
 select * from shoe_customers;
 select * from shoe_orders;
+```
 
-# Order <-> Customer Join
+### Order <-> Customer Join
+```
 CREATE TABLE order_customer(
   order_id INT,
   product_id STRING,
@@ -59,5 +66,6 @@ SELECT
 FROM shoe_orders
   INNER JOIN shoe_customers
   ON show_orders.customer_id = shoe_customers.id;
+```
 
   
