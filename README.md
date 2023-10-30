@@ -70,4 +70,62 @@ FROM shoe_orders
   ON show_orders.customer_id = shoe_customers.id;
 ```
 
+### Order <-> Customer <-> Product Join
+```
+CREATE TABLE order_customer_product(
+  order_id INT,
+  ts TIMESTAMP(3),
+  first_name STRING,
+  last_name STRING,
+  email STRING,
+  phone STRING,
+  street_address STRING,
+  state STRING,
+  zip_code STRING,
+  country STRING,
+  country_code STRING,
+  brand STRING,
+  model STRING,
+  sale_price INT,
+  rating DOUBLE
+);
+```
+
+```
+INSERT INTO order_customer_product(
+  order_id,
+  ts,
+  first_name,
+  last_name,
+  email,
+  phone,
+  street_address,
+  state,
+  zip_code,
+  country,
+  country_code,
+  brand,
+  model,
+  sale_price,
+  rating)
+SELECT
+  order_id,
+  ts,
+  first_name,
+  last_name,
+  email,
+  phone,
+  street_address,
+  state,
+  zip_code,
+  country,
+  country_code,
+  brand,
+  name,
+  sale_price,
+  rating
+FROM order_customer
+  INNER JOIN shoe_products
+  ON order_customer.product_id = shoe_products.id;
+```
   
