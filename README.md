@@ -1,10 +1,16 @@
 # shoe-store
 Shoe Store Loyalty Engine - Flink SQL Workshop
 
+# Create Confluent Cloud Resources with terraform
+Please follow this [guide](terraform/README.md)
+
+# Create Confluent Cloud Resources manually
+
 ## Kafka
+Environment, Schema Registry, CLuster, Service accounts, Role Binding
 
 ### Kafka Topics
--create new topics with 1 partition: shoe_customers, shoe_products, shoe_orders
+-create new topics with 1 partition: customers, products, orders
 
 ### Data Sources
 Using Datagen with following templates:
