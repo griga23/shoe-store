@@ -37,16 +37,53 @@ Create following 3 Datagen Source Connectors:
 
 ### Select Basics
 ```
-select * from shoe_products;
+DESCRIBE shoe_products;
 ```
 ```
-select * from shoe_customers;
+SELECT * FROM shoe_products;
 ```
 ```
-select * from shoe_orders;
+DESCRIBE shoe_customers;
+```
+```
+SELECT * FROM shoe_customers;
+```
+```
+DESCRIBE shoe_orders;
+```
+```
+SELECT * FROM shoe_orders;
 ```
 
 ### Select Advanced
+Show amount of unique customers
+```
+SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
+```
+
+Show last 10 orders
+```
+SELECT $rowtime, order_id FROM shoe_orders LIMIT 10;
+```
+
+Show total amoumt of orders for each customer
+```
+SELECT customer_id, 
+    COUNT(order_id) as total_orders, 
+    MAX(`$rowtime`) as last_time 
+FROM shoe_orders
+GROUP BY customer_id;
+```
+
+Show amount of orders for 1 minute intervals
+```
+SELECT
+ window_end,
+ COUNT(DISTINCT order_id) AS num_orders
+FROM TABLE(
+   TUMBLE(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTES))
+GROUP BY window_end;
+```
 
 ### Order <-> Customer Join
 ```
