@@ -89,7 +89,7 @@ GROUP BY window_end;
 ### Joins
 Prepare table for Order <-> Customer join 
 ```
-CREATE TABLE order_customer(
+CREATE TABLE shoe_order_customer(
   order_id INT,
   product_id STRING,
   ts TIMESTAMP(3),
@@ -139,7 +139,7 @@ FROM shoe_orders
 
 Prepare table for Order <-> Customer <-> Product Join
 ```
-CREATE TABLE order_customer_product(
+CREATE TABLE shoe_order_customer_product(
   order_id INT,
   ts TIMESTAMP(3),
   first_name STRING,
