@@ -228,13 +228,13 @@ FROM shoe_order_customer_product
 GROUP BY email;
 ```
 
-Calculate which customers receive special promotion for their 5th order
+Calculate which customers receive special promotion for their 10th order
 ```
- SELECT
+SELECT
    email,
    COUNT(*) AS total,
-   (COUNT(*) % 6) AS sequence,
-   (COUNT(*) % 6) = 5 AS next_one_free
+   (COUNT(*) % 10) AS sequence,
+   (COUNT(*) % 10) = 0 AS next_one_free
  FROM shoe_order_customer_product
  WHERE brand = 'Jones-Stokes'
  GROUP BY email;
