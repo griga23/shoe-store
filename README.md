@@ -6,26 +6,47 @@ Please follow this [guide](terraform/README.md)
 
 # Create Confluent Cloud Resources manually
 
-## Kafka
-Environment, Schema Registry, CLuster, Service accounts, Role Binding
+## Confluent Cloud Resources
+Following resources are required:
+  * Confluent Cloud Environment
+  * Stream Governance package Essentials - Schema Registry enabled
+  * Kafka Cluster - Basic
+  * Service accounts
+  * Role Binding
 
 ### Kafka Topics
--create new topics with 1 partition: customers, products, orders
+Create following topics (1 partition is ok):
+ * shoe_products (for product data aka Product Catalog)
+ * shoe_customers (for customer data aka Customer CRM)
+ * shoe_orders (for realtime order transactions aka Billing System)
+Skip Topic Schemas. They will be created automatically by the Datagen Connectors.
 
-### Data Sources
+### Connectors - Data Sources
 Using Datagen with following templates:
   * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
   * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
   * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
+
+Create following 3 Datagen Source Connectors:
+  * Topic **shoe_products** , API Key Global Access, AVRO format, **Shoes** template, 1 task
+  * Topic **shoe_customers** , API Key Global Access, AVRO format, **Shoe customers** template, 1 task
+  * Topic **shoe_orders** , API Key Global Access, AVRO format, **Shoe orders** template, 1 task
+
 
 ## Flink
 
 ### Select Basics
 ```
 select * from shoe_products;
+```
+```
 select * from shoe_customers;
+```
+```
 select * from shoe_orders;
 ```
+
+### Select Advanced
 
 ### Order <-> Customer Join
 ```
