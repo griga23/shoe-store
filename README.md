@@ -251,4 +251,24 @@ SELECT
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
 ```
-  
+
+Find customers who bought twice shoes with high rating and then bought shoes with low rating
+```
+SELECT *
+FROM shoe_order_customer_product
+     MATCH_RECOGNIZE (
+         PARTITION BY email
+         ORDER BY $rowtime
+         MEASURES
+           a.rating AS rating1,
+           b.rating AS rating2,
+           c.rating AS rating3,
+           c.order_id AS order_id,
+           $rowtime AS order_time
+         AFTER MATCH SKIP TO NEXT ROW
+         PATTERN (a b c)
+         DEFINE
+           a AS a.rating > 4,
+           b AS b.rating > 4,
+           c AS c.rating > 0 AND c.rating < 2);
+```  
