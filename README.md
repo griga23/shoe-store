@@ -228,7 +228,7 @@ FROM shoe_order_customer_product
 GROUP BY email;
 ```
 
-Calculate which customers receive special promotion for their 10th order
+Find which customers should receive special promotion for their 10th order of the same brand
 ```
 SELECT
    email,
@@ -240,4 +240,15 @@ SELECT
  GROUP BY email;
  ```
 
+Find which customers have ordered related brands in large volumes
+```
+SELECT
+     email,
+     COLLECT(brand) AS products,
+     'related_brands' AS promotion_name
+  FROM shoe_order_customer_product
+  WHERE brand IN ('Braun-Bruen', 'Will Inc')
+  GROUP BY email
+  HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 1000;
+```
   
