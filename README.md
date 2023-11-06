@@ -249,6 +249,6 @@ SELECT
   FROM shoe_order_customer_product
   WHERE brand IN ('Braun-Bruen', 'Will Inc')
   GROUP BY email
-  HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 1000;
+  HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
 ```
   
