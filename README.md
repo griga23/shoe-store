@@ -226,6 +226,7 @@ SELECT
   END AS rewards_level
 FROM shoe_order_customer_product
 GROUP BY email;
+```
 
 Calculate which customers receive special promotion for their 5th order
 ```
