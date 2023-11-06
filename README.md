@@ -196,4 +196,37 @@ FROM shoe_order_customer
   INNER JOIN shoe_products
   ON shoe_order_customer.product_id = shoe_products.id;
 ```
+
+### Promotion Calculation
+
+Prepare table for loyalty levels
+```
+CREATE TABLE shoe_loyalty_levels(
+  email STRING,
+  total BIGINT,
+  rewards_level STRING,
+  PRIMARY KEY (email) NOT ENFORCED
+);
+```
+
+Calculate loyalty levels
+```
+INSERT INTO shoe_loyalty_levels(
+ email,
+ total,
+ rewards_level)
+SELECT
+  email,
+  SUM(sale_price) AS total,
+  CASE
+    WHEN SUM(sale_price) > 8000000 THEN 'GOLD'
+    WHEN SUM(sale_price) > 7000000 THEN 'SILVER'
+    WHEN SUM(sale_price) > 6000000 THEN 'BRONZE'
+    ELSE 'CLIMBING'
+  END AS rewards_level
+FROM shoe_order_customer_product
+GROUP BY email;
+
+
+
   
