@@ -227,6 +227,16 @@ SELECT
 FROM shoe_order_customer_product
 GROUP BY email;
 
-
+Calculate which customers receive special promotion for their 5th order
+```
+ SELECT
+   email,
+   COUNT(*) AS total,
+   (COUNT(*) % 6) AS sequence,
+   (COUNT(*) % 6) = 5 AS next_one_free
+ FROM shoe_order_customer_product
+ WHERE brand = 'Jones-Stokes'
+ GROUP BY email;
+ ```
 
   
