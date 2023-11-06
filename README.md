@@ -61,11 +61,6 @@ Show amount of unique customers
 SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
 ```
 
-Show last 10 orders
-```
-SELECT $rowtime, order_id FROM shoe_orders LIMIT 10;
-```
-
 Show amount of shoe models, average rating and maximum model price for each brand
 ```
 SELECT brand as brand_name, 
@@ -74,6 +69,11 @@ SELECT brand as brand_name,
     MAX(sale_price)/100 as max_price
 FROM shoe_products
 GROUP BY brand;
+```
+
+Show last 10 orders
+```
+SELECT $rowtime, order_id FROM shoe_orders LIMIT 10;
 ```
 
 Show amount of orders for 1 minute intervals
