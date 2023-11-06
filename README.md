@@ -86,7 +86,8 @@ FROM TABLE(
 GROUP BY window_end;
 ```
 
-### Order <-> Customer Join
+### Joins
+Prepare table for Order <-> Customer join 
 ```
 CREATE TABLE order_customer(
   order_id INT,
@@ -103,6 +104,7 @@ CREATE TABLE order_customer(
   country_code STRING);
 ```
 
+Insert data in the created table
 ```
  INSERT INTO order_customer(
   order_id,
@@ -135,7 +137,7 @@ FROM shoe_orders
   ON show_orders.customer_id = shoe_customers.id;
 ```
 
-### Order <-> Customer <-> Product Join
+Prepare table for Order <-> Customer <-> Product Join
 ```
 CREATE TABLE order_customer_product(
   order_id INT,
@@ -156,6 +158,7 @@ CREATE TABLE order_customer_product(
 );
 ```
 
+Insert data in the created table
 ```
 INSERT INTO order_customer_product(
   order_id,
