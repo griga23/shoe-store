@@ -66,13 +66,14 @@ Show last 10 orders
 SELECT $rowtime, order_id FROM shoe_orders LIMIT 10;
 ```
 
-Show total amoumt of orders for each customer
+Show amount of shoe models, average rating and maximum model price for each brand
 ```
-SELECT customer_id, 
-    COUNT(order_id) as total_orders, 
-    MAX(`$rowtime`) as last_time 
-FROM shoe_orders
-GROUP BY customer_id;
+SELECT brand as brand_name, 
+    COUNT(DISTINCT name) as models_by_brand, 
+    ROUND(AVG(rating),2) as avg_rating,
+    MAX(sale_price)/100 as max_price
+FROM shoe_products
+GROUP BY brand;
 ```
 
 Show amount of orders for 1 minute intervals
