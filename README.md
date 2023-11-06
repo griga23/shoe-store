@@ -86,7 +86,7 @@ FROM TABLE(
 GROUP BY window_end;
 ```
 
-### Joins
+### Data Enrichment
 Prepare table for Order <-> Customer join 
 ```
 CREATE TABLE shoe_order_customer(
@@ -106,7 +106,7 @@ CREATE TABLE shoe_order_customer(
 
 Insert data in the created table
 ```
- INSERT INTO order_customer(
+ INSERT INTO shoe_order_customer(
   order_id,
   product_id,
   ts,
@@ -134,7 +134,7 @@ SELECT
   country_code
 FROM shoe_orders
   INNER JOIN shoe_customers
-  ON show_orders.customer_id = shoe_customers.id;
+  ON shoe_orders.customer_id = shoe_customers.id;
 ```
 
 Prepare table for Order <-> Customer <-> Product Join
@@ -160,7 +160,7 @@ CREATE TABLE shoe_order_customer_product(
 
 Insert data in the created table
 ```
-INSERT INTO order_customer_product(
+INSERT INTO shoe_order_customer_product(
   order_id,
   ts,
   first_name,
@@ -192,8 +192,8 @@ SELECT
   name,
   sale_price,
   rating
-FROM order_customer
+FROM shoe_order_customer
   INNER JOIN shoe_products
-  ON order_customer.product_id = shoe_products.id;
+  ON shoe_order_customer.product_id = shoe_products.id;
 ```
   
