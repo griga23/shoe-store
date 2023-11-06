@@ -245,7 +245,7 @@ Find which customers have ordered related brands in large volumes
 SELECT
      email,
      COLLECT(brand) AS products,
-     'related_brands' AS promotion_name
+     'bundle_offer' AS promotion_name
   FROM shoe_order_customer_product
   WHERE brand IN ('Braun-Bruen', 'Will Inc')
   GROUP BY email
