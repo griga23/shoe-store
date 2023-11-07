@@ -197,7 +197,7 @@ FROM shoe_order_customer
   ON shoe_order_customer.product_id = shoe_products.id;
 ```
 
-### Promotion Calculation
+### Loyalty Levels Calculation
 
 Prepare table for loyalty levels
 ```
@@ -227,6 +227,8 @@ SELECT
 FROM shoe_order_customer_product
 GROUP BY email;
 ```
+
+### Promotions Calculation
 
 Find which customers should receive special promotion for their 10th order of the same brand
 ```
@@ -271,4 +273,57 @@ FROM shoe_order_customer_product
            a AS a.rating > 4,
            b AS b.rating > 4,
            c AS c.rating > 0 AND c.rating < 2);
-```  
+```
+
+Prepare table for promotion notifications
+```
+CREATE TABLE shoe_promotions(
+  email STRING,
+  promotion_name STRING,
+  PRIMARY KEY (email) NOT ENFORCED
+);
+```
+
+Write all 3 promotions as in a single statement set to the shoe_promotions table
+```
+EXECUTE STATEMENT SET 
+BEGIN
+
+INSERT INTO shoe_promotions
+SELECT
+   email,
+   'next_free' AS promotion_name
+FROM shoe_order_customer_product
+WHERE brand = 'Jones-Stokes'
+GROUP BY email
+HAVING COUNT(*) % 10 = 0;
+
+INSERT INTO shoe_promotions
+SELECT
+     email,
+     'bundle_offer' AS promotion_name
+  FROM shoe_order_customer_product
+  WHERE brand IN ('Braun-Bruen', 'Will Inc')
+  GROUP BY email
+  HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
+
+INSERT INTO shoe_promotions
+SELECT email,
+  'better_experience' AS promotion_name
+FROM shoe_order_customer_product
+     MATCH_RECOGNIZE (
+         PARTITION BY email
+         ORDER BY $rowtime
+         MEASURES
+           a.rating AS rating1,
+           b.rating AS rating2,
+           c.rating AS rating3
+         AFTER MATCH SKIP TO NEXT ROW
+         PATTERN (a b c)
+         DEFINE
+           a AS a.rating > 4,
+           b AS b.rating > 4,
+           c AS c.rating > 0 AND c.rating < 2);
+
+END;
+```
