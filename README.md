@@ -284,7 +284,7 @@ CREATE TABLE shoe_promotions(
 );
 ```
 
-Write all 3 promotions as in a single statement set to the shoe_promotions table
+Write all 3 calculated promotions in a single statement set to the shoe_promotions table
 ```
 EXECUTE STATEMENT SET 
 BEGIN
