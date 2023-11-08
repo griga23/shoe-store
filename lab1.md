@@ -23,6 +23,10 @@ NOTE: We use Datagen with following templates:
   * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
   * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
 
+### Flink Pool
+
+If already not present create Flink Pool Cluster
+
 
 ## Flink
 
