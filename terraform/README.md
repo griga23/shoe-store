@@ -88,7 +88,6 @@ terraform output -json
    - Catalog: `flink_handson_terraform-XXXXXXXX`
    - Database: `cc-handson-cluster`
  - Submit the following SQL queries (one at a time):
-```
 
 Now, everything is up and running for the hands-on.
 
@@ -97,4 +96,4 @@ Now, everything is up and running for the hands-on.
 # Destroy the hands.on infrastructure
 ```bash
 terraform destroy
-``````
+```
