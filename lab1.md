@@ -2,6 +2,8 @@
 
 Prepare required resources (if not already done automatically with the Terraform lab) 
 
+## Prepare Kafka Resources
+
 ### Kafka Topics
 Create following topics (1 partition is ok):
  * shoe_products (for product data aka Product Catalog)
@@ -11,15 +13,15 @@ Skip Topic Schemas. They will be created automatically by the Datagen Connectors
 
 ### Connectors - Data Sources
 
-NOTE: We use Datagen with following templates:
-  * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
-  * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
-  * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
-
 Create following 3 Datagen Source Connectors:
   * Topic **shoe_products** , API Key Global Access, AVRO format, **Shoes** template, 1 task
   * Topic **shoe_customers** , API Key Global Access, AVRO format, **Shoe customers** template, 1 task
   * Topic **shoe_orders** , API Key Global Access, AVRO format, **Shoe orders** template, 1 task
+
+NOTE: We use Datagen with following templates:
+  * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
+  * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
+  * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
 
 
 ## Flink
