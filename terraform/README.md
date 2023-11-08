@@ -11,9 +11,9 @@ We will deploy with terraform:
  - Confluent Cloud Basic Cloud:
     - in AWS in region (eu-central-1)
  - Connectors:
-    - Datagen for products
-    - Datagen for customers
-    - Datagen for orders
+    - Datagen for shoe_products
+    - Datagen for shoe_customers 
+    - Datagen for show_orders
  - Service Accounts
     - app_manager-XXXX with Role EnvironmentAdmin
     - sr-XXXX with Role EnvironmentAdmin
