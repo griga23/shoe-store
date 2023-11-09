@@ -59,7 +59,7 @@ NOTE: There might be empty result set if keyed customers tables was created afte
 ### Data Enrichment
 We can store the result of a join to a new table.
 
-First try join on the non-keyed customer table
+First try joining data on the non-keyed customer table
 ```
 SELECT
   order_id,
@@ -85,9 +85,9 @@ FROM shoe_orders
   INNER JOIN shoe_customers_keyed
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
 ```
-NOTE: there are many duplicates.
+NOTE: there are no duplicate orders.
 
-Prepare table for Order <-> Customer join 
+Prepare new table for to string result of the Order <-> Customer join 
 ```
 CREATE TABLE shoe_order_customer(
   order_id INT,
@@ -112,24 +112,22 @@ SELECT
   last_name,
   email
 FROM shoe_orders
-  INNER JOIN shoe_customers
-  ON shoe_orders.customer_id = shoe_customers.id;
+  INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
+  ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
 ```
 
-Prepare table for Order <-> Customer <-> Product Join
+Verify that data are joined successfully. 
+```
+SELECT * FROM shoe_order_customer;
+```
+
+Prepare a new table for Order <-> Customer <-> Product Join
 ```
 CREATE TABLE shoe_order_customer_product(
   order_id INT,
-  ts TIMESTAMP(3),
   first_name STRING,
   last_name STRING,
   email STRING,
-  phone STRING,
-  street_address STRING,
-  state STRING,
-  zip_code STRING,
-  country STRING,
-  country_code STRING,
   brand STRING,
   model STRING,
   sale_price INT,
@@ -141,39 +139,25 @@ Insert data in the created table
 ```
 INSERT INTO shoe_order_customer_product(
   order_id,
-  ts,
   first_name,
   last_name,
   email,
-  phone,
-  street_address,
-  state,
-  zip_code,
-  country,
-  country_code,
   brand,
   model,
   sale_price,
   rating)
 SELECT
   order_id,
-  ts,
   first_name,
   last_name,
   email,
-  phone,
-  street_address,
-  state,
-  zip_code,
-  country,
-  country_code,
   brand,
-  name,
+  model,
   sale_price,
   rating
 FROM shoe_order_customer
-  INNER JOIN shoe_products
-  ON shoe_order_customer.product_id = shoe_products.id;
+  INNER JOIN shoe_products_keyed FOR SYSTEM_TIME AS OF shoe_order_customer.`$rowtime`
+  ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
 ```
 
 Verify that data are joined successfully. 
