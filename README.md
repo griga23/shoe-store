@@ -8,8 +8,8 @@ Shoe Store Loyalty Engine - Flink SQL Workshop
   * Automatated creation using Terraform  [guide](terraform/README.md)
 
 ## Workshop Labs
-  *  [Lab1](lab1.md)
-  *  [Lab2](lab2.md)
+  *  Select Statements, Flink Tables [Lab1](lab1.md)
+  *  Join Statements, Data Enrichment [Lab2](lab2.md)
 
 ## Notification Client 
   * Use Python Notification client [guide](notification_client.md)
