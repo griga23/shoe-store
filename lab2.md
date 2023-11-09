@@ -38,11 +38,11 @@ NOTE: Look at the number of rows returned. There are many duplicates for each or
 
 Join orders with keyed customer records (Regular Join with Keyed Table)
 ```
-SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
 INNER JOIN shoe_customers_keyed 
-ON shoe_orders.customer_id = shoe_customers_keyed.id
-WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
+WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Look at the number of rows returned. There are no duplicates for each order! This is because we have only one customer record for each customer id.
 
