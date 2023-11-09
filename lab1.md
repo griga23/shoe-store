@@ -41,24 +41,46 @@ NOTE: Flink Cluster is at the Environment level and can be used with multiple Ka
 
 
 ## Flink Tables
+Let's start with exploring our Flink tables.
+Kafka topics and schemas are always in sync with our Flink cluster. Any topic created in Kafka is visible directly as a table in Flink, and any table created in Flink is visible as a topic in Kafka. Effectively, Flink provides a SQL interface on top of Confluent Cloud.
+
+Following mapping exist:
+| Kafka| Flink      | 
+| -------------- |:-------------:|
+| Environment  | Catalog   | 
+| Cluster | Database   |
+| Topic + Schema | Table   |
 
 ### Select Basics
+Our Flink tables are populated by the Datagen connectors.
+
+We can first check the table schema for our shoe product catalog. This should be the same as the topic schema in Schema Registry.
 ```
 DESCRIBE shoe_products;
 ```
+
+Let's check if any product records exist in the table.
 ```
 SELECT * FROM shoe_products;
 ```
+
+Check if customers schema exist. 
 ```
 DESCRIBE shoe_customers;
 ```
+
+Are there any customers in Texas with name starting with B. ?
 ```
 SELECT * FROM shoe_customers
   WHERE `state` = 'Texas' AND `last_name` LIKE 'B%';
 ```
+
+Check all attributes of shoe_orders table including hidden attributes.
 ```
 DESCRIBE EXTENDED shoe_orders;
 ```
+
+Check first 10 orders for one customer.
 ```
 SELECT order_id, product_id, customer_id, $rowtime
   FROM shoe_orders
