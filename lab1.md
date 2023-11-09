@@ -28,7 +28,7 @@ NOTE: We use Datagen with following templates:
 If already not present create Flink Pool Cluster
 
 
-## Flink
+## Flink Tables
 
 ### Select Basics
 ```
@@ -81,6 +81,30 @@ SELECT
 FROM TABLE(
    TUMBLE(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTES))
 GROUP BY window_end;
+```
+
+### Tables with Primary Key 
+Create a new table for unique customers
+```
+CREATE TABLE shoe_customers_keyed(
+  id STRING,
+  first_name STRING,
+  last_name STRING,
+  email STRING,
+  PRIMARY KEY (email) NOT ENFORCED
+  );
+```
+
+Copy customer data from the original table 
+```
+INSERT INTO shoe_customers_keyed
+  SELECT id, first_name, last_name, email
+    FROM shoe_customers;
+```
+
+Show amount of cutomers in the new table
+```
+SELECT COUNT(*) FROM shoe_customers_keyed;
 ```
 
 End of Lab1
