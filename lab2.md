@@ -24,7 +24,7 @@ FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-Now, we can look at different types of joins available
+Now, we can look at different types of joins available. We will join order records and customer records.
 
 Join orders with non-keyed customer records (Regular Join)
 ```
