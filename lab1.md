@@ -212,14 +212,21 @@ CREATE TABLE shoe_products_keyed(
   model STRING,
   sale_price INT,
   rating DOUBLE,
-  PRIMARY KEY (id) NOT ENFORCED
+  PRIMARY KEY (product_id) NOT ENFORCED
   );
+```
+
+Create a new Flink job to copy product data from the original table to the new table
+```
+INSERT INTO shoe_products_keyed
+  SELECT id, brand, `name`, sale_price, rating 
+    FROM shoe_products;
 ```
 
 Check if only single record is returned for some product
 ```
 SELECT * 
- FROM shoe_customers_keyed  
+ FROM shoe_products_keyed  
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
