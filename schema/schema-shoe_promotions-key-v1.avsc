@@ -1,0 +1,11 @@
+{
+  "fields": [
+    {
+      "name": "email",
+      "type": "string"
+    }
+  ],
+  "name": "record",
+  "namespace": "org.apache.flink.avro.generated",
+  "type": "record"
+}

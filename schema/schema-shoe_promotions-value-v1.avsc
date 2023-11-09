@@ -1,0 +1,15 @@
+{
+  "fields": [
+    {
+      "default": null,
+      "name": "promotion_name",
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  ],
+  "name": "record",
+  "namespace": "org.apache.flink.avro.generated",
+  "type": "record"
+}

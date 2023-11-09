@@ -38,7 +38,7 @@ resource "confluent_kafka_acl" "connectors_source_create_topic_demo" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   resource_type = "TOPIC"
-  resource_name = "handson-"
+  resource_name = "shoe-"
   pattern_type  = "PREFIXED"
   principal     = "User:${confluent_service_account.connectors.id}"
   operation     = "CREATE"
@@ -58,7 +58,7 @@ resource "confluent_kafka_acl" "connectors_source_write_topic_demo" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   resource_type = "TOPIC"
-  resource_name = "handson-"
+  resource_name = "shoe-"
   pattern_type  = "PREFIXED"
   principal     = "User:${confluent_service_account.connectors.id}"
   operation     = "WRITE"
@@ -78,7 +78,7 @@ resource "confluent_kafka_acl" "connectors_source_read_topic_demo" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   resource_type = "TOPIC"
-  resource_name = "handson-"
+  resource_name = "shoe-"
   pattern_type  = "PREFIXED"
   principal     = "User:${confluent_service_account.connectors.id}"
   operation     = "READ"
@@ -216,7 +216,7 @@ resource "confluent_kafka_topic" "products" {
   kafka_cluster {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
-  topic_name    = "handson-products"
+  topic_name    = "shoe-products"
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id
@@ -231,7 +231,7 @@ resource "confluent_kafka_topic" "customers" {
   kafka_cluster {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
-  topic_name    = "handson-customers"
+  topic_name    = "shoe-customers"
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id
@@ -246,7 +246,7 @@ resource "confluent_kafka_topic" "orders" {
   kafka_cluster {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
-  topic_name    = "handson-orders"
+  topic_name    = "shoe-orders"
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id
