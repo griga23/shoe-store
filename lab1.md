@@ -91,7 +91,7 @@ CREATE TABLE shoe_customers_keyed(
   first_name STRING,
   last_name STRING,
   email STRING,
-  PRIMARY KEY (email) NOT ENFORCED
+  PRIMARY KEY (id) NOT ENFORCED
   );
 ```
 
