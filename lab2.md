@@ -5,22 +5,28 @@ Finishing Lab 1 is required for this lab.
 ## Flink Joins
 
 ### Understand Joins in Flink
+Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
+By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-Show all customer records for one customer
+Let's first look at our data records and their timestamps.
+
+Find all customer records for one customer and display timestamps when events were ingested in the shoe_customers Kafka topic
 ```
 SELECT id,$rowtime 
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-Show all orders for one customer
+Find all orders for one customer and display timestamps when events were ingested in the shoe_orders Kafka topic
 ```
 SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-Join orders with non-keyd customer records (Regular Join)
+Now, we can look at different types of joins available
+
+Join orders with non-keyed customer records (Regular Join)
 ```
 SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -28,8 +34,9 @@ INNER JOIN shoe_customers
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+NOTE: Look at the number of rows returned. There are many duplicates for each order!
 
-Join orders with keyd customer records (Regular Join with Keyed Table)
+Join orders with keyed customer records (Regular Join with Keyed Table)
 ```
 SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -37,8 +44,9 @@ INNER JOIN shoe_customers_keyed
 ON shoe_orders.customer_id = shoe_customers_keyed.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+NOTE: Look at the number of rows returned. There are no duplicates for each order! This is because we have only one customer record for each customer id.
 
-Join orders with keyd customer records in time when orders were created (Temporal Join with Keyed Table)
+Join orders with keyd customer records in time when order was created (Temporal Join with Keyed Table)
 ```
 SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -46,8 +54,11 @@ INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
 ON shoe_orders.customer_id = shoe_customers_keyed.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+NOTE: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
 ### Data Enrichment
+We can store the result of a join to a new table.
+
 Prepare table for Order <-> Customer join 
 ```
 CREATE TABLE shoe_order_customer(
@@ -158,7 +169,14 @@ FROM shoe_order_customer
   ON shoe_order_customer.product_id = shoe_products.id;
 ```
 
+Verify that data are joined successfully. 
+```
+SELECT * FROM shoe_order_customer_product;
+```
+
 ### Loyalty Levels Calculation
+
+Now we are ready to calculate loyalty level for our customers
 
 Prepare table for loyalty levels
 ```
@@ -170,7 +188,8 @@ CREATE TABLE shoe_loyalty_levels(
 );
 ```
 
-Calculate loyalty levels
+Calculate loyalty levels and store results in the created table.
+NOTE: You might need to change the loyalty level numbers according to amount of the data you have ingested.
 ```
 INSERT INTO shoe_loyalty_levels(
  email,
@@ -180,9 +199,9 @@ SELECT
   email,
   SUM(sale_price) AS total,
   CASE
-    WHEN SUM(sale_price) > 8000000 THEN 'GOLD'
+    WHEN SUM(sale_price) > 80000000 THEN 'GOLD'
     WHEN SUM(sale_price) > 7000000 THEN 'SILVER'
-    WHEN SUM(sale_price) > 6000000 THEN 'BRONZE'
+    WHEN SUM(sale_price) > 600000 THEN 'BRONZE'
     ELSE 'CLIMBING'
   END AS rewards_level
 FROM shoe_order_customer_product
@@ -191,7 +210,9 @@ GROUP BY email;
 
 ### Promotions Calculation
 
-Find which customers should receive special promotion for their 10th order of the same brand
+Let's find out if some customers are eligible for some special promotions.
+
+Find which customer should receive special promotion for their 10th order of the same brand
 ```
 SELECT
    email,
@@ -202,8 +223,9 @@ SELECT
  WHERE brand = 'Jones-Stokes'
  GROUP BY email;
  ```
+NOTE: We calculate number of orders of Jones-Stokes brand for each customer and offer a free product if it's 10th order.
 
-Find which customers have ordered related brands in large volumes
+Find which customer have ordered related brands in large volumes
 ```
 SELECT
      email,
@@ -214,6 +236,7 @@ SELECT
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
 ```
+NOTE: We sum all orders of brands Braun-Bruen and Will Inc for each customer and offer a special promotion if sum is larger than 10.  
 
 Find customers who bought twice shoes with high rating and then bought shoes with low rating
 ```
@@ -235,6 +258,9 @@ FROM shoe_order_customer_product
            b AS b.rating > 4,
            c AS c.rating > 0 AND c.rating < 2);
 ```
+NOTE: We are looking for a pattern where customer orders two products with a good rating (orders a, b) and one product with a bad rating (order c). 
+
+Now we are ready to store the results for all calculated promotions. 
 
 Prepare table for promotion notifications
 ```
@@ -287,6 +313,11 @@ FROM shoe_order_customer_product
            c AS c.rating > 0 AND c.rating < 2);
 
 END;
+```
+
+Check if all promotion notifications are stored correctly
+```
+select * from shoe_promotions;
 ```
 
 End of Lab 2
