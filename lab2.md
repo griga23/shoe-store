@@ -199,6 +199,11 @@ FROM shoe_order_customer_product
 GROUP BY email;
 ```
 
+Verify results
+```
+SELECT * FROM shoe_loyalty_levels;
+```
+
 ### Promotions Calculation
 
 Let's find out if some customers are eligible for some special promotions.
