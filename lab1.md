@@ -33,9 +33,11 @@ NOTE: We use Datagen Connectors with following templates:
   * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
   * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
 
-### Flink Pool
+### Flink Compute Pool
 
-If already not present create Flink Pool Cluster
+Check if Flink Cluster has been created. Is it running in the same region as your Kafka cluster?
+
+NOTE: Flink Cluster is at the Environment level and can be used with multiple Kafka clusters.
 
 
 ## Flink Tables
