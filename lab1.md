@@ -137,7 +137,7 @@ GROUP BY brand;
 Let's try Flink time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are comminly used in Flink's window operations, especially when dealing with event time windows.
 
-Find amount of orders for one minute intervals.
+Find amount of orders for 1 minute intervals (tumbling window aggregation).
 ```
 SELECT
  window_end,
@@ -145,6 +145,16 @@ SELECT
 FROM TABLE(
    TUMBLE(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTES))
 GROUP BY window_end;
+```
+
+Find amount of orders for 10 minute intervals advanced by 5 minutes (hopping window aggregation).
+```
+SELECT
+ window_start, window_end,
+ COUNT(DISTINCT order_id) AS num_orders
+FROM TABLE(
+   HOP(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '5' MINUTES, INTERVAL '10' MINUTES))
+GROUP BY window_start, window_end;
 ```
 
 NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
