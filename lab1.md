@@ -133,6 +133,7 @@ SELECT brand as brand_name,
 FROM shoe_products
 GROUP BY brand;
 ```
+### Time Windows
 
 Let's try Flink time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are comminly used in Flink's window operations, especially when dealing with event time windows.
