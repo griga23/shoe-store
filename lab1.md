@@ -195,4 +195,11 @@ SELECT *
  WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
+Compare it with all customer records for one specific customer
+```
+SELECT *
+ FROM shoe_customers
+ WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
 End of Lab1
