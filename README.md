@@ -1,4 +1,4 @@
-# shoe-store
+# Confluent Cloud - Flink SQL Shoe Store Workshop
 Shoe Store Loyalty Engine - Flink SQL Workshop
 
 ![image](terraform/img/Flink_Hands-on_Workshop_Complete.png)
