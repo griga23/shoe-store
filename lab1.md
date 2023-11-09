@@ -20,10 +20,7 @@ Check if following Avro schemas exist in your Schema Registry:
 NOTE: Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
 
 ### Connectors
-Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configuratiosn are correct.:
-  * **DatagenSourceConnector_0**, Topic shoe_products, AVRO format, **Shoes** template
-  * **DatagenSourceConnector_1**,Topic shoe_customers, AVRO format, **Shoe customers** template
-  * **DatagenSourceConnector_2**,Topic shoe_orders, AVRO format, **Shoe orders** template
+Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configurations are correct.
 
 | Connector Name (can be anything)| Topic      | Format | Template            | 
 | --------------------------- |:-------------:| -----:|----------------------:|
@@ -31,7 +28,7 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 | **DatagenSourceConnector_1**| shoe_customers | AVRO   | **Shoes customers** | 
 | **DatagenSourceConnector_2**| shoe_orders    | AVRO   | **Shoes orders**    | 
 
-NOTE: We use Datagen with following templates:
+NOTE: We use Datagen Connectors with following templates:
   * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
   * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
   * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
