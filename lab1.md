@@ -19,7 +19,7 @@ Check if following Avro schemas exist in your Schema Registry:
 
 NOTE: Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
 
-### Connectors
+### Datagen Connectors
 Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configurations are correct.
 
 | Connector Name (can be anything)| Topic      | Format | Template            | 
