@@ -48,8 +48,9 @@ SELECT * FROM shoe_customers
 DESCRIBE shoe_orders;
 ```
 ```
-SELECT * FROM shoe_orders 
-  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+SELECT * FROM shoe_orders
+  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a'
+  LIMIT 10;
 ```
 
 ### Select Advanced
