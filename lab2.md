@@ -59,21 +59,42 @@ NOTE: There might be empty result set if keyed customers tables was created afte
 ### Data Enrichment
 We can store the result of a join to a new table.
 
+First try join on the non-keyed customer table
+```
+SELECT
+  order_id,
+  product_id,
+  first_name,
+  last_name,
+  email
+FROM shoe_orders
+  INNER JOIN shoe_customers
+  ON shoe_orders.customer_id = shoe_customers.id;
+```
+NOTE: there are many duplicate order rows returned.
+
+Now try join on the keyed customer table
+```
+SELECT
+  order_id,
+  product_id,
+  first_name,
+  last_name,
+  email
+FROM shoe_orders
+  INNER JOIN shoe_customers_keyed
+  ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
+```
+NOTE: there are many duplicates.
+
 Prepare table for Order <-> Customer join 
 ```
 CREATE TABLE shoe_order_customer(
   order_id INT,
   product_id STRING,
-  ts TIMESTAMP(3),
   first_name STRING,
   last_name STRING,
-  email STRING,
-  phone STRING,
-  street_address STRING,
-  state STRING,
-  zip_code STRING,
-  country STRING,
-  country_code STRING);
+  email STRING);
 ```
 
 Insert data in the created table
@@ -81,29 +102,15 @@ Insert data in the created table
  INSERT INTO shoe_order_customer(
   order_id,
   product_id,
-  ts,
   first_name,
   last_name,
-  email,
-  phone,
-  street_address,
-  state,
-  zip_code,
-  country,
-  country_code)
+  email)
 SELECT
   order_id,
   product_id,
-  ts,
   first_name,
   last_name,
-  email,
-  phone,
-  street_address,
-  state,
-  zip_code,
-  country,
-  country_code
+  email
 FROM shoe_orders
   INNER JOIN shoe_customers
   ON shoe_orders.customer_id = shoe_customers.id;
