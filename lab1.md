@@ -51,6 +51,19 @@ Following mapping exist:
 | Cluster | Database   |
 | Topic + Schema | Table   |
 
+Make sure you work with correct Flink catalog and database (=Kafka cluster).
+```
+SHOW DATABASES;
+```
+```
+USE <MY KAFKA CLUSTER NAME>;
+```
+List all Flink Tables (=Kafka topics) in your cluster
+```
+SHOW TABLES;
+```
+Do you see tables shoe_products, shoe_customers, shoe_orders?
+
 ### Select Basics
 Our Flink tables are populated by the Datagen connectors.
 
