@@ -160,7 +160,10 @@ GROUP BY window_start, window_end;
 NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
 
 ### Tables with Primary Key 
-Create a new table for unique customers
+
+Flink allows you to define primary key for your table. Primary key is a column that is unique for each record.
+
+Let's create a new table that will store unique customers only
 ```
 CREATE TABLE shoe_customers_keyed(
   id STRING,
@@ -171,7 +174,9 @@ CREATE TABLE shoe_customers_keyed(
   );
 ```
 
-Copy customer data from the original table 
+NOTE: More information about Primary key constraint https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint
+
+Create a new Flink job to copy customer data from the original table to the new table
 ```
 INSERT INTO shoe_customers_keyed
   SELECT id, first_name, last_name, email
@@ -181,6 +186,13 @@ INSERT INTO shoe_customers_keyed
 Show amount of cutomers in the new table
 ```
 SELECT COUNT(*) FROM shoe_customers_keyed;
+```
+
+Look up one specific customer
+```
+SELECT * 
+ FROM shoe_customers_keyed  
+ WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
 End of Lab1
