@@ -2,7 +2,7 @@
 
 Prepare required resources (if not already done automatically with the Terraform lab) 
 
-## Prepare Kafka Resources
+## Verify Kafka Resources
 
 ### Kafka Topics
 Create following topics (1 partition is ok):
