@@ -1,5 +1,3 @@
-![image](terraform/img/confluent-logo-300-2.png)
-
 # shoe-store
 Shoe Store Loyalty Engine - Flink SQL Workshop
 
