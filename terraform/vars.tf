@@ -53,7 +53,7 @@ variable "sr_cloud_region" {
 
 variable "sr_package" {
   type    = string
-  default = "ADVANCED"
+  default = "ESSENTIALS"
 }
 
 # --------------------------------------------

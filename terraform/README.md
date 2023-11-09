@@ -11,9 +11,9 @@ We will deploy with terraform:
  - Confluent Cloud Basic Cloud:
     - in AWS in region (eu-central-1)
  - Connectors:
-    - Datagen for products
-    - Datagen for customers
-    - Datagen for orders
+    - Datagen for shoe_products
+    - Datagen for shoe_customers 
+    - Datagen for show_orders
  - Service Accounts
     - app_manager-XXXX with Role EnvironmentAdmin
     - sr-XXXX with Role EnvironmentAdmin
@@ -88,7 +88,6 @@ terraform output -json
    - Catalog: `flink_handson_terraform-XXXXXXXX`
    - Database: `cc-handson-cluster`
  - Submit the following SQL queries (one at a time):
-```
 
 Now, everything is up and running for the hands-on.
 
@@ -97,4 +96,4 @@ Now, everything is up and running for the hands-on.
 # Destroy the hands.on infrastructure
 ```bash
 terraform destroy
-``````
+```
