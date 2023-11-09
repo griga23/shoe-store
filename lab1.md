@@ -40,7 +40,7 @@ Check if Flink Cluster has been created. Is it running in the same region as you
 NOTE: Flink Cluster is at the Environment level and can be used with multiple Kafka clusters.
 
 ## Connecting to Flink 
-You can use your web browser or console to enterFlink SQL statements.
+You can use your web browser or console to enter Flink SQL statements.
   * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
   * **Console** - copy/paste command from your Flink Compute Pool to the command line
 
@@ -113,7 +113,9 @@ SELECT order_id, product_id, customer_id, $rowtime
 ```
 
 ### Select Advanced
-Show amount of (unique) customers
+Let's try to run more advanced queries.
+
+First find out number of customers records and then number of unique customers.
 ```
 SELECT COUNT(id) AS num_customers FROM shoe_customers;
 ```
@@ -121,7 +123,8 @@ SELECT COUNT(id) AS num_customers FROM shoe_customers;
 SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
 ```
 
-Show amount of shoe models, average rating and maximum model price for each brand
+We can try some basic aggregations with the product catalog records.
+For each shoe brand find number of shoe models, average rating and maximum model price. 
 ```
 SELECT brand as brand_name, 
     COUNT(DISTINCT name) as models_by_brand, 
@@ -131,7 +134,10 @@ FROM shoe_products
 GROUP BY brand;
 ```
 
-Show amount of orders for 1 minute intervals
+Let's try Flink time windowing functions for shoe order records.
+Column names “window_start” and “window_end” are comminly used in Flink's window operations, especially when dealing with event time windows.
+
+Find amount of orders for one minute intervals.
 ```
 SELECT
  window_end,
@@ -140,6 +146,8 @@ FROM TABLE(
    TUMBLE(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTES))
 GROUP BY window_end;
 ```
+
+NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
 
 ### Tables with Primary Key 
 Create a new table for unique customers
