@@ -41,13 +41,15 @@ SELECT * FROM shoe_products;
 DESCRIBE shoe_customers;
 ```
 ```
-SELECT * FROM shoe_customers;
+SELECT * FROM shoe_customers
+  WHERE `state` = 'Texas' AND `last_name` LIKE 'B%';
 ```
 ```
 DESCRIBE shoe_orders;
 ```
 ```
-SELECT * FROM shoe_orders;
+SELECT * FROM shoe_orders 
+  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
 ### Select Advanced
