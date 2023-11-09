@@ -45,16 +45,20 @@ SELECT * FROM shoe_customers
   WHERE `state` = 'Texas' AND `last_name` LIKE 'B%';
 ```
 ```
-DESCRIBE shoe_orders;
+DESCRIBE EXTENDED shoe_orders;
 ```
 ```
-SELECT * FROM shoe_orders
+SELECT order_id, product_id, customer_id, $rowtime
+  FROM shoe_orders
   WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a'
   LIMIT 10;
 ```
 
 ### Select Advanced
-Show amount of unique customers
+Show amount of (unique) customers
+```
+SELECT COUNT(id) AS num_customers FROM shoe_customers;
+```
 ```
 SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
 ```
@@ -67,11 +71,6 @@ SELECT brand as brand_name,
     MAX(sale_price)/100 as max_price
 FROM shoe_products
 GROUP BY brand;
-```
-
-Show last 10 orders
-```
-SELECT $rowtime, order_id FROM shoe_orders LIMIT 10;
 ```
 
 Show amount of orders for 1 minute intervals
