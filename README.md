@@ -1,7 +1,7 @@
 # shoe-store
 Shoe Store Loyalty Engine - Flink SQL Workshop
 
-![image](terraform/img/deployment_diagram.png)
+![image](terraform/img/Flink_Hands-on_Workshop_Complete.png)
 
 ## Required Confluent Cloud Resources 
   * Manual creation with this guide [guide](prereq.md)
