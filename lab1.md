@@ -1,22 +1,35 @@
 # Lab 1
 
-Prepare required resources (if not already done automatically with the Terraform lab) 
+All required resources must be already crreated for this lab to work correctly.
 
-## Verify Kafka Resources
+## Verify Confluent Cloud Resources
+Let's verify if all resources were created correctly and we can start using them.
 
 ### Kafka Topics
-Create following topics (1 partition is ok):
+Check if following topics exist in your Kafka cluster:
  * shoe_products (for product data aka Product Catalog)
  * shoe_customers (for customer data aka Customer CRM)
  * shoe_orders (for realtime order transactions aka Billing System)
-Skip Topic Schemas. They will be created automatically by the Datagen Connectors.
 
-### Connectors - Data Sources
+### Schemas in Schema Registry
+Check if following Avro schemas exist in your Schema Registry:
+ * shoe_products-value
+ * shoe_customers-value
+ * shoe_orders-value
 
-Create following 3 Datagen Source Connectors:
-  * Topic **shoe_products** , API Key Global Access, AVRO format, **Shoes** template, 1 task
-  * Topic **shoe_customers** , API Key Global Access, AVRO format, **Shoe customers** template, 1 task
-  * Topic **shoe_orders** , API Key Global Access, AVRO format, **Shoe orders** template, 1 task
+NOTE: Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
+
+### Connectors
+Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configuratiosn are correct.:
+  * **DatagenSourceConnector_0**, Topic shoe_products, AVRO format, **Shoes** template
+  * **DatagenSourceConnector_1**,Topic shoe_customers, AVRO format, **Shoe customers** template
+  * **DatagenSourceConnector_2**,Topic shoe_orders, AVRO format, **Shoe orders** template
+
+| Connector Name (can be anything)| Topic      | Format | Template            | 
+| --------------------------- |:-------------:| -----:|----------------------:|
+| **DatagenSourceConnector_0**| shoe_products  | AVRO   | **Shoes**           | 
+| **DatagenSourceConnector_1**| shoe_customers | AVRO   | **Shoes customers** | 
+| **DatagenSourceConnector_2**| shoe_orders    | AVRO   | **Shoes orders**    | 
 
 NOTE: We use Datagen with following templates:
   * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
