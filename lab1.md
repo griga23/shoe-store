@@ -39,6 +39,17 @@ Check if Flink Cluster has been created. Is it running in the same region as you
 
 NOTE: Flink Cluster is at the Environment level and can be used with multiple Kafka clusters.
 
+## Connecting to Flink 
+You can use your web browser or console to enterFlink SQL statements.
+  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
+  * **Console** - copy/paste command from your Flink Compute Pool to the command line
+
+Example:
+```
+confluent flink shell --compute-pool lfcp-xxxxx --environment env-xxxxx
+```
+
+NOTE: you need to have confluent cloud console tool installed and be logged in with correct access rights.
 
 ## Flink Tables
 Let's start with exploring our Flink tables.
