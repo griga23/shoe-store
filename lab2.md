@@ -28,7 +28,7 @@ Now, we can look at different types of joins available
 
 Join orders with non-keyed customer records (Regular Join)
 ```
-SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
 INNER JOIN shoe_customers 
 ON shoe_orders.customer_id = shoe_customers.id
