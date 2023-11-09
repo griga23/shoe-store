@@ -2,7 +2,50 @@
 
 Finishing Lab 1 is required for this lab.
 
-## Flink
+## Flink Joins
+
+### Understand Joins in Flink
+
+Show all customer records for one customer
+```
+SELECT id,$rowtime 
+FROM shoe_customers  
+WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+Show all orders for one customer
+```
+SELECT order_id, customer_id, $rowtime
+FROM shoe_orders
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+Join orders with non-keyd customer records (Regular Join)
+```
+SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers 
+ON shoe_orders.customer_id = shoe_customers.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+Join orders with keyd customer records (Regular Join with Keyed Table)
+```
+SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers_keyed 
+ON shoe_orders.customer_id = shoe_customers_keyed.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+Join orders with keyd customer records in time when orders were created (Temporal Join with Keyed Table)
+```
+SELECT order_id, customer_id, shoe_orders.`$rowtime`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
+ON shoe_orders.customer_id = shoe_customers_keyed.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
 
 ### Data Enrichment
 Prepare table for Order <-> Customer join 
