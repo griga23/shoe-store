@@ -166,11 +166,11 @@ Flink allows you to define primary key for your table. Primary key is a column t
 Let's create a new table that will store unique customers only
 ```
 CREATE TABLE shoe_customers_keyed(
-  id STRING,
+  customer_id STRING,
   first_name STRING,
   last_name STRING,
   email STRING,
-  PRIMARY KEY (id) NOT ENFORCED
+  PRIMARY KEY (customer_id) NOT ENFORCED
   );
 ```
 
@@ -192,7 +192,7 @@ Look up one specific customer
 ```
 SELECT * 
  FROM shoe_customers_keyed  
- WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
 Compare it with all customer records for one specific customer
@@ -201,5 +201,27 @@ SELECT *
  FROM shoe_customers
  WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+
+We also need to create Primary Key table for our product catalog.
+
+Prepare a new table that will store unique products only
+```
+CREATE TABLE shoe_products_keyed(
+  product_id STRING,
+  brand STRING,
+  model STRING,
+  sale_price INT,
+  rating DOUBLE,
+  PRIMARY KEY (id) NOT ENFORCED
+  );
+```
+
+Check if only single record is returned for some product
+```
+SELECT * 
+ FROM shoe_customers_keyed  
+ WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
+```
+
 
 End of Lab1
