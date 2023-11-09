@@ -75,7 +75,7 @@ SHOW TABLES;
 ```
 Do you see tables shoe_products, shoe_customers, shoe_orders?
 
-### Select Basics
+### Select Queries
 Our Flink tables are populated by the Datagen connectors.
 
 We can first check the table schema for our shoe product catalog. This should be the same as the topic schema in Schema Registry.
@@ -112,7 +112,7 @@ SELECT order_id, product_id, customer_id, $rowtime
   LIMIT 10;
 ```
 
-### Select Advanced
+### Select Aggregations
 Let's try to run more advanced queries.
 
 First find out number of customers records and then number of unique customers.
