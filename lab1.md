@@ -70,6 +70,11 @@ SHOW TABLES;
 ```
 Do you see tables shoe_products, shoe_customers, shoe_orders?
 
+Understand how was the table created
+```
+SHOW CREATE TABLE shoe_products;
+```
+
 ### Select Queries
 Our Flink tables are populated by the Datagen connectors.
 
