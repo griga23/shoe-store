@@ -4,7 +4,7 @@ Finishing Lab 1 is required for this lab.
 
 ## Flink Joins
 
-### Understand Joins in Flink
+### Understand Timestamps
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
@@ -26,6 +26,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Check timestamp when were the orders generated. This is important for join operation we will do next.
 
+### Understand Joins
 Now, we can look at different types of joins available. 
 We will join order records and customer records.
 
