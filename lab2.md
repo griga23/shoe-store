@@ -75,8 +75,7 @@ CREATE TABLE shoe_order_customer(
   product_id STRING,
   first_name STRING,
   last_name STRING,
-  email STRING,
-  PRIMARY KEY (order_id) NOT ENFORCED
+  email STRING
   );
 ```
 
@@ -95,7 +94,7 @@ SELECT
   last_name,
   email
 FROM shoe_orders
-  INNER JOIN shoe_customers_keyed
+  INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
 ```
 
@@ -114,8 +113,7 @@ CREATE TABLE shoe_order_customer_product(
   brand STRING,
   model STRING,
   sale_price INT,
-  rating DOUBLE,
-  PRIMARY KEY (order_id) NOT ENFORCED
+  rating DOUBLE
 );
 ```
 
@@ -140,7 +138,7 @@ SELECT
   sale_price,
   rating
 FROM shoe_order_customer
-  INNER JOIN shoe_products_keyed
+  INNER JOIN shoe_products_keyed FOR SYSTEM_TIME AS OF shoe_order_customer.`$rowtime`
   ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
 ```
 
