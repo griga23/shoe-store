@@ -113,7 +113,7 @@ SELECT order_id, product_id, customer_id, $rowtime
   LIMIT 10;
 ```
 
-### Select Aggregations
+### Aggregations
 Let's try to run more advanced queries.
 
 First find out number of customers records and then number of unique customers.
