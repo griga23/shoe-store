@@ -4,10 +4,10 @@ Finishing Lab 1 is required for this lab.
 
 ## Flink Joins
 
-### Understand Timestamps
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
+### Understand Timestamps
 Let's first look at our data records and their timestamps.
 
 Find all customer records for one customer and display timestamps when events were ingested in the shoe_customers Kafka topic
