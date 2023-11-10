@@ -114,7 +114,8 @@ CREATE TABLE shoe_order_customer_product(
   brand STRING,
   model STRING,
   sale_price INT,
-  rating DOUBLE
+  rating DOUBLE,
+  PRIMARY KEY (order_id) NOT ENFORCED
 );
 ```
 
@@ -139,7 +140,7 @@ SELECT
   sale_price,
   rating
 FROM shoe_order_customer
-  INNER JOIN shoe_products_keyed FOR SYSTEM_TIME AS OF shoe_order_customer.`$rowtime`
+  INNER JOIN shoe_products_keyed
   ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
 ```
 
