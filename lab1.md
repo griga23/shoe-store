@@ -28,11 +28,6 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 | **DatagenSourceConnector_1**| shoe_customers | AVRO   | **Shoes customers** | 
 | **DatagenSourceConnector_2**| shoe_orders    | AVRO   | **Shoes orders**    | 
 
-NOTE: We use Datagen Connectors with following templates:
-  * Shoe Products https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoes.avro
-  * Shoe Customers https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_customers.avro
-  * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
-
 ### Flink Compute Pool
 
 Check if Flink Cluster has been created. Is it running in the same region as your Kafka cluster?
