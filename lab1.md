@@ -74,6 +74,7 @@ Understand how was the table created
 ```
 SHOW CREATE TABLE shoe_products;
 ```
+More info to understand all parameters https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html
 
 ### Select Queries
 Our Flink tables are populated by the Datagen connectors.
