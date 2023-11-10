@@ -1,5 +1,5 @@
+![image](terraform/img/confluent-logo-300-2.png)
 # Lab 2
-
 Finishing Lab 1 is required for this lab.
 
 ## Flink Joins
@@ -75,7 +75,7 @@ CREATE TABLE shoe_order_customer(
 
 Insert data in the created table
 ```
- INSERT INTO shoe_order_customer(
+INSERT INTO shoe_order_customer(
   order_id,
   product_id,
   first_name,

@@ -1,6 +1,7 @@
+![image](terraform/img/confluent-logo-300-2.png)
 # Lab 1
 
-All required resources must be already crreated for this lab to work correctly.
+All required resources must be already created for this lab to work correctly.
 
 ## Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
@@ -57,7 +58,10 @@ Following mapping exist:
 | Cluster | Database   |
 | Topic + Schema | Table   |
 
-Make sure you work with correct Flink catalog and database (=Kafka cluster).
+We will now work with SQL Worksheet:
+![image](terraform/img/sql_worksheet.png)
+
+Make sure you work with correct Flink catalog (=environment) and database (=Kafka cluster).
 ```
 SHOW DATABASES;
 ```
@@ -187,7 +191,7 @@ INSERT INTO shoe_customers_keyed
 
 Show amount of cutomers in the new table
 ```
-SELECT COUNT(*) FROM shoe_customers_keyed;
+SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed;
 ```
 
 Look up one specific customer
@@ -232,5 +236,7 @@ SELECT *
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
+Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
+![image](terraform/img/flink_jobs.png)
 
-End of Lab1
+End of Lab1 got [lab2](lab2.md)

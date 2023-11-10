@@ -2,13 +2,12 @@
 
 # Workshop Deployment via terraform
 
-This is the deployment of a confluent cloud infrastructure to run the Hands-on Workshop.
-a demo to try out Flink on Confluent Cloud.
+This is the deployment of confluent cloud infrastructure resources to run the Flink SQL Hands-on Workshop.
 We will deploy with terraform:
  - Environment:
      - Name: flink_hands-on+UUID
-     - with enabled Schema Registry (advanced) in AWS region (eu-central-1)
- - Confluent Cloud Basic Cloud:
+     - with enabled Schema Registry (essentails) in AWS region (eu-central-1)
+ - Confluent Cloud Basic Cloud: cc_handson_cluster
     - in AWS in region (eu-central-1)
  - Connectors:
     - Datagen for shoe_products
@@ -19,6 +18,7 @@ We will deploy with terraform:
     - sr-XXXX with Role EnvironmentAdmin
     - clients-XXXX with Role CloudClusterAdmin
     - connectors-XXXX
+ - Flink Compute Pool cc_handson_flink in AWS region eu-central-1 with 5 CFUs
 
 ![image](img/deployment_diagram.png)
 
@@ -26,7 +26,8 @@ We will deploy with terraform:
 - User account on [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree)
 - Local install of [Terraform](https://www.terraform.io) (details below)
 - Local install of [jq](https://jqlang.github.io/jq/download) (details below)
-- Create API Key in Confluent Cloud []()
+- local install confluent cli, [install the cli](https://docs.confluent.io/confluent-cli/current/install.html) 
+- Create API Key in Confluent Cloud via cli or GUI
     ```bash
     confluent login
     confluent api-key create --resource cloud --description "API for terraform"
@@ -55,6 +56,12 @@ brew install jq
 ```
 For Windows User download from [here](https://jqlang.github.io/jq/download/)
 
+## Install Confluent Cli
+local install confluent cli, [install the cli](https://docs.confluent.io/confluent-cli/current/install.html) 
+```
+brew install confluentinc/tap/cli
+```
+
 # Provision services for the demo
 
 ## Set environment variables
@@ -79,6 +86,7 @@ terraform output -json
 ```
 
 ## Flink Compute Pool
+
  - Access Confluent Cloud WebUI: https://confluent.cloud/login
  - Access your Environment: `flink_handson_terraform-XXXXXXXX`
  - Select tab `Flink (preview)`
@@ -87,7 +95,7 @@ terraform output -json
  - Make sure to select:
    - Catalog: `flink_handson_terraform-XXXXXXXX`
    - Database: `cc-handson-cluster`
- - Submit the following SQL queries (one at a time):
+ - Submit the following SQL queries [start with LAB1](../lab1.md):
 
 Now, everything is up and running for the hands-on.
 
@@ -97,3 +105,5 @@ Now, everything is up and running for the hands-on.
 ```bash
 terraform destroy
 ```
+
+End of terraform, start with [lab1](../lab1.md)
