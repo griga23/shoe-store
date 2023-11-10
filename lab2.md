@@ -26,7 +26,8 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Check timestamp when were the orders generated. This is important for join operation we will do next.
 
-Now, we can look at different types of joins available. We will join order records and customer records.
+Now, we can look at different types of joins available. 
+We will join order records and customer records.
 
 Join orders with non-keyed customer records (Regular Join)
 ```
@@ -60,34 +61,6 @@ NOTE: There might be empty result set if keyed customers tables was created afte
 
 ### Data Enrichment
 We can store the result of a join to a new table.
-
-First try joining data on the non-keyed customer table
-```
-SELECT
-  order_id,
-  product_id,
-  first_name,
-  last_name,
-  email
-FROM shoe_orders
-  INNER JOIN shoe_customers
-  ON shoe_orders.customer_id = shoe_customers.id;
-```
-NOTE: there are many duplicate order rows returned.
-
-Now try join on the keyed customer table
-```
-SELECT
-  order_id,
-  product_id,
-  first_name,
-  last_name,
-  email
-FROM shoe_orders
-  INNER JOIN shoe_customers_keyed
-  ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
-```
-NOTE: there are no duplicate orders.
 
 Prepare new table for to string result of the Order <-> Customer join 
 ```
