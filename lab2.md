@@ -75,7 +75,9 @@ CREATE TABLE shoe_order_customer(
   product_id STRING,
   first_name STRING,
   last_name STRING,
-  email STRING);
+  email STRING,
+  PRIMARY KEY (order_id) NOT ENFORCED
+  );
 ```
 
 Insert data in the created table
@@ -93,7 +95,7 @@ SELECT
   last_name,
   email
 FROM shoe_orders
-  INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
+  INNER JOIN shoe_customers_keyed
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
 ```
 
