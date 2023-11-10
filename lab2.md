@@ -16,6 +16,7 @@ SELECT id,$rowtime
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+NOTE: Check timestamp when were the customer records generated.
 
 Find all orders for one customer and display timestamps when events were ingested in the shoe_orders Kafka topic
 ```
@@ -23,6 +24,7 @@ SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+NOTE: Check timestamp when were the orders generated. This is important for join operation we will do next.
 
 Now, we can look at different types of joins available. We will join order records and customer records.
 
