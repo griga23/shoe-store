@@ -285,6 +285,7 @@ FROM shoe_order_customer_product
 
 END;
 ```
+NOTE: there is a bug in the Web UI. Remove the first 2 lines and the last line to be able to run the job.
 
 Check if all promotion notifications are stored correctly
 ```
