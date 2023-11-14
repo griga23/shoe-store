@@ -1,6 +1,6 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Lab 2
-Finishing Lab 1 is required for this lab.
+Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
 
 ## Flink Joins
 
@@ -8,7 +8,10 @@ Flink SQL supports complex and flexible join operations over dynamic tables. The
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
 ### Understand Timestamps
-Let's first look at our data records and their timestamps.
+Let's first look at our data records and their timestamps. Open Flink SQL workspace.
+
+If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again.
+![image](terraform/img/catalog-and-database-dropdown.png)
 
 Find all customer records for one customer and display timestamps when events were ingested in the shoe_customers Kafka topic
 ```
@@ -299,4 +302,4 @@ Check if all promotion notifications are stored correctly
 select * from shoe_promotions;
 ```
 
-End of Lab 2
+End of Lab2.

@@ -1,7 +1,7 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Lab 1
 
-All required resources must be already created for this lab to work correctly.
+All required resources must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
 
 ## Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
@@ -23,11 +23,11 @@ NOTE: Schema Registry is at the Environment level and can be used for multiple K
 ### Datagen Connectors
 Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configurations are correct.
 
-| Connector Name (can be anything)| Topic      | Format | Template            | 
-| --------------------------- |:-------------:| -----:|----------------------:|
-| **DatagenSourceConnector_0**| shoe_products  | AVRO   | **Shoes**           | 
-| **DatagenSourceConnector_1**| shoe_customers | AVRO   | **Shoes customers** | 
-| **DatagenSourceConnector_2**| shoe_orders    | AVRO   | **Shoes orders**    | 
+| Connector Name (can be anything)     |      Topic      | Format |             Template | 
+|--------------------------------------|:---------------:|-------:|---------------------:|
+| **DatagenSourceConnector_products**  |  shoe_products  |   AVRO |            **Shoes** | 
+| **DatagenSourceConnector_customers** | shoe_customers  |   AVRO |  **Shoes customers** | 
+| **DatagenSourceConnector_orders**    |   shoe_orders   |   AVRO |     **Shoes orders** | 
 
 ### Flink Compute Pool
 
@@ -52,11 +52,11 @@ Let's start with exploring our Flink tables.
 Kafka topics and schemas are always in sync with our Flink cluster. Any topic created in Kafka is visible directly as a table in Flink, and any table created in Flink is visible as a topic in Kafka. Effectively, Flink provides a SQL interface on top of Confluent Cloud.
 
 Following mapping exist:
-| Kafka| Flink      | 
-| -------------- |:-------------:|
-| Environment  | Catalog   | 
-| Cluster | Database   |
-| Topic + Schema | Table   |
+| Kafka          | Flink     | 
+| ------------   |:---------:|
+| Environment    | Catalog   | 
+| Cluster        | Database  |
+| Topic + Schema | Table     |
 
 We will now work with SQL Worksheet:
 ![image](terraform/img/sql_worksheet.png)
@@ -73,6 +73,10 @@ List all Flink Tables (=Kafka topics) in your cluster
 SHOW TABLES;
 ```
 Do you see tables shoe_products, shoe_customers, shoe_orders?
+
+You can add multiple query boxes by clicking the + button on the left of it
+
+![image](terraform/img/add-query-box.png)
 
 Understand how was the table created
 ```
@@ -141,7 +145,7 @@ GROUP BY brand;
 ### Time Windows
 
 Let's try Flink time windowing functions for shoe order records.
-Column names “window_start” and “window_end” are comminly used in Flink's window operations, especially when dealing with event time windows.
+Column names “window_start” and “window_end” are commonly used in Flink's window operations, especially when dealing with event time windows.
 
 Find amount of orders for 1 minute intervals (tumbling window aggregation).
 ```
@@ -239,4 +243,4 @@ SELECT *
 Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
 
-End of Lab1 got [lab2](lab2.md)
+End of Lab1, continue with [Lab2](lab2.md).
