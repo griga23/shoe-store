@@ -3,12 +3,19 @@
 Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
 
 Table of Content 
+
 [Flink Joins](lab2.md#flink-joins)
+
 [Understand Timestamps](lab2.md#understand-timestamps)
+
 [Understand Joins](lab2.md#understand-joins)
+
 [Data Enrichment](lab2.md#data-enrichment)
+
 [Loyalty Levels Calculation](lab2.md#loyalty-levels-calculation)
+
 [Promotions Calculation](lab2.md#promotions-calculation)
+
 
 ## Flink Joins
 
