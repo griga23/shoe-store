@@ -58,6 +58,16 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Look at the number of rows returned. There are many duplicates for each order!
 
+Join orders with non-keyed customer records in some time windows (Interval Join)
+```
+SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers
+ON shoe_orders.customer_id = shoe_customers.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
+  shoe_orders.`$rowtime` BETWEEN shoe_customers.`$rowtime` - INTERVAL '1' HOUR AND shoe_customers.`$rowtime`;
+```
+
 Join orders with keyed customer records (Regular Join with Keyed Table)
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
