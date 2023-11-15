@@ -2,6 +2,14 @@
 # Lab 2
 Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
 
+Table of Content 
+[Flink Joins](lab2.md#flink-joins)
+[Understand Timestamps](lab2.md#understand-timestamps)
+[Understand Joins](lab2.md#understand-joins)
+[Data Enrichment](lab2.md#data-enrichment)
+[Loyalty Levels Calculation](lab2.md#loyalty-levels-calculation)
+[Promotions Calculation](lab2.md#promotions-calculation)
+
 ## Flink Joins
 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
