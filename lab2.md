@@ -103,6 +103,7 @@ SELECT
 FROM shoe_orders
   INNER JOIN shoe_customers_keyed 
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
+```
 
 Verify that data are joined successfully. 
 ```
