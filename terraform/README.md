@@ -75,10 +75,28 @@ export CONFLUENT_CLOUD_API_SECRET=<Enter credentials here>
 
 ```
 
+For Windows Users, please follow the steps below:
+- Create file `env.bat` in the Terraform folder
+```bat
+@echo off
+:: Confluent Cloud
+set CONFLUENT_CLOUD_API_KEY=<Enter credentials here>
+set CONFLUENT_CLOUD_API_SECRET=<Enter credentials here>
+@echo on
+```
+
+For Windows users please comment the last three lines in `providers.tf`:
+```bash
+# data "external" "env_vars" {
+#  program = ["${path.module}/shell/env_terraform.sh"]
+#}
+``` 
+
 ## Deploy via terraform
 run the following commands:
 ```Bash
 source .env
+# for Windows: env.bat
 terraform init
 terraform plan
 terraform apply --auto-approve
@@ -95,7 +113,7 @@ terraform output -json
  - Make sure to select:
    - Catalog: `flink_handson_terraform-XXXXXXXX`
    - Database: `cc-handson-cluster`
- - Submit the following SQL queries [start with LAB1](../lab1.md):
+ - Submit the following SQL queries [start with LAB1](../lab1.md)
 
 Now, everything is up and running for the hands-on.
 
