@@ -17,6 +17,7 @@ Table of Content
 [Promotions Calculation](lab2.md#promotions-calculation)
 
 
+
 ## Flink Joins
 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
