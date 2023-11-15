@@ -79,8 +79,12 @@ CREATE TABLE shoe_order_customer(
   first_name STRING,
   last_name STRING,
   email STRING
-  );
+) WITH (
+    'changelog.mode' = 'retract'
+);
 ```
+NOTE: we need to create a table which will be com[patible with our Table <-> Stream join
+Check Dynamic Table stream encodings https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#table-to-stream-conversion
 
 Insert data in the created table
 ```
@@ -97,9 +101,8 @@ SELECT
   last_name,
   email
 FROM shoe_orders
-  INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
+  INNER JOIN shoe_customers_keyed 
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
-```
 
 Verify that data are joined successfully. 
 ```
@@ -117,6 +120,8 @@ CREATE TABLE shoe_order_customer_product(
   model STRING,
   sale_price INT,
   rating DOUBLE
+)WITH (
+    'changelog.mode' = 'retract'
 );
 ```
 
@@ -141,7 +146,7 @@ SELECT
   sale_price,
   rating
 FROM shoe_order_customer
-  INNER JOIN shoe_products_keyed FOR SYSTEM_TIME AS OF shoe_order_customer.`$rowtime`
+  INNER JOIN shoe_products_keyed
   ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
 ```
 
@@ -164,8 +169,23 @@ CREATE TABLE shoe_loyalty_levels(
 );
 ```
 
-Calculate loyalty levels and store results in the created table.
+See which loyalty levels are being calculated
+```
+SELECT
+  email,
+  SUM(sale_price) AS total,
+  CASE
+    WHEN SUM(sale_price) > 80000000 THEN 'GOLD'
+    WHEN SUM(sale_price) > 7000000 THEN 'SILVER'
+    WHEN SUM(sale_price) > 600000 THEN 'BRONZE'
+    ELSE 'CLIMBING'
+  END AS rewards_level
+FROM shoe_order_customer_product
+GROUP BY email;
+```
 NOTE: You might need to change the loyalty level numbers according to amount of the data you have ingested.
+
+Now you can calculate loyalty levels and store results in the created table.
 ```
 INSERT INTO shoe_loyalty_levels(
  email,
@@ -219,28 +239,6 @@ SELECT
 ```
 NOTE: We sum all orders of brands Braun-Bruen and Will Inc for each customer and offer a special promotion if sum is larger than 10.  
 
-Find customers who bought twice shoes with high rating and then bought shoes with low rating
-```
-SELECT *
-FROM shoe_order_customer_product
-     MATCH_RECOGNIZE (
-         PARTITION BY email
-         ORDER BY $rowtime
-         MEASURES
-           a.rating AS rating1,
-           b.rating AS rating2,
-           c.rating AS rating3,
-           c.order_id AS order_id,
-           $rowtime AS order_time
-         AFTER MATCH SKIP TO NEXT ROW
-         PATTERN (a b c)
-         DEFINE
-           a AS a.rating > 4,
-           b AS b.rating > 4,
-           c AS c.rating > 0 AND c.rating < 2);
-```
-NOTE: We are looking for a pattern where customer orders two products with a good rating (orders a, b) and one product with a bad rating (order c). 
-
 Now we are ready to store the results for all calculated promotions. 
 
 Prepare table for promotion notifications
@@ -252,7 +250,7 @@ CREATE TABLE shoe_promotions(
 );
 ```
 
-Write all 3 calculated promotions in a single statement set to the shoe_promotions table
+Write both calculated promotions in a single statement set to the shoe_promotions table
 ```
 EXECUTE STATEMENT SET 
 BEGIN
@@ -274,24 +272,6 @@ SELECT
   WHERE brand IN ('Braun-Bruen', 'Will Inc')
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
-
-INSERT INTO shoe_promotions
-SELECT email,
-  'better_experience' AS promotion_name
-FROM shoe_order_customer_product
-     MATCH_RECOGNIZE (
-         PARTITION BY email
-         ORDER BY $rowtime
-         MEASURES
-           a.rating AS rating1,
-           b.rating AS rating2,
-           c.rating AS rating3
-         AFTER MATCH SKIP TO NEXT ROW
-         PATTERN (a b c)
-         DEFINE
-           a AS a.rating > 4,
-           b AS b.rating > 4,
-           c AS c.rating > 0 AND c.rating < 2);
 
 END;
 ```
