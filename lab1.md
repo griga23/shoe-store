@@ -63,6 +63,9 @@ We will now work with SQL Worksheet:
 
 Make sure you work with correct Flink catalog (=environment) and database (=Kafka cluster).
 ```
+SHOW CATALOGS;
+```
+```
 SHOW DATABASES;
 ```
 ```
@@ -242,5 +245,26 @@ SELECT *
 
 Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
+
+or you could use the confluent cli
+```bash
+confluent login
+confluent flink statement list --cloud aws --region eu-central-1 --environment <your env-id> --compute-pool <your pool id>
+#          Creation Date         |        Name        |           Statement            | Compute Pool |  Status   |              Status Detail               
+#--------------------------------+--------------------+--------------------------------+--------------+-----------+------------------------------------------
+#...
+# 2023-11-15 16:14:38 +0000 UTC | f041ae19-c932-403f | CREATE TABLE                   | lfcp-jvv9jq  | COMPLETED | Table 'shoe_customers_keyed'             
+#                                |                    | shoe_customers_keyed(          |              |           | created                                  
+#                                |                    |  customer_id STRING,           |              |           |                                          
+#                                |                    | first_name STRING,   last_name |              |           |                                          
+#                                |                    | STRING,   email STRING,        |              |           |                                          
+#                                |                    | PRIMARY KEY (customer_id) NOT  |              |           |                                          
+#                                |                    | ENFORCED   );                  |              |           |                                          
+# ....
+# Exceptions
+confluent flink statement exception list <name> --cloud aws --region eu-central-1 --environment <your env-id>
+# Descriobe Statements
+confluent flink statement describe <name> --cloud aws --region eu-central-1 --environment <your env-id>
+```
 
 End of Lab1, continue with [Lab2](lab2.md).

@@ -15,6 +15,12 @@ Now you have two possibilities to create the Hands-On Workshop Confluent Cloud r
 1. Let terraform create it: If you are comfortable running terraform, then follow this [guide](terraform/README.md).
 2. Create all resources manually.
 
+A main prereq on your desktop is have confluent cli installed. you need to [install the cli](https://docs.confluent.io/confluent-cli/current/install.html) on your desktop. You need the cli to run the flink SQL shell. we found the shell is better for the workshop. This workshop guide will cover the GUI only.
+Please bring the cli on the latest version (Version:     v3.41.0):
+```
+confluent update
+```
+
 ## Confluent Cloud Resources for the Hands-on Workshop: Manual Setup
 You can create each Confluent Cloud resource with the confluent cli tool and/or Confluent Cloud Control Plane GUI.
 Both are using the confluent cloud API in background.
@@ -101,6 +107,7 @@ Go back to environment `handson-flink` and choose `Flink (preview)` Tab. From th
 * enter Pool Name: `cc_flink_compute_pool` with 5 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
 The pool will be provisioned and ready to use in a couple of moments.
+
 ![image](terraform/img/flinkpool.png)
 
 Open the SQL Workspace of compute pool and set:
@@ -108,6 +115,11 @@ Open the SQL Workspace of compute pool and set:
 - and the cluster name `cc_handson_cluster` as database
 Via the dropdown boxes, see graphic
 ![image](terraform/img/sqlworksheet.png)
+
+Of course you could also use the the Flink SQL Shell. Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2)
+```bash
+confluent flink shell --compute-pool <pool id> --environment <env-id>
+```
 
 The infrastructure for the Hands-on Workshop is up and running. And we can now start to develop our use case of a loyalty program in Flink SQL.
 ![image](terraform/img/deployment_diagram.png)
