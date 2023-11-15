@@ -2,7 +2,6 @@
 # Lab 2
 Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
 
-Table of Content 
 
 [Flink Joins](lab2.md#flink-joins)
 
