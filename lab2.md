@@ -160,17 +160,7 @@ SELECT * FROM shoe_order_customer_product;
 
 Now we are ready to calculate loyalty level for our customers
 
-Prepare table for loyalty levels
-```
-CREATE TABLE shoe_loyalty_levels(
-  email STRING,
-  total BIGINT,
-  rewards_level STRING,
-  PRIMARY KEY (email) NOT ENFORCED
-);
-```
-
-See which loyalty levels are being calculated
+First let's see which loyalty levels are being calculated
 ```
 SELECT
   email,
@@ -185,6 +175,17 @@ FROM shoe_order_customer_product
 GROUP BY email;
 ```
 NOTE: You might need to change the loyalty level numbers according to amount of the data you have ingested.
+
+
+Prepare table for loyalty levels
+```
+CREATE TABLE shoe_loyalty_levels(
+  email STRING,
+  total BIGINT,
+  rewards_level STRING,
+  PRIMARY KEY (email) NOT ENFORCED
+);
+```
 
 Now you can calculate loyalty levels and store results in the created table.
 ```
