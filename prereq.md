@@ -1,6 +1,7 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Prerequisites
 Before we can run the hands-on workshop, a working infrastructure in Confluent Cloud must exist:
+- only AWS cloud provider (Flink SQL PReview is running in AWS only. 16-Nov-2023)
 - an environment with Schema Registry enabled,
 - a Kafka Cluster,
 - 3 topics
@@ -15,8 +16,9 @@ Now you have two possibilities to create the Hands-On Workshop Confluent Cloud r
 1. Let terraform create it: If you are comfortable running terraform, then follow this [guide](terraform/README.md).
 2. Create all resources manually.
 
-A main prereq on your desktop is have confluent cli installed. you need to [install the cli](https://docs.confluent.io/confluent-cli/current/install.html) on your desktop. You need the cli to run the flink SQL shell. we found the shell is better for the workshop. This workshop guide will cover the GUI only.
-Please bring the cli on the latest version (Version:     v3.41.0):
+On your desktop we expect that confluent cli installed. [install the cli](https://docs.confluent.io/confluent-cli/current/install.html) on your desktop. You need the cli to run the flink SQL shell. 
+The shell gives you better experience in the workshop. 
+Please bring the cli on the latest version (Version: v3.41.0):
 ```
 confluent update
 ```

@@ -1,5 +1,5 @@
 # Confluent Cloud - Flink SQL Shoe Store Workshop
-Shoe Store Loyalty Engine - Flink SQL Workshop
+Shoe Store Loyalty Engine - Flink SQL Workshop in Confluent Cloud running on AWS only
 
 ![image](terraform/img/Flink_Hands-on_Workshop_Complete.png)
 
@@ -12,6 +12,10 @@ For a good preparation and first understanding, please read this [guide](https:/
 ## Workshop Labs
   *  Select Statements, Flink Tables [Lab1](lab1.md)
   *  Join Statements, Data Enrichment [Lab2](lab2.md)
+
+The Labs will design a loyality program within Flink SQL. The complete Mapping of dynamic Tables and Topics will be shown in next graphic.
+
+![image](terraform/img/flink_sql_diagram.png)
 
 ## Notification Client 
   * Use Python Notification client [guide](notification_client.md)
