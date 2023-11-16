@@ -3,21 +3,21 @@
 
 All required resources must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
 
-[Verify Confluent Cloud Resources](lab1.md#verify-confluent-cloud-resources)
+[1. Verify Confluent Cloud Resources](lab1.md#verify-confluent-cloud-resources)
 
-[Flink Tables](lab1.md#flink-tables)
+[2. Flink Tables](lab1.md#flink-tables)
 
-[Select Queries](lab1.md#select-queries)
+[3. Select Queries](lab1.md#select-queries)
 
-[Aggregations](lab1.md#aggregations)
+[4. Aggregations](lab1.md#aggregations)
 
-[Time Windows](lab1.md#time-windows)
+[5. Time Windows](lab1.md#time-windows)
 
-[Tables with Primary Key](lab1.md#tables-with-primary-key)
+[6. Tables with Primary Key](lab1.md#tables-with-primary-key)
 
-[Flink Jobs](lab1.md#flink-jobs)
+[7. Flink Jobs](lab1.md#flink-jobs)
 
-## Verify Confluent Cloud Resources
+## 1. Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
 
 ### Kafka Topics
@@ -66,7 +66,7 @@ eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compu
 
 NOTE: you need to have confluent cloud console tool installed and be logged in with correct access rights.
 
-## Flink Tables
+## 2. Flink Tables
 Let's start with exploring our Flink tables.
 Kafka topics and schemas are always in sync with our Flink cluster. Any topic created in Kafka is visible directly as a table in Flink, and any table created in Flink is visible as a topic in Kafka. Effectively, Flink provides a SQL interface on top of Confluent Cloud.
 
@@ -107,7 +107,7 @@ SHOW CREATE TABLE shoe_products;
 ```
 More info to understand all parameters https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html
 
-### Select Queries
+### 3. Select Queries
 Our Flink tables are populated by the Datagen connectors.
 
 We can first check the table schema for our shoe product catalog. This should be the same as the topic schema in Schema Registry.
@@ -144,7 +144,7 @@ SELECT order_id, product_id, customer_id, $rowtime
   LIMIT 10;
 ```
 
-### Aggregations
+### 4. Aggregations
 Let's try to run more advanced queries.
 
 First find out number of customers records and then number of unique customers.
@@ -165,7 +165,7 @@ SELECT brand as brand_name,
 FROM shoe_products
 GROUP BY brand;
 ```
-### Time Windows
+### 5. Time Windows
 
 Let's try Flink time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are commonly used in Flink's window operations, especially when dealing with event time windows.
@@ -192,7 +192,7 @@ GROUP BY window_start, window_end;
 
 NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
 
-### Tables with Primary Key 
+### 6. Tables with Primary Key 
 
 Flink allows you to define primary key for your table. Primary key is a column that is unique for each record.
 
@@ -268,7 +268,7 @@ SELECT *
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
-### Flink Jobs 
+### 7. Flink Jobs 
 
 Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
