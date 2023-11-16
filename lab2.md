@@ -310,3 +310,5 @@ select * from shoe_promotions;
 ```
 
 End of Lab2.
+
+If you don't need your infrastructure anymore, do not forget to delete the resources.

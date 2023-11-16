@@ -1,7 +1,0 @@
-#!/bin/bash
-set -e
-
-printf '{
-    "CONFLUENT_CLOUD_API_KEY": "%s",
-    "CONFLUENT_CLOUD_API_SECRET": "%s"
-}' "$CONFLUENT_CLOUD_API_KEY" "$CONFLUENT_CLOUD_API_SECRET"
