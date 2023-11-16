@@ -3,19 +3,19 @@
 
 All required resources must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
 
-[1. Verify Confluent Cloud Resources](lab1.md#verify-confluent-cloud-resources)
+[1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
-[2. Flink Tables](lab1.md#flink-tables)
+[2. Flink Tables](lab1.md#2-flink-tables)
 
-[3. Select Queries](lab1.md#select-queries)
+[3. Select Queries](lab1.md#3-select-queries)
 
-[4. Aggregations](lab1.md#aggregations)
+[4. Aggregations](lab1.md#4-aggregations)
 
-[5. Time Windows](lab1.md#time-windows)
+[5. Time Windows](lab1.md#5-time-windows)
 
-[6. Tables with Primary Key](lab1.md#tables-with-primary-key)
+[6. Tables with Primary Key](lab1.md#6-tables-with-primary-key)
 
-[7. Flink Jobs](lab1.md#flink-jobs)
+[7. Flink Jobs](lab1.md#7-flink-jobs)
 
 ## 1. Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
