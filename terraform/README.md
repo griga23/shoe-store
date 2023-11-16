@@ -49,7 +49,7 @@ brew install hashicorp/tap/terraform
 brew update
 brew upgrade hashicorp/tap/terraform
 ```
-If you are running Windows, please use this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash?tabs=bash)
+If you are running Windows, please use this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash?tabs=bash) <br>
 If you are running on Ubuntu (or WSL2 with Ubuntu), please use this [guide](https://computingforgeeks.com/how-to-install-terraform-on-ubuntu/)
 
 This tutorial was tested with Terraform v1.6.4.
@@ -58,7 +58,7 @@ This tutorial was tested with Terraform v1.6.4.
 ```
 brew install jq
 ```
-If you are running Windows, download from [here](https://jqlang.github.io/jq/download/)
+If you are running Windows, download from [here](https://jqlang.github.io/jq/download/) <br>
 If you are running on Ubuntu (or WSL2 with Ubuntu), please follow the instructions [here](https://lindevs.com/install-jq-on-ubuntu)
 
 ## Install Confluent Cli
@@ -114,7 +114,7 @@ You deployed:
 
 ![image](img/terraform_deployment.png)
 
-You are ready to[start with LAB1](../lab1.md)
+You are ready to [start with LAB1](../lab1.md)
 
 # Destroy the hands.on infrastructure
 ```bash
