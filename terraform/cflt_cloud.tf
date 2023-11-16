@@ -7,10 +7,6 @@ resource "confluent_environment" "cc_handson_env" {
     prevent_destroy = false
   }
 }
-output "cc_hands_env" {
-  description = "CC Environment"
-  value       = resource.confluent_environment.cc_handson_env.id
-}
 
 # --------------------------------------------------------
 # Schema Registry
@@ -19,10 +15,6 @@ data "confluent_schema_registry_region" "cc_handson_sr" {
   cloud   = var.sr_cloud_provider
   region  = var.sr_cloud_region
   package = var.sr_package
-}
-output "cc_handson_sr" {
-  description = "CC Schema Registry Region"
-  value       = data.confluent_schema_registry_region.cc_handson_sr
 }
 resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
   package = data.confluent_schema_registry_region.cc_handson_sr.package
@@ -35,10 +27,6 @@ resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
   lifecycle {
     prevent_destroy = false
   }
-}
-output "cc_sr_cluster" {
-  description = "CC SR Cluster ID"
-  value       = resource.confluent_schema_registry_cluster.cc_sr_cluster.id
 }
 
 # --------------------------------------------------------
@@ -56,10 +44,6 @@ resource "confluent_kafka_cluster" "cc_kafka_cluster" {
   lifecycle {
     prevent_destroy = false
   }
-}
-output "cc_kafka_cluster" {
-  description = "CC Kafka Cluster ID"
-  value       = resource.confluent_kafka_cluster.cc_kafka_cluster.id
 }
 
 # --------------------------------------------------------
