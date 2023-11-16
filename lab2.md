@@ -3,26 +3,26 @@
 Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
 
 
-[Flink Joins](lab2.md#flink-joins)
+[1. Flink Joins](lab2.md#1-flink-joins)
 
-[Understand Timestamps](lab2.md#understand-timestamps)
+[2. Understand Timestamps](lab2.md#2-understand-timestamps)
 
-[Understand Joins](lab2.md#understand-joins)
+[3. Understand Joins](lab2.md#3-understand-joins)
 
-[Data Enrichment](lab2.md#data-enrichment)
+[4. Data Enrichment](lab2.md#4-data-enrichment)
 
-[Loyalty Levels Calculation](lab2.md#loyalty-levels-calculation)
+[5. Loyalty Levels Calculation](lab2.md#5-loyalty-levels-calculation)
 
-[Promotions Calculation](lab2.md#promotions-calculation)
+[6. Promotions Calculation](lab2.md#6-promotions-calculation)
 
 
 
-## Flink Joins
+## 1. Flink Joins
 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-### Understand Timestamps
+### 2. Understand Timestamps
 Let's first look at our data records and their timestamps. Open Flink SQL workspace.
 
 If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again.
@@ -44,7 +44,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Check timestamp when were the orders generated. This is important for join operation we will do next.
 
-### Understand Joins
+### 3. Understand Joins
 Now, we can look at different types of joins available. 
 We will join order records and customer records.
 
@@ -93,7 +93,7 @@ NOTE: If Temporal Join returns no values you might need to run following command
 SET 'sql.tables.scan.idle-timeout' = '1s';
 ```
 
-### Data Enrichment
+### 4. Data Enrichment
 We can store the result of a join to a new table.
 
 Prepare new table for to string result of the Order <-> Customer join 
@@ -181,7 +181,7 @@ Verify that data are joined successfully.
 SELECT * FROM shoe_order_customer_product;
 ```
 
-### Loyalty Levels Calculation
+### 5. Loyalty Levels Calculation
 
 Now we are ready to calculate loyalty level for our customers
 
@@ -236,7 +236,7 @@ Verify results
 SELECT * FROM shoe_loyalty_levels;
 ```
 
-### Promotions Calculation
+### 6. Promotions Calculation
 
 Let's find out if some customers are eligible for some special promotions.
 
