@@ -3,6 +3,20 @@
 
 All required resources must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
 
+[Verify Confluent Cloud Resources](lab1.md#verify-confluent-cloud-resources)
+
+[Flink Tables](lab1.md#flink-tables)
+
+[Select Queries](lab1.md#select-queries)
+
+[Aggregations](lab1.md#aggregations)
+
+[Time Windows](lab1.md#time-windows)
+
+[Tables with Primary Key](lab1.md#tables-with-primary-key)
+
+[Flink Jobs](lab1.md#flink-jobs)
+
 ## Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
 
@@ -253,6 +267,8 @@ SELECT *
  FROM shoe_products_keyed  
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
+
+### Flink Jobs 
 
 Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
