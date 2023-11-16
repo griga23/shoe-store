@@ -20,6 +20,8 @@ pip install confluent-kafka
 pip install avro
 pip install http.client
 pip install urllib3
+pip install jproperties
+pip install confluent_avro
 ```
 If you do not want to use Pushover, then use [Telegram](https://github.com/ora0600/apache-kafka-as-a-service-by-confluent/tree/master/webinar1). In my github repositories I do have some samples around Telegram. Signup to Pushover you will get free access for a week or so.
 
@@ -39,16 +41,20 @@ You also need to access the confluent cloud cluster. Normally a Service Account 
 * create API Key for Cluster click `Create Kafka cluster API Key`, set description `Python API KEY`
 * create API Key for Schema Registry click `Create Schema Registry API Key`, set description `Python Schema API KEY`
 * click `Copy` and you have the complete configuration to connect to your confluent cloud cluster, store this into file `client.properties`
+
+We only need these properties in client.properties:
 ```bash
-# copy the values into config dict
-config = {
-     'bootstrap.servers': '<bootstrap.servers>',     
-     'security.protocol': 'SASL_SSL',
-     'sasl.mechanisms': 'PLAIN',
-     'sasl.username': '<sasl.username>', 
-     'sasl.password': 'sasl.password',
-     'group.id': 'shoe_promotions',
-     'auto.offset.reset': 'latest'}
+bootstrap.servers=<BROKER>
+security.protocol=SASL_SSL
+sasl.mechanisms=PLAIN
+sasl.username=<API KEY>
+sasl.password=<API SECRET>
+session.timeout.ms=45000
+schema.registry.url=<SR URL>
+basic.auth.credentials.source=USER_INFO
+basic.auth.user.info=>SRKEY:SRSECRET>
+group.id=shoe_promotions
+auto.offset.reset=earliest
 ```
 
 ## Python Notifcation Service

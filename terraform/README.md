@@ -52,7 +52,11 @@ brew upgrade hashicorp/tap/terraform
 If you are running Windows, please use this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash?tabs=bash) <br>
 If you are running on Ubuntu (or WSL2 with Ubuntu), please use this [guide](https://computingforgeeks.com/how-to-install-terraform-on-ubuntu/)
 
-This tutorial was tested with Terraform v1.6.4.
+This tutorial was tested with Terraform v1.6.4 and confluent terraform provider 1.55.0 . To upgrade terraform on MacOS use
+```bash
+brew upgrade terraform
+```
+Or download new version from [website](https://www.terraform.io/downloads.html)
 
 ## Install jq
 ```

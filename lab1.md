@@ -75,7 +75,7 @@ SHOW DATABASES;
 ```
 ```
 USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
-USE <MY CONFLUENT CLUSTER NAME>;
+USE cc_handson_cluster;
 ```
 List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster
 ```
@@ -192,6 +192,11 @@ CREATE TABLE shoe_customers_keyed(
   PRIMARY KEY (customer_id) NOT ENFORCED
   );
 ```
+Compare created keyed table with shoe_customers, what is the difference.
+```bash
+SHOW CREATE TABLE shoe_customers_keyed;
+```
+We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) contraint. What does this mean?
 
 NOTE: More information about Primary key constraint https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint
 

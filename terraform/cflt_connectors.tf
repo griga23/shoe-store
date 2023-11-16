@@ -294,10 +294,6 @@ resource "confluent_connector" "datagen_products" {
     prevent_destroy = false
   }
 }
-output "datagen_products" {
-  description = "CC Datagen Products Connector ID"
-  value       = resource.confluent_connector.datagen_products.id
-}
 
 # datagen_customers
 resource "confluent_connector" "datagen_customers" {
@@ -332,10 +328,6 @@ resource "confluent_connector" "datagen_customers" {
     prevent_destroy = false
   }
 }
-output "datagen_customers" {
-  description = "CC Datagen Customers Connector ID"
-  value       = resource.confluent_connector.datagen_customers.id
-}
 
 # datagen_orders
 resource "confluent_connector" "datagen_orders" {
@@ -369,8 +361,4 @@ resource "confluent_connector" "datagen_orders" {
   lifecycle {
     prevent_destroy = false
   }
-}
-output "datagen_orders" {
-  description = "CC Datagen Orders Connector ID"
-  value       = resource.confluent_connector.datagen_orders.id
 }
