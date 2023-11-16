@@ -45,6 +45,11 @@ Example:
 confluent flink shell --compute-pool lfcp-xxxxx --environment env-xxxxx
 ```
 
+If you have used Terraform for the prerequisites:
+```
+eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
+```
+
 NOTE: you need to have confluent cloud console tool installed and be logged in with correct access rights.
 
 ## Flink Tables
@@ -69,9 +74,10 @@ SHOW CATALOGS;
 SHOW DATABASES;
 ```
 ```
-USE <MY KAFKA CLUSTER NAME>;
+USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
+USE <MY CONFLUENT CLUSTER NAME>;
 ```
-List all Flink Tables (=Kafka topics) in your cluster
+List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster
 ```
 SHOW TABLES;
 ```
