@@ -10,8 +10,8 @@ For a good preparation and first understanding, please read this [guide](https:/
   * Automatated creation using Terraform  [guide](terraform/README.md)
 
 ## Workshop Labs
-  *  Select Statements, Flink Tables [Lab1](lab1.md)
-  *  Join Statements, Data Enrichment [Lab2](lab2.md)
+  *  Lab1: Flink Tables, Select Statements, Aggregations, Time Windows [Lab1](lab1.md)
+  *  Lab2: Join Statements, Data Enrichment, Statement Sets  [Lab2](lab2.md)
 
 The Labs will design a loyality program within Flink SQL. The complete Mapping of dynamic Tables and Topics will be shown in next graphic.
 
