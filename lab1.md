@@ -5,7 +5,7 @@ All required resources must be already created for this lab to work correctly. I
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
-[2. Create Pool and Connecting to Flink](lab1.md#2-create-pool-and-connecting-to-flink)
+[2. Create Pool](lab1.md#2-create-pool-and-connecting-to-flink)
 
 [3. Flink Tables](lab1.md#3-flink-tables)
 
@@ -68,7 +68,7 @@ The pool will be provisioned and ready to use in a couple of moments.
 ![image](terraform/img/flinkpool.png)
 
 
-## 2. Connecting to Flink 
+## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
   * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
     Open the SQL Workspace of compute pool and set:
@@ -79,7 +79,8 @@ You can use your web browser or console to enter Flink SQL statements.
     ![image](terraform/img/sqlworksheet.png)
 
   * **Console** - copy/paste command from your Flink Compute Pool to the command line   
-  Of course you could also use the the Flink SQL Shell. Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2)
+  Of course you could also use the the Flink SQL Shell. You need to have confluent cloud console tool installed and be logged in with correct access rights.
+  Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2). 
   ```bash
   confluent flink shell --compute-pool <pool id> --environment <env-id>
   ```
@@ -93,13 +94,11 @@ NOTE: you can access your Flink Compute Pool from the Data Portal. Just click on
 Data Portal: Kafka Topics Tiles
 ![image](terraform/img/dataPortal1.png)
 
-Data Portal: shoe_order topic selected. Click on Query button.
+Data Portal: shoe_order topic selected. Click on Query button to access your Flink Compute Pool.
 ![image](terraform/img/dataPortal2.png)
 
 
-NOTE: you need to have confluent cloud console tool installed and be logged in with correct access rights.
-
-## 3. Flink Tables
+## 4. Flink Tables
 Let's start with exploring our Flink tables.
 Kafka topics and schemas are always in sync with our Flink cluster. Any topic created in Kafka is visible directly as a table in Flink, and any table created in Flink is visible as a topic in Kafka. Effectively, Flink provides a SQL interface on top of Confluent Cloud.
 
@@ -140,7 +139,7 @@ SHOW CREATE TABLE shoe_products;
 ```
 More info to understand all parameters https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html
 
-### 4. Select Queries
+### 5. Select Queries
 Our Flink tables are populated by the Datagen connectors.
 
 We can first check the table schema for our shoe product catalog. This should be the same as the topic schema in Schema Registry.
@@ -177,7 +176,7 @@ SELECT order_id, product_id, customer_id, $rowtime
   LIMIT 10;
 ```
 
-### 5. Aggregations
+### 6. Aggregations
 Let's try to run more advanced queries.
 
 First find out number of customers records and then number of unique customers.
@@ -198,7 +197,7 @@ SELECT brand as brand_name,
 FROM shoe_products
 GROUP BY brand;
 ```
-### 6. Time Windows
+### 7. Time Windows
 
 Let's try Flink time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are commonly used in Flink's window operations, especially when dealing with event time windows.
@@ -225,7 +224,7 @@ GROUP BY window_start, window_end;
 
 NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
 
-### 7. Tables with Primary Key 
+### 8. Tables with Primary Key 
 
 Flink allows you to define primary key for your table. Primary key is a column that is unique for each record.
 
@@ -301,7 +300,7 @@ SELECT *
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
-### 8. Flink Jobs 
+### 9. Flink Jobs 
 
 Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
