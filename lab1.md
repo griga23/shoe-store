@@ -93,6 +93,14 @@ If you have used Terraform for the prerequisites:
 ```
 eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
 ```
+NOTE: you can access your Flink Compute Pool from the Data Portal. Just click on the Data Portal in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tile you can query topic's data using Flink. 
+
+Data Portal: Kafka Topics Tiles
+![image](terraform/img/dataPortal1.png)
+
+Data Portal: shoe_order topic selected
+![image](terraform/img/dataPortal2.png)
+
 
 NOTE: you need to have confluent cloud console tool installed and be logged in with correct access rights.
 
