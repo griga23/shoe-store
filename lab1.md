@@ -67,32 +67,27 @@ The pool will be provisioned and ready to use in a couple of moments.
 
 ![image](terraform/img/flinkpool.png)
 
-Open the SQL Workspace of compute pool and set:
-- the environment name `handson-flink` as catalog
-- and the cluster name `cc_handson_cluster` as database
-Via the dropdown boxes, see graphic
-![image](terraform/img/sqlworksheet.png)
-
-Of course you could also use the the Flink SQL Shell. Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2)
-```bash
-confluent flink shell --compute-pool <pool id> --environment <env-id>
-```
-
 
 ## 2. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool (see above screenshot)
-  * **Console** - copy/paste command from your Flink Compute Pool to the command line
+  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
+    Open the SQL Workspace of compute pool and set:
+    - the environment name `handson-flink` as catalog
+    - and the cluster name `cc_handson_cluster` as database
+    
+    Via the dropdown boxes, see graphic
+    ![image](terraform/img/sqlworksheet.png)
 
-Example:
-```
-confluent flink shell --compute-pool lfcp-xxxxx --environment env-xxxxx
-```
+  * **Console** - copy/paste command from your Flink Compute Pool to the command line   
+  Of course you could also use the the Flink SQL Shell. Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2)
+  ```bash
+  confluent flink shell --compute-pool <pool id> --environment <env-id>
+  ```
+  If you have used Terraform for the prerequisites:
+  ```
+  eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
+  ```
 
-If you have used Terraform for the prerequisites:
-```
-eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
-```
 NOTE: you can access your Flink Compute Pool from the Data Portal. Just click on the Data Portal in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tile you can query topic's data using Flink. 
 
 Data Portal: Kafka Topics Tiles
