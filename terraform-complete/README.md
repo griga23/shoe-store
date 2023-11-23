@@ -93,6 +93,10 @@ terraform init
 terraform plan
 terraform apply
 terraform output -json
+# for sensitive data
+terraform output -raw SRSecret
+terraform output -raw AppManagerSecret
+terraform output -raw ClientSecret
 ```
 
 Please check whether the terraform execution went without errors.
@@ -125,3 +129,18 @@ All Labs are deployed and running, please check via [Confluent Consonle](https:/
 ```bash
 terraform destroy
 ```
+There could be a conflict destroying everything with our Tags. In this case destroy again via terraform.
+```bash
+#╷
+#│ Error: error deleting Tag "<tagID>/PII": 409 Conflict
+#│ 
+#│ 
+#╵
+#╷
+#│ Error: error deleting Tag "<tagID>/Public": 409 Conflict
+#│ 
+#│ 
+#╵
+# destroy again
+terraform destroy
+``` 
