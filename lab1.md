@@ -81,7 +81,7 @@ confluent flink shell --compute-pool <pool id> --environment <env-id>
 
 ## 2. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
+  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool (see above screenshot)
   * **Console** - copy/paste command from your Flink Compute Pool to the command line
 
 Example:
@@ -98,7 +98,7 @@ NOTE: you can access your Flink Compute Pool from the Data Portal. Just click on
 Data Portal: Kafka Topics Tiles
 ![image](terraform/img/dataPortal1.png)
 
-Data Portal: shoe_order topic selected
+Data Portal: shoe_order topic selected. Click on Query button.
 ![image](terraform/img/dataPortal2.png)
 
 
