@@ -9,6 +9,10 @@ For a good preparation and first understanding, please read this [guide](https:/
   * Manual creation with this [guide](prereq.md)
   * Automatated creation using Terraform  [guide](terraform/README.md)
 
+Optional:
+You can deploy the complete finished workshop with terraform. Currently the SQL Statements are not deployed, but will come very soon this year (2023) or latest beginning of 2024.  
+Please follow the [guide](terraform-complete/README.md) for a complete and finished Loyalty-Program.
+
 ## Workshop Labs
   *  Lab 1: Flink Tables, Select Statements, Aggregations, Time Windows [Lab1](lab1.md)
   *  Lab 2: Join Statements, Data Enrichment, Statement Sets  [Lab2](lab2.md)

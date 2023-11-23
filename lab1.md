@@ -5,7 +5,7 @@ All required resources must be already created for this lab to work correctly. I
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
-[2. Connecting to Flink ](lab1.md#2-connecting-to-flink)
+[2. Create Pool and Connecting to Flink](lab1.md#2-create-pool-and-connecting-to-flink)
 
 [3. Flink Tables](lab1.md#3-flink-tables)
 
@@ -45,11 +45,39 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 | **DatagenSourceConnector_customers** | shoe_customers  |   AVRO |  **Shoes customers** | 
 | **DatagenSourceConnector_orders**    |   shoe_orders   |   AVRO |     **Shoes orders** | 
 
-### Flink Compute Pool
+## 2. Create Pool and Connecting to Flink
 
-Check if Flink Cluster has been created. Is it running in the same region as your Kafka cluster?
+IMPORTANT TO KNOW FOR THE WORKSHOP:
+We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
+The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
+The online team is working in different regions:
+ - Attendees with Lastname first Letter A-I working in region `us-east1` 
+     * Flink SQL Pool in `us-east1`
+ - Attendees with Lastname first Letter J-R working in region `us-east2` 
+     * Flink SQL Pool in `us-east2`
+ - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
+     * Flink SQL Pool in `eu-west-1`
 
-NOTE: Flink Cluster is at the Environment level and can be used with multiple Kafka clusters.
+Create Flink Compute Pool in environment `handson-flink`
+Go back to environment `handson-flink` and choose `Flink (preview)` Tab. From there we create a new compute pool:
+* choose AWS region (remember the Lastname Rule), click `continue` and 
+* enter Pool Name: `cc_flink_compute_pool` with 5 Confluent Flink Units (CFU) and 
+* click `Continue` button and then `Finish`.
+The pool will be provisioned and ready to use in a couple of moments.
+
+![image](terraform/img/flinkpool.png)
+
+Open the SQL Workspace of compute pool and set:
+- the environment name `handson-flink` as catalog
+- and the cluster name `cc_handson_cluster` as database
+Via the dropdown boxes, see graphic
+![image](terraform/img/sqlworksheet.png)
+
+Of course you could also use the the Flink SQL Shell. Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2)
+```bash
+confluent flink shell --compute-pool <pool id> --environment <env-id>
+```
+
 
 ## 2. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.

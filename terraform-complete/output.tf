@@ -1,3 +1,6 @@
+output "cc_compute_pool_name" {
+  value = confluent_flink_compute_pool.cc_flink_compute_pool.id
+}
 
 output "cc_hands_env" {
   description = "Confluent Cloud Environment ID"
