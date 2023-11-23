@@ -25,8 +25,13 @@ By default, the order of joins is not optimized. Tables are joined in the order 
 ### 2. Understand Timestamps
 Let's first look at our data records and their timestamps. Open Flink SQL workspace.
 
-If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again.
+If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again. 
 ![image](terraform/img/catalog-and-database-dropdown.png)
+
+If you do not set the catalog and database, you can instead use it in the statement like:
+```bash
+SELECT * FROM `flink_handson_terraform-fd877e73`.`cc_handson_cluster`.`shoe_promotions` LIMIT 10;
+```
 
 Find all customer records for one customer and display timestamps when events were ingested in the shoe_customers Kafka topic
 ```
@@ -308,6 +313,10 @@ Check if all promotion notifications are stored correctly
 ```
 select * from shoe_promotions;
 ```
+
+All data products are created and events are in motion. Visit the brand new data portal from there you get all information you need and query the data. Give it a try.
+
+![image](terraform/img/dataportal.png)
 
 End of Lab2.
 

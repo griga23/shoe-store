@@ -1,22 +1,8 @@
 ![image](img/confluent-logo-300-2.png)
 
-# Workshop Deployment via terraform
+# Finished Workshop Deployment via terraform
 
-IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
-The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east1` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=us-east2 and cc_cloud_region=us-east1 vars and also remember during manual setup)
-      + Environment Schema Registry in `us-east2`
-      + Confluent Cloud Cluster in `us-east1`
- - Attendees with Lastname first Letter J-R working in region `us-east2` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=us-east2 and cc_cloud_region=us-east2 vars and also remember during manual setup)
-      + Environment Schema Registry in `us-east2`
-      + Confluent Cloud Cluster in `us-east2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=eu-central-1 and cc_cloud_region=eu-west-1 vars and also remember during manual setup)
-      + Environment Schema Registry in `eu-central-1`
-      + Confluent Cloud Cluster in `eu-west-1`
-
-This is the deployment of confluent cloud infrastructure resources to run the Flink SQL Hands-on Workshop.
+This is the deployment of confluent cloud infrastructure resources including all finished LABS from the Flink SQL Hands-on Workshop.
 We will deploy with terraform:
  - Environment:
      - Name: flink_hands-on+UUID
@@ -32,8 +18,10 @@ We will deploy with terraform:
     - sr-XXXX with Role EnvironmentAdmin
     - clients-XXXX with Role CloudClusterAdmin
     - connectors-XXXX
- 
-![image](img/terraform_deployment.png)
+ - Flink Compute Pool cc_handson_flink in AWS region eu-central-1 with 5 CFUs
+ - (coming soon 2023/2024 will Confluent Terraform allow this) all flink SQL statments from [lab1](../lab1.md) and [lab2](../lab2.md)
+
+![image](img/Flink_Hands-on_Workshop_Complete.png)
 
 # Pre-requisites
 - User account on [Confluent Cloud](https://www.confluent.io/confluent-cloud/tryfree)
@@ -91,7 +79,7 @@ This tutorial was tested with Confluent CLI v3.41.0.
 ## Set environment variables
 - Add your API key to the Terraform variables by creating a tfvars file
 ```bash
-cat > $PWD/terraform/terraform.tfvars <<EOF
+cat > $PWD/terraform-complete/terraform.tfvars <<EOF
 confluent_cloud_api_key = "{Cloud API Key}"
 confluent_cloud_api_secret = "{Cloud API Key Secret}"
 EOF
@@ -120,13 +108,18 @@ You can copy the login instruction also from the UI.
 To continue with the UI:
  - Access Confluent Cloud WebUI: https://confluent.cloud/login
  - Access your Environment: `flink_handson_terraform-XXXXXXXX`
- - Start with [lab1](../lab1.md)
+ - Select tab `Flink (preview)`
+ - Access your Flink Compute Pool: `standard_compute_pool-XXXXXXXX`
+ - Click `Open SQL workspace`
+ - Make sure to select:
+   - Catalog: `flink_handson_terraform-XXXXXXXX`
+   - Database: `cc-handson-cluster`
 
 You deployed:
 
-![image](img/terraform_deployment.png)
+![image](img/Flink_Hands-on_Workshop_Complete.png)
 
-You are ready to [start with LAB1](../lab1.md)
+All Labs are deployed and running, please check via [Confluent Consonle](https://confluent.cloud/login).
 
 # Destroy the hands.on infrastructure
 ```bash
