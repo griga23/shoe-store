@@ -5,19 +5,21 @@ All required resources must be already created for this lab to work correctly. I
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
-[2. Create Pool](lab1.md#2-create-pool-and-connecting-to-flink)
+[2. Create Pool](lab1.md#2-create-pool)
 
-[3. Flink Tables](lab1.md#3-flink-tables)
+[3. Connecting to Flink](lab1.md#3-connecting-to-flink)
 
-[4. Select Queries](lab1.md#4-select-queries)
+[4. Flink Tables](lab1.md#3-flink-tables)
 
-[5. Aggregations](lab1.md#5-aggregations)
+[5. Select Queries](lab1.md#4-select-queries)
 
-[6. Time Windows](lab1.md#6-time-windows)
+[6. Aggregations](lab1.md#5-aggregations)
 
-[7. Tables with Primary Key](lab1.md#7-tables-with-primary-key)
+[7. Time Windows](lab1.md#6-time-windows)
 
-[8. Flink Jobs](lab1.md#8-flink-jobs)
+[8. Tables with Primary Key](lab1.md#7-tables-with-primary-key)
+
+[9. Flink Jobs](lab1.md#8-flink-jobs)
 
 ## 1. Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
@@ -45,7 +47,7 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 | **DatagenSourceConnector_customers** | shoe_customers  |   AVRO |  **Shoes customers** | 
 | **DatagenSourceConnector_orders**    |   shoe_orders   |   AVRO |     **Shoes orders** | 
 
-## 2. Create Pool and Connecting to Flink
+## 2. Create Pool
 
 IMPORTANT TO KNOW FOR THE WORKSHOP:
 We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
