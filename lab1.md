@@ -115,6 +115,8 @@ We will now work with SQL Worksheet:
 ![image](terraform/img/sql_worksheet.png)
 
 Make sure you work with correct Flink catalog (=environment) and database (=Kafka cluster).
+ ![image](terraform/img/sqlWorksheetDetail.png)
+ 
 ```
 SHOW CATALOGS;
 ```
