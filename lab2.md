@@ -91,7 +91,7 @@ WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
-NOTE 2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans 
+NOTE 2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans.
 ```
 SET 'sql.tables.scan.idle-timeout' = '1s';
 ```
