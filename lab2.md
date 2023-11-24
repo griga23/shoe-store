@@ -22,7 +22,7 @@ Finishing Lab 1 is required for Lab 2. If you have not completed it, go back to 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-You can find more information about Flink SQL Joins [here.(]https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html)
+You can find more information about Flink SQL Joins [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html)
 
 ### 2. Understand Timestamps
 Let's first look at our data records and their timestamps. Open the Flink SQL workspace.
@@ -36,7 +36,7 @@ SELECT id,$rowtime
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Check the timestamp when the customer records were generated.
+NOTE: Check the timestamps from when the customer records were generated.
 
 Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic
 ```
@@ -44,13 +44,13 @@ SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Check timestamp when were the orders generated. This is important for join operation we will do next.
+NOTE: Check the timestamps when the orders were generated. This is important for the join operations we will do next.
 
 ### 3. Understand Joins
-Now, we can look at different types of joins available. 
-We will join order records and customer records.
+Now, we can look at the different types of joins available. 
+We will join `order` records and `customer` records.
 
-Join orders with non-keyed customer records (Regular Join)
+Join orders with non-keyed customer records (Regular Join):
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -58,9 +58,9 @@ INNER JOIN shoe_customers
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Look at the number of rows returned. There are many duplicates for each order!
+NOTE: Look at the number of rows returned. There are many duplicates!
 
-Join orders with non-keyed customer records in some time windows (Interval Join)
+Join orders with non-keyed customer records in some time windows (Interval Join):
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -70,7 +70,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
   shoe_orders.`$rowtime` BETWEEN shoe_customers.`$rowtime` - INTERVAL '1' HOUR AND shoe_customers.`$rowtime`;
 ```
 
-Join orders with keyed customer records (Regular Join with Keyed Table)
+Join orders with keyed customer records (Regular Join with Keyed Table):
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -78,9 +78,9 @@ INNER JOIN shoe_customers_keyed
 ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
 WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Look at the number of rows returned. There are no duplicates for each order! This is because we have only one customer record for each customer id.
+NOTE: Look at the number of rows returned. There are no duplicates! This is because we have only one customer record for each customer id.
 
-Join orders with keyd customer records in time when order was created (Temporal Join with Keyed Table)
+Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table)
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
@@ -88,12 +88,13 @@ INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
 ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
 WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
+NOTE1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
-NOTE: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans 
+NOTE2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans 
 ```
 SET 'sql.tables.scan.idle-timeout' = '1s';
 ```
+NOTE3: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/sql/queries/joins/#temporal-joins)
 
 ### 4. Data Enrichment
 We can store the result of a join to a new table.
