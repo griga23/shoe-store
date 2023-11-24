@@ -78,12 +78,12 @@ The pool will be provisioned and ready to use in a couple of moments.
 
 ## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - click on the button Open SQL workspace on your Flink Compute Pool
-    Open the SQL Workspace of compute pool and set:
-    - the environment name `handson-flink` as catalog
+  * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool
+    You now have to set which cataloge and database you want to use:
+    - Set the environment name `handson-flink` as cataloge,
     - and the cluster name `cc_handson_cluster` as database
     
-    Via the dropdown boxes, see graphic
+    via the dropdown boxes, see graphic below
     ![image](terraform/img/sqlworksheet.png)
 
   * **Console** - copy/paste command from your Flink Compute Pool to the command line   
