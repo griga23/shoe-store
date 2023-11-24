@@ -79,8 +79,8 @@ The pool will be provisioned and ready to use in a couple of moments.
 ## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
   * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool
-    You now have to set which cataloge and database you want to use:
-    - Set the environment name `handson-flink` as cataloge,
+    You now have to set which catalog and database you want to use:
+    - Set the environment name `handson-flink` as catalog,
     - and the cluster name `cc_handson_cluster` as database
     
     via the dropdown boxes, see graphic below
@@ -108,7 +108,7 @@ Data Portal: `shoe_order` topic selected. Click on `Query` button to access your
 Let's start with exploring our Flink tables.
 Kafka topics and schemas are always in sync with our Flink cluster. Any topic created in Kafka is visible directly as a table in Flink, and any table created in Flink is visible as a topic in Kafka. Effectively, Flink provides a SQL interface on top of Confluent Cloud.
 
-Following mapping exist:
+Following mappings exist:
 | Kafka          | Flink     | 
 | ------------   |:---------:|
 | Environment    | Catalog   | 
@@ -131,24 +131,24 @@ SHOW DATABASES;
 USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
 USE cc_handson_cluster;
 ```
-List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster
+List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster:
 ```
 SHOW TABLES;
 ```
-Do you see tables shoe_products, shoe_customers, shoe_orders?
+Do you see tables `shoe_products`, `shoe_customers`, `shoe_orders`?
 
-You can add multiple query boxes by clicking the + button on the left of it
+You can add multiple query boxes by clicking the `+` button on the left.
 
 ![image](terraform/img/add-query-box.png)
 
-Understand how was the table created
+Understand how the table `shoe_products` was created:
 ```
 SHOW CREATE TABLE shoe_products;
 ```
 
 ![image](terraform/img/sqlWorkspace_showCreated.png)
 
-More info to understand all parameters https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html
+YOu can find more information about all parameters  [here](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html)
 
 ### 5. Select Queries
 Our Flink tables are populated by the Datagen connectors.
