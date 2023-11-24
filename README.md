@@ -15,8 +15,8 @@ The hands-on consists of two labs (see below), and these require Confluent Cloud
  *  Preparation of required Confluent Cloud Resources: You can either create your infrastructure manually with this [guide](prereq.md) or you can use Terraform for an automatated creation: [Terraform guide](terraform/README.md).
 
 ## Workshop Labs
-  *  Lab 1: Flink Tables, Select Statements, Aggregations, Time Windows [Lab1](lab1.md)
-  *  Lab 2: Join Statements, Data Enrichment, Statement Sets  [Lab2](lab2.md)
+  *  [Lab1](lab1.md): Flink Tables, Select Statements, Aggregations, Time Windows 
+  *  [Lab2](lab2.md): Join Statements, Data Enrichment, Statement Sets  
 
 Together, the Labs will design a loyality program within Flink SQL. You can see the complete Mapping of dynamic Tables and Topics in the next graphic.
 
