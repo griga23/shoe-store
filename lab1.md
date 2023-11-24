@@ -141,6 +141,9 @@ Understand how was the table created
 ```
 SHOW CREATE TABLE shoe_products;
 ```
+
+![image](terraform/img/sqlWorkspace_showCreated.png)
+
 More info to understand all parameters https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html
 
 ### 5. Select Queries
