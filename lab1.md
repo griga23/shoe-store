@@ -3,6 +3,8 @@
 
 All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [prerequisites](prereq.md).
 
+## Content of Lab 1
+
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
 [2. Create Pool](lab1.md#2-create-pool)
