@@ -28,6 +28,7 @@ You can find more information about Flink SQL Joins [here.](https://docs.conflue
 Let's first look at our data records and their timestamps. Open the Flink SQL workspace.
 
 If you left the Flink SQL Workspace or refreshed the page, `catalog` and `database` dropdowns are reset. Make sure they are selected again. 
+
 ![image](terraform/img/catalog-and-database-dropdown.png)
 
 Find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic
