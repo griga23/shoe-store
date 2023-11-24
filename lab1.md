@@ -148,12 +148,12 @@ SHOW CREATE TABLE shoe_products;
 
 ![image](terraform/img/sqlWorkspace_showCreated.png)
 
-YOu can find more information about all parameters  [here](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html)
+You can find more information about all parameters  [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html)
 
 ### 5. Select Queries
 Our Flink tables are populated by the Datagen connectors.
 
-We can first check the table schema for our shoe product catalog. This should be the same as the topic schema in Schema Registry.
+Let us first check the table schema for our `shoe_products` catalog. This should be the same as the topic schema in Schema Registry.
 ```
 DESCRIBE shoe_products;
 ```
@@ -163,23 +163,23 @@ Let's check if any product records exist in the table.
 SELECT * FROM shoe_products;
 ```
 
-Check if customers schema exist. 
+Now check if the `shoe_customers` schema  exists. 
 ```
 DESCRIBE shoe_customers;
 ```
 
-Are there any customers in Texas with name starting with B. ?
+Are there any customers in Texas whose name starts with `B` ?
 ```
 SELECT * FROM shoe_customers
   WHERE `state` = 'Texas' AND `last_name` LIKE 'B%';
 ```
 
-Check all attributes of shoe_orders table including hidden attributes.
+Check all attributes of the `shoe_orders` table including hidden attributes.
 ```
 DESCRIBE EXTENDED shoe_orders;
 ```
 
-Check first 10 orders for one customer.
+Check first ten orders for one customer.
 ```
 SELECT order_id, product_id, customer_id, $rowtime
   FROM shoe_orders
@@ -190,7 +190,7 @@ SELECT order_id, product_id, customer_id, $rowtime
 ### 6. Aggregations
 Let's try to run more advanced queries.
 
-First find out number of customers records and then number of unique customers.
+First find out the number of customers records and then the number of unique customers.
 ```
 SELECT COUNT(id) AS num_customers FROM shoe_customers;
 ```
@@ -199,7 +199,7 @@ SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
 ```
 
 We can try some basic aggregations with the product catalog records.
-For each shoe brand find number of shoe models, average rating and maximum model price. 
+For each shoe brand, find the number of shoe models, average rating and maximum model price. 
 ```
 SELECT brand as brand_name, 
     COUNT(DISTINCT name) as models_by_brand, 
@@ -210,10 +210,10 @@ GROUP BY brand;
 ```
 ### 7. Time Windows
 
-Let's try Flink time windowing functions for shoe order records.
+Let's try Flink's time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are commonly used in Flink's window operations, especially when dealing with event time windows.
 
-Find amount of orders for 1 minute intervals (tumbling window aggregation).
+Find the amount of orders for one minute intervals (tumbling window aggregation).
 ```
 SELECT
  window_end,
@@ -223,7 +223,7 @@ FROM TABLE(
 GROUP BY window_end;
 ```
 
-Find amount of orders for 10 minute intervals advanced by 5 minutes (hopping window aggregation).
+Find the amount of orders for ten minute intervals advanced by five minutes (hopping window aggregation).
 ```
 SELECT
  window_start, window_end,
@@ -233,7 +233,7 @@ FROM TABLE(
 GROUP BY window_start, window_end;
 ```
 
-NOTE: More info about Flink Window aggregations https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/
+NOTE: You can find more information about Flink Window aggregations [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/)
 
 ### 8. Tables with Primary Key 
 
