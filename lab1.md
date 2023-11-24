@@ -84,16 +84,18 @@ You can use your web browser or console to enter Flink SQL statements.
     - and the cluster name `cc_handson_cluster` as database
     
     via the dropdown boxes, see graphic below
+    
     ![image](terraform/img/sqlworksheet.png)
 
-  * **Console** - copy/paste command from your Flink Compute Pool to the command line   
-  Of course you could also use the the Flink SQL Shell. You need to have confluent cloud console tool installed and be logged in with correct access rights.
-  Copy the command out of the `Compute Pool Window` and execute in your terminal (we prefer iterm2). 
+
+  * **Console** - copy/paste the command from your Flink Compute Pool to the command line.    
+  Of course you could also use the the Flink SQL Shell. For this, you need to have Confluent Cloud Console tool installed and be logged in with correct access rights.
+  Copy the command out of the `Compute Pool Window` and execute it in your terminal (we prefer iterm2). 
   ```bash
   confluent flink shell --compute-pool <pool id> --environment <env-id>
   ```
 
-NOTE: you can access your Flink Compute Pool from the Data Portal. Just click on the Data Portal in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tile you can query topic's data using Flink. 
+NOTE: You can also access your Flink Compute Pool from the Data Portal. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
 
 Data Portal: Kafka Topics Tiles
 ![image](terraform/img/dataPortal1.png)
