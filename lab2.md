@@ -1,6 +1,6 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Lab 2
-Finishing Lab 1 is required for this lab. If you have not completed it, go to [LAB 1](lab1.md).
+Finishing Lab 1 is required for Lab 2. If you have not completed it, go back to [Lab 1](lab1.md).
 
 
 [1. Flink Joins](lab2.md#1-flink-joins)
@@ -25,20 +25,20 @@ By default, the order of joins is not optimized. Tables are joined in the order 
 You can find more information about Flink SQL Joins [here.(]https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html)
 
 ### 2. Understand Timestamps
-Let's first look at our data records and their timestamps. Open Flink SQL workspace.
+Let's first look at our data records and their timestamps. Open the Flink SQL workspace.
 
-If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again. 
+If you left the Flink SQL Workspace or refreshed the page, `catalog` and `database` dropdowns are reset. Make sure they are selected again. 
 ![image](terraform/img/catalog-and-database-dropdown.png)
 
-Find all customer records for one customer and display timestamps when events were ingested in the `shoe_customers` Kafka topic
+Find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic
 ```
 SELECT id,$rowtime 
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE: Check timestamp when were the customer records generated.
+NOTE: Check the timestamp when the customer records were generated.
 
-Find all orders for one customer and display timestamps when events were ingested in the shoe_orders Kafka topic
+Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic
 ```
 SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
