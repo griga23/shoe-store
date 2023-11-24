@@ -90,17 +90,17 @@ You can use your web browser or console to enter Flink SQL statements.
 
   * **Console** - copy/paste the command from your Flink Compute Pool to the command line.    
   Of course you could also use the the Flink SQL Shell. For this, you need to have Confluent Cloud Console tool installed and be logged in with correct access rights.
-  Copy the command out of the `Compute Pool Window` and execute it in your terminal (we prefer iterm2). 
+  Copy the command out of the Compute Pool Window and execute it in your terminal (we prefer iterm2). 
   ```bash
   confluent flink shell --compute-pool <pool id> --environment <env-id>
   ```
 
-NOTE: You can also access your Flink Compute Pool from the Data Portal. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
+NOTE: You can also access your Flink Compute Pool from the Data Portal as shown below. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
 
 Data Portal: Kafka Topics Tiles
 ![image](terraform/img/dataPortal1.png)
 
-Data Portal: shoe_order topic selected. Click on Query button to access your Flink Compute Pool.
+Data Portal: `shoe_order` topic selected. Click on `Query` button to access your Flink Compute Pool.
 ![image](terraform/img/dataPortal2.png)
 
 
@@ -115,10 +115,10 @@ Following mapping exist:
 | Cluster        | Database  |
 | Topic + Schema | Table     |
 
-We will now work with SQL Worksheet:
+We will now work with the following SQL Worksheet:
 ![image](terraform/img/sql_worksheet.png)
 
-Make sure you work with correct Flink catalog (=environment) and database (=Kafka cluster).
+Make sure you work with the correct Flink catalog (=environment) and database (=Kafka cluster).
  ![image](terraform/img/sqlWorksheetDetail.png)
  
 ```
