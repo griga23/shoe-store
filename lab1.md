@@ -53,7 +53,11 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 
 IMPORTANT TO KNOW FOR THE WORKSHOP:
 We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
-The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
+
+### If you are participating onsite in Berlin
+The complete onsite team is working in region: `eu-central-1`. (No changes in the guides (both Terraform and manual) necessary.)
+
+### If you are participating online via zoom
 The online team is working in different regions:
  - Attendees with Lastname first Letter A-I working in region `us-east1` 
      * Flink SQL Pool in `us-east1`
