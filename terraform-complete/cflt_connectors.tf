@@ -217,6 +217,7 @@ resource "confluent_kafka_topic" "products" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   topic_name    = "shoe_products"
+  partitions_count   = 1
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id
@@ -232,6 +233,7 @@ resource "confluent_kafka_topic" "customers" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   topic_name    = "shoe_customers"
+  partitions_count   = 1
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id
@@ -247,6 +249,7 @@ resource "confluent_kafka_topic" "orders" {
     id = confluent_kafka_cluster.cc_kafka_cluster.id
   }
   topic_name    = "shoe_orders"
+  partitions_count   = 1
   rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
   credentials {
     key    = confluent_api_key.app_manager_kafka_cluster_key.id

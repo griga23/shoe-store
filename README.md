@@ -9,8 +9,7 @@ For a good preparation and first understanding, please read this [Guide to Flink
   * Automatated creation using Terraform  [guide](terraform/README.md)
 
 Optional:
-You can deploy the complete finished workshop with terraform. Currently the SQL Statements are not deployed, but will come very soon this year (2023) or latest beginning of 2024.  
-Please follow the [guide](terraform-complete/README.md) for a complete and finished Loyalty-Program.
+You can deploy the complete finished workshop with terraform. Please follow the [guide](terraform-complete/README.md) for a complete and finished Loyalty-Program. Only the notification need to be setup manually.
 
 ## Workshop Labs
   *  Lab 1: Flink Tables, Select Statements, Aggregations, Time Windows [Lab1](lab1.md)
@@ -25,3 +24,4 @@ The Labs will design a loyality program within Flink SQL. The complete Mapping o
 
 ## Costs
 The lab execution do not consume much money. We calculated an amount of less than 10$ for a couple of hours testing.
+If you create the cluster one day before, we recommend to pause all connectors.

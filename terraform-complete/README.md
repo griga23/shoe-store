@@ -19,7 +19,7 @@ We will deploy with terraform:
     - clients-XXXX with Role CloudClusterAdmin
     - connectors-XXXX
  - Flink Compute Pool cc_handson_flink in AWS region eu-central-1 with 5 CFUs
- - (coming soon 2023/2024 will Confluent Terraform allow this) all flink SQL statments from [lab1](../lab1.md) and [lab2](../lab2.md)
+ - all flink SQL statments from [lab1](../lab1.md) and [lab2](../lab2.md)
 
 ![image](img/Flink_Hands-on_Workshop_Complete.png)
 
@@ -103,7 +103,7 @@ Please check whether the terraform execution went without errors.
 
 There are two ways to continue, either over shell or over UI. If you want to start with the shell, please type:
 
-```
+```bash
 eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
 ```
 
@@ -123,7 +123,9 @@ You deployed:
 
 ![image](img/Flink_Hands-on_Workshop_Complete.png)
 
-All Labs are deployed and running, please check via [Confluent Consonle](https://confluent.cloud/login).
+All Labs are deployed and running, please check via [Confluent Console](https://confluent.cloud/login).
+
+A last optional lab would to configure and run the [Notification Client](/../notification_client.md)
 
 # Destroy the hands.on infrastructure
 ```bash
