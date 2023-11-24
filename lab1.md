@@ -66,9 +66,9 @@ The online team is working in different regions:
  - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
      * Flink SQL Pool in `eu-west-1`
 
-Create Flink Compute Pool in environment `handson-flink`
-Go back to environment `handson-flink` and choose `Flink (preview)` Tab. From there we create a new compute pool:
-* choose AWS region (remember the Lastname Rule), click `continue` and 
+### Create Flink Compute Pool
+Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
+* choose AWS region (remember the Lastname rule above), click `continue` and 
 * enter Pool Name: `cc_flink_compute_pool` with 5 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
 The pool will be provisioned and ready to use in a couple of moments.
