@@ -1,7 +1,7 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Lab 1
 
-All required resources must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
+All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, follow the [prerequisites](prereq.md).
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
