@@ -80,7 +80,7 @@ WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Look at the number of rows returned. There are no duplicates! This is because we have only one customer record for each customer id.
 
-Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table)
+Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table):
 ```
 SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
