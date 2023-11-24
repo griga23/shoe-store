@@ -27,13 +27,13 @@ All required resources in Confluent Cloud must be already created for this lab t
 Let's verify if all resources were created correctly and we can start using them.
 
 ### Kafka Topics
-Check if following topics exist in your Kafka cluster:
+Check if the following topics exist in your Kafka cluster:
  * shoe_products (for product data aka Product Catalog),
  * shoe_customers (for customer data aka Customer CRM),
  * shoe_orders (for realtime order transactions aka Billing System).
 
 ### Schemas in Schema Registry
-Check if following Avro schemas exist in your Schema Registry:
+Check if the following Avro schemas exist in your Schema Registry:
  * shoe_products-value,
  * shoe_customers-value,
  * shoe_orders-value.
@@ -41,7 +41,7 @@ Check if following Avro schemas exist in your Schema Registry:
 NOTE: Schema Registry is at the Environment level and can be used for multiple Kafka clusters.
 
 ### Datagen Connectors
-Your Kafka cluster should have three Datagen Source Connectors running. Check if topic and template configurations match the table below.
+Your Kafka cluster should have three Datagen Source Connectors running. Check if their topic and template configurations match the table below.
 
 | Connector Name (can be anything)     |      Topic      | Format |             Template | 
 |--------------------------------------|:---------------:|-------:|---------------------:|
