@@ -186,9 +186,9 @@ SELECT * FROM shoe_order_customer_product;
 
 ### 5. Loyalty Levels Calculation
 
-Now we are ready to calculate loyalty level for our customers
+Now we are ready to calculate loyalty levels for our customers.
 
-First let's see which loyalty levels are being calculated
+First let's see which loyalty levels are being calculated:
 ```
 SELECT
   email,
@@ -202,10 +202,10 @@ SELECT
 FROM shoe_order_customer_product
 GROUP BY email;
 ```
-NOTE: You might need to change the loyalty level numbers according to amount of the data you have ingested.
+NOTE: You might need to change the loyalty level numbers according to the amount of the data you have already ingested.
 
 
-Prepare table for loyalty levels
+Prepare the table for loyalty levels:
 ```
 CREATE TABLE shoe_loyalty_levels(
   email STRING,
@@ -215,7 +215,7 @@ CREATE TABLE shoe_loyalty_levels(
 );
 ```
 
-Now you can calculate loyalty levels and store results in the created table.
+Now you can calculate loyalty levels and store the results in the new table.
 ```
 INSERT INTO shoe_loyalty_levels(
  email,
@@ -234,16 +234,16 @@ FROM shoe_order_customer_product
 GROUP BY email;
 ```
 
-Verify results
+Verify your results:
 ```
 SELECT * FROM shoe_loyalty_levels;
 ```
 
 ### 6. Promotions Calculation
 
-Let's find out if some customers are eligible for some special promotions.
+Let's find out if some customers are eligible for special promotions.
 
-Find which customer should receive special promotion for their 10th order of the same brand
+Find which customer should receive a special promotion for their 10th order of the same shoe brand.
 ```
 SELECT
    email,
@@ -254,9 +254,9 @@ SELECT
  WHERE brand = 'Jones-Stokes'
  GROUP BY email;
  ```
-NOTE: We calculate number of orders of Jones-Stokes brand for each customer and offer a free product if it's 10th order.
+NOTE: We calculate the number of orders of the brand 'Jones-Stokes' for each customer and offer a free product if it's their 10th order.
 
-Find which customer have ordered related brands in large volumes
+Find which customers have ordered related brands in large volumes.
 ```
 SELECT
      email,
@@ -267,11 +267,11 @@ SELECT
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
 ```
-NOTE: We sum all orders of brands Braun-Bruen and Will Inc for each customer and offer a special promotion if sum is larger than 10.  
+NOTE: We sum all orders of brands 'Braun-Bruen' and 'Will Inc' for each customer and offer a special promotion if the sum is larger than ten.  
 
 Now we are ready to store the results for all calculated promotions. 
 
-Prepare table for promotion notifications
+Create a table for promotion notifications:
 ```
 CREATE TABLE shoe_promotions(
   email STRING,
@@ -280,7 +280,9 @@ CREATE TABLE shoe_promotions(
 );
 ```
 
-Write both calculated promotions in a single statement set to the shoe_promotions table
+Write both calculated promotions in a single statement set to the `shoe_promotions` table.
+NOTE: There is a bug in the Web UI. Remove the first two lines and the last line to be able to run the statement.
+
 ```
 EXECUTE STATEMENT SET 
 BEGIN
@@ -305,17 +307,17 @@ SELECT
 
 END;
 ```
-NOTE: there is a bug in the Web UI. Remove the first 2 lines and the last line to be able to run the job.
 
-Check if all promotion notifications are stored correctly
+
+Check if all promotion notifications are stored correctly.
 ```
-select * from shoe_promotions;
+SELECT * from shoe_promotions;
 ```
 
-All data products are created and events are in motion. Visit the brand new data portal from there you get all information you need and query the data. Give it a try.
+All data products are created now and events are in motion. Visit the brand new data portal to get all information you need and query the data. Give it a try!
 
 ![image](terraform/img/dataportal.png)
 
-End of Lab2.
+## End of Lab2.
 
-If you don't need your infrastructure anymore, do not forget to delete the resources.
+# If you don't need your infrastructure anymore, do not forget to delete the resources!
