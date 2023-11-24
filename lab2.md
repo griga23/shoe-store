@@ -88,13 +88,13 @@ INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
 ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
 WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
-NOTE1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
+NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
-NOTE2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans 
+NOTE 2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans 
 ```
 SET 'sql.tables.scan.idle-timeout' = '1s';
 ```
-NOTE3: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/sql/queries/joins/#temporal-joins)
+NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/sql/queries/joins/#temporal-joins)
 
 ### 4. Data Enrichment
 We can store the result of a join to a new table.
