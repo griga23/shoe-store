@@ -22,7 +22,7 @@ Finishing Lab 1 is required for this lab. If you have not completed it, go to [L
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-More infromation about Flink SQL Joins https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html
+More information about Flink SQL Joins https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html
 
 ### 2. Understand Timestamps
 Let's first look at our data records and their timestamps. Open Flink SQL workspace.
