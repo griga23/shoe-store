@@ -22,7 +22,7 @@ Finishing Lab 1 is required for this lab. If you have not completed it, go to [L
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-More information about Flink SQL Joins https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html
+You can find more information about Flink SQL Joins [here.(]https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html)
 
 ### 2. Understand Timestamps
 Let's first look at our data records and their timestamps. Open Flink SQL workspace.
@@ -30,7 +30,7 @@ Let's first look at our data records and their timestamps. Open Flink SQL worksp
 If you left the Flink SQL Workspace or refreshed the page, Catalog and Database dropdowns are reset. Make sure they are selected again. 
 ![image](terraform/img/catalog-and-database-dropdown.png)
 
-Find all customer records for one customer and display timestamps when events were ingested in the shoe_customers Kafka topic
+Find all customer records for one customer and display timestamps when events were ingested in the `shoe_customers` Kafka topic
 ```
 SELECT id,$rowtime 
 FROM shoe_customers  
