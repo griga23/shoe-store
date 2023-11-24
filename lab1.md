@@ -179,7 +179,7 @@ Check all attributes of the `shoe_orders` table including hidden attributes.
 DESCRIBE EXTENDED shoe_orders;
 ```
 
-Check first ten orders for one customer.
+Check the first ten orders for one customer.
 ```
 SELECT order_id, product_id, customer_id, $rowtime
   FROM shoe_orders
@@ -237,9 +237,9 @@ NOTE: You can find more information about Flink Window aggregations [here.](http
 
 ### 8. Tables with Primary Key 
 
-Flink allows you to define primary key for your table. Primary key is a column that is unique for each record.
+Flink allows you to define a primary key for your table. The primary key is a column whose value is unique for each record.
 
-Let's create a new table that will store unique customers only
+Let's create a new table that will store unique customers only.
 ```
 CREATE TABLE shoe_customers_keyed(
   customer_id STRING,
@@ -249,34 +249,35 @@ CREATE TABLE shoe_customers_keyed(
   PRIMARY KEY (customer_id) NOT ENFORCED
   );
 ```
-Compare created keyed table with shoe_customers, what is the difference.
+Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
+
 ```bash
 SHOW CREATE TABLE shoe_customers_keyed;
 ```
-We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) contraint. What does this mean?
+We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
 
-NOTE: More information about Primary key constraint https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint
+NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
 
-Create a new Flink job to copy customer data from the original table to the new table
+Create a new Flink job to copy customer data from the original table to the new table.
 ```
 INSERT INTO shoe_customers_keyed
   SELECT id, first_name, last_name, email
     FROM shoe_customers;
 ```
 
-Show amount of cutomers in the new table
+Show the amount of cutomers in `shoe_customers_keyed`.
 ```
 SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed;
 ```
 
-Look up one specific customer
+Look up one specific customer:
 ```
 SELECT * 
  FROM shoe_customers_keyed  
  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-Compare it with all customer records for one specific customer
+Compare it with all customer records for one specific customer:
 ```
 SELECT *
  FROM shoe_customers
@@ -285,7 +286,7 @@ SELECT *
 
 We also need to create Primary Key table for our product catalog.
 
-Prepare a new table that will store unique products only
+Prepare a new table that will store unique products only:
 ```
 CREATE TABLE shoe_products_keyed(
   product_id STRING,
@@ -297,14 +298,14 @@ CREATE TABLE shoe_products_keyed(
   );
 ```
 
-Create a new Flink job to copy product data from the original table to the new table
+Create a new Flink job to copy product data from the original table to the new table. 
 ```
 INSERT INTO shoe_products_keyed
   SELECT id, brand, `name`, sale_price, rating 
     FROM shoe_products;
 ```
 
-Check if only single record is returned for some product
+Check if only a single record is returned for some product.
 ```
 SELECT * 
  FROM shoe_products_keyed  
@@ -313,10 +314,10 @@ SELECT *
 
 ### 9. Flink Jobs 
 
-Now, you can finally check with jobs are still running, which jobs failed, and which stopped. Go to Flink (Preview) in environments and choose `Flink Statements`. Check what you can do here.
+Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink (Preview)` in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
 
-or you could use the confluent cli
+You can also  use the Confluent CLI:
 ```bash
 confluent login
 confluent flink statement list --cloud aws --region eu-central-1 --environment <your env-id> --compute-pool <your pool id>
@@ -337,4 +338,4 @@ confluent flink statement exception list <name> --cloud aws --region eu-central-
 confluent flink statement describe <name> --cloud aws --region eu-central-1 --environment <your env-id>
 ```
 
-End of Lab1, continue with [Lab2](lab2.md).
+This is the end of Lab1, please continue with [Lab2](lab2.md).
