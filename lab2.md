@@ -100,7 +100,7 @@ NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.
 ### 4. Data Enrichment
 We can store the result of a join in a new table.
 
-Create a new table for the string results of the `Order <-> Customer` join 
+Create a new table for the string results of the `Order <-> Customer` join.
 ```
 CREATE TABLE shoe_order_customer(
   order_id INT,
