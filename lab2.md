@@ -97,9 +97,9 @@ SET 'sql.tables.scan.idle-timeout' = '1s';
 NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/sql/queries/joins/#temporal-joins)
 
 ### 4. Data Enrichment
-We can store the result of a join to a new table.
+We can store the result of a join in a new table.
 
-Prepare new table for to string result of the Order <-> Customer join 
+Create a new table for the string results of the `Order <-> Customer` join 
 ```
 CREATE TABLE shoe_order_customer(
   order_id INT,
@@ -111,10 +111,10 @@ CREATE TABLE shoe_order_customer(
     'changelog.mode' = 'retract'
 );
 ```
-NOTE: we need to create a table which will be compatible with our Table <-> Stream join
-Check Dynamic Table stream encodings https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#table-to-stream-conversion
+NOTE: We need to create a table which will be compatible with our `Table <-> Stream` join.
+You can check Dynamic Table stream encodings [here.](https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#table-to-stream-conversion)
 
-Insert data in the created table
+Insert data into the new table:
 ```
 INSERT INTO shoe_order_customer(
   order_id,
@@ -133,12 +133,12 @@ FROM shoe_orders
   ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
 ```
 
-Verify that data are joined successfully. 
+Verify that the data was joined successfully. 
 ```
 SELECT * FROM shoe_order_customer;
 ```
 
-Prepare a new table for Order <-> Customer <-> Product Join
+Create a new table for `Order <-> Customer <-> Product` Join
 ```
 CREATE TABLE shoe_order_customer_product(
   order_id INT,
@@ -154,7 +154,7 @@ CREATE TABLE shoe_order_customer_product(
 );
 ```
 
-Insert data in the created table
+Insert the data into the new table:
 ```
 INSERT INTO shoe_order_customer_product(
   order_id,
@@ -179,7 +179,7 @@ FROM shoe_order_customer
   ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
 ```
 
-Verify that data are joined successfully. 
+Verify that the data was joined successfully. 
 ```
 SELECT * FROM shoe_order_customer_product;
 ```
