@@ -31,7 +31,7 @@ If you left the Flink SQL Workspace or refreshed the page, `catalog` and `databa
 
 ![image](terraform/img/catalog-and-database-dropdown.png)
 
-Find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic
+Find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic.
 ```
 SELECT id,$rowtime 
 FROM shoe_customers  
@@ -39,7 +39,7 @@ WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Check the timestamps from when the customer records were generated.
 
-Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic
+Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic.
 ```
 SELECT order_id, customer_id, $rowtime
 FROM shoe_orders
