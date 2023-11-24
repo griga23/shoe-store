@@ -110,7 +110,7 @@ CREATE TABLE shoe_order_customer(
     'changelog.mode' = 'retract'
 );
 ```
-NOTE: we need to create a table which will be com[patible with our Table <-> Stream join
+NOTE: we need to create a table which will be compatible with our Table <-> Stream join
 Check Dynamic Table stream encodings https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#table-to-stream-conversion
 
 Insert data in the created table
