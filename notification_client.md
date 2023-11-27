@@ -38,7 +38,7 @@ You also need to access the confluent cloud cluster. Normally a Service Account 
 * create API Key for Schema Registry click `Create Schema Registry API Key`, set description `Python Schema API KEY`
 * click `Copy` and you have the complete configuration to connect to your confluent cloud cluster, store this into file `client.properties`
 
-We only need these properties in client.properties:
+We only need these properties in client.properties (if you run terraform-complete the client.properties file will be generated) :
 ```bash
 bootstrap.servers=<BROKER>
 security.protocol=SASL_SSL
