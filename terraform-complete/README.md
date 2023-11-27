@@ -124,7 +124,7 @@ You deployed:
 ![image](img/Flink_Hands-on_Workshop_Complete.png)
 
 All Labs are deployed and running, please check via [Confluent Console](https://confluent.cloud/login).
-For the last lab [Notification Client](/../notification_client.md) a `client.prperties` will be generation. Take this file to run the [Notification Client](/../notification_client.md).
+For the last lab [Notification Client](/../notification_client.md) a `client.prperties` will be generated. Take this file to run the [Notification Client](/../notification_client.md).
 A last optional lab would to configure and run the [Notification Client](/../notification_client.md)
 
 # Destroy the hands.on infrastructure
