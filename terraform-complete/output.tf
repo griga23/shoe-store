@@ -17,10 +17,22 @@ output "cc_sr_cluster" {
   value       = resource.confluent_schema_registry_cluster.cc_sr_cluster.id
 }
 
+output "cc_sr_cluster_endpoint" {
+  description = "CC SR Cluster ID"
+  value       = resource.confluent_schema_registry_cluster.cc_sr_cluster.rest_endpoint
+}
+
 output "cc_kafka_cluster" {
   description = "CC Kafka Cluster ID"
   value       = resource.confluent_kafka_cluster.cc_kafka_cluster.id
 }
+
+output "cc_kafka_cluster_bootsrap" {
+  description = "CC Kafka Cluster ID"
+  value       = resource.confluent_kafka_cluster.cc_kafka_cluster.bootstrap_endpoint
+
+}
+
 
 output "datagen_products" {
   description = "CC Datagen Products Connector ID"
@@ -66,3 +78,4 @@ output "ClientSecret" {
   value       = confluent_api_key.clients_kafka_cluster_key.secret
   sensitive = true
 }
+
