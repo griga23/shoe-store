@@ -95,7 +95,7 @@ NOTE 2: If Temporal Join returns no values you might need to run following comma
 ```
 SET 'sql.tables.scan.idle-timeout' = '1s';
 ```
-NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/sql/queries/joins/#temporal-joins)
+NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
 
 ### 4. Data Enrichment
 We can store the result of a join in a new table.
