@@ -59,10 +59,10 @@ The complete onsite team is working in region: `eu-central-1`. (No changes in th
 
 ### If you are participating online via zoom
 The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east1` 
-     * Flink SQL Pool in `us-east1`
- - Attendees with Lastname first Letter J-R working in region `us-east2` 
-     * Flink SQL Pool in `us-east2`
+ - Attendees with Lastname first Letter A-I working in region `us-east-1` 
+     * Flink SQL Pool in `us-east-1`
+ - Attendees with Lastname first Letter J-R working in region `us-east-2` 
+     * Flink SQL Pool in `us-east-2`
  - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
      * Flink SQL Pool in `eu-west-1`
 
