@@ -66,3 +66,21 @@ variable "sr_package" {
   type    = string
   default = "ESSENTIALS"
 }
+
+# --------------------------------------------
+# Confluent Cloud Flink Compute Pool variables
+# --------------------------------------------
+variable "cc_dislay_name" {
+  type    = string
+  default = "standard_compute_pool"
+}
+
+variable "cc_compute_pool_name" {
+  type    = string
+  default = "cc_handson_flink"
+}
+
+variable "cc_compute_pool_cfu" {
+  type    = number
+  default = 5
+}
