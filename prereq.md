@@ -28,11 +28,11 @@ IMPORTANT TO KNOW FOR THE WORKSHOP:
 We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
 The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
 The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east1`
-      + Environment Schema Registry in `us-east2`
-      + Confluent Cloud Cluster in `us-east1`
- - Attendees with Lastname first Letter J-R working in region `us-east2` 
-      + Environment Schema Registry in `us-east2`
+ - Attendees with Lastname first Letter A-I working in region `us-east-1`
+      + Environment Schema Registry in `us-east-2`
+      + Confluent Cloud Cluster in `us-east-1`
+ - Attendees with Lastname first Letter J-R working in region `us-east-2` 
+      + Environment Schema Registry in `us-east-2`
       + Confluent Cloud Cluster in `us-east2`
  - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
       + Environment Schema Registry in `eu-central-1`
