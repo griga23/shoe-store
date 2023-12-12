@@ -91,11 +91,7 @@ WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
-NOTE 2: If Temporal Join returns no values you might need to run following command to decrease time interval for table scans.
-```
-SET 'sql.tables.scan.idle-timeout' = '1s';
-```
-NOTE 3: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
+NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
 
 ### 4. Data Enrichment
 We can store the result of a join in a new table.
