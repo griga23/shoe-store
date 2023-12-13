@@ -129,6 +129,8 @@ SHOW DATABASES;
 ```
 ```
 USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
+```
+```
 USE <MY CONFLUENT KAFKA CLUSTER NAME>;
 ```
 List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster:
