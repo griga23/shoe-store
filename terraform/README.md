@@ -113,12 +113,6 @@ terraform output -raw ClientSecret
 
 Please check whether the terraform execution went without errors.
 
-There are two ways to continue, either over shell or over UI. If you want to start with the shell, please type:
-
-```
-eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
-```
-
 You can copy the login instruction also from the UI.
 
 To continue with the UI:
