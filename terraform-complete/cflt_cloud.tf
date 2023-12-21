@@ -101,6 +101,32 @@ resource "confluent_role_binding" "app_manager_environment_admin" {
     prevent_destroy = false
   }
 }
+resource "confluent_role_binding" "app_manager_flinkdeveloper" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "FlinkDeveloper"
+  crn_pattern = confluent_environment.cc_handson_env.resource_name
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_role_binding" "app_manager_flinkadmin" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "FlinkAdmin"
+  crn_pattern = confluent_environment.cc_handson_env.resource_name
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_role_binding" "app_manager_assigner" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "Assigner"
+  crn_pattern = "${data.confluent_organization.ccloud.resource_name}/service-account=${confluent_service_account.app_manager.id}"
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+
 resource "confluent_role_binding" "sr_environment_admin" {
   principal   = "User:${confluent_service_account.sr.id}"
   role_name   = "EnvironmentAdmin"
@@ -189,6 +215,33 @@ resource "confluent_api_key" "clients_kafka_cluster_key" {
   depends_on = [
     confluent_role_binding.clients_cluster_admin
   ]
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+# --------------------------------------------------------
+# Flink API Keys
+# --------------------------------------------------------
+resource "confluent_api_key" "env-manager-flink-api-key" {
+  display_name = "env-manager-flink-api-${confluent_environment.cc_handson_env.display_name}-key-${random_id.id.hex}"
+  description  = "Flink API Key that is owned by 'env-manager' service account"
+  owner {
+    id          = confluent_service_account.app_manager.id
+    api_version = confluent_service_account.app_manager.api_version
+    kind        = confluent_service_account.app_manager.kind
+  }
+
+  managed_resource {
+    id          = "${var.cc_compute_pool_region}"
+    api_version = "fcpm/v2"
+    kind        = "Region"
+
+    environment {
+      id = confluent_environment.cc_handson_env.id
+    }
+  }
+
   lifecycle {
     prevent_destroy = false
   }

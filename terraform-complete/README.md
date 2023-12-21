@@ -124,8 +124,14 @@ You deployed:
 ![image](img/Flink_Hands-on_Workshop_Complete.png)
 
 All Labs are deployed and running, please check via [Confluent Console](https://confluent.cloud/login).
-For the last lab [Notification Client](/../notification_client.md) a `client.prperties` will be generated. Take this file to run the [Notification Client](/../notification_client.md).
-A last optional lab would to configure and run the [Notification Client](/../notification_client.md)
+
+Please have a look on topics to show if events are procduced and consumed. The show_promotion topics takes a while to have data.
+
+![image](img/topic_list.png)
+
+As you can see, we did configure that only 1 partition is created per topic, because we want to generate less costs as possible. 
+
+For the last optional lab [Notification Client](/../notification_client.md) a `client.prperties` will be generated. Take this file to run the [Notification Client](/../notification_client.md).
 
 # Destroy the hands.on infrastructure
 ```bash
@@ -143,6 +149,6 @@ There could be a conflict destroying everything with our Tags. In this case dest
 #│ 
 #│ 
 #╵
-# destroy again
+# destroy again if you run into errors
 terraform destroy
 ``` 

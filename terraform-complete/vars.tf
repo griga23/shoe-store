@@ -84,3 +84,8 @@ variable "cc_compute_pool_cfu" {
   type    = number
   default = 5
 }
+
+variable "cc_compute_pool_region" {
+  type    = string
+  default = "aws.eu-central-1"
+}

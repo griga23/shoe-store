@@ -9,9 +9,6 @@ resource "null_resource" "flink_sql_statements" {
     resource.confluent_flink_compute_pool.cc_flink_compute_pool
   ]
   provisioner "local-exec" {
-    command = "./00_deploy_sql_statements.sh"
-  }
-provisioner "local-exec" {
     command = "./00_create_client.properties.sh"
   }
 }
