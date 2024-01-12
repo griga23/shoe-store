@@ -90,7 +90,7 @@ This tutorial was tested with Confluent CLI v3.41.0.
 
 Clone the repo on your desktop.
 ```bash
-cd $HOME
+cd $HOME # or where-ever directory you want to use
 git clone https://github.com/griga23/shoe-store.git
 cd shoe-store
 ```
@@ -111,6 +111,7 @@ cd ./terraform
 terraform init
 terraform plan
 terraform apply
+# Apply shows you what will be provision, enter yes to continue provisioning 
 terraform output -json
 # for sensitive data
 terraform output -raw SRSecret
