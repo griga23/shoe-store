@@ -76,6 +76,12 @@ This tutorial was tested with Confluent CLI v3.41.0.
 
 # Provision services for the demo
 
+Clone the repo on your desktop.
+```bash
+cd $HOME
+git clone https://github.com/griga23/shoe-store.git
+cd shoe-store
+```
 ## Set environment variables
 - Add your API key to the Terraform variables by creating a tfvars file
 ```bash
