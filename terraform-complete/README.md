@@ -98,6 +98,7 @@ cd ./terraform
 terraform init
 terraform plan
 terraform apply
+# apply will show the resources to be provisioned, enter yes to continue provisioning 
 terraform output -json
 # for sensitive data
 terraform output -raw SRSecret
