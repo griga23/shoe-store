@@ -94,48 +94,10 @@ NOTE 1: There might be empty result set if keyed customers tables was created af
 NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
 
 ### 4. Data Enrichment
-We can store the result of a join in a new table.
+We can store the result of a join in a new table. 
+We will join data from: Order, Customer, Product tables together in a single SQL statement.
 
-Create a new table for the string results of the `Order <-> Customer` join.
-```
-CREATE TABLE shoe_order_customer(
-  order_id INT,
-  product_id STRING,
-  first_name STRING,
-  last_name STRING,
-  email STRING
-) WITH (
-    'changelog.mode' = 'retract'
-);
-```
-NOTE: We need to create a table which will be compatible with our `Table <-> Stream` join.
-You can check Dynamic Table stream encodings [here.](https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#table-to-stream-conversion)
-
-Insert data into the new table:
-```
-INSERT INTO shoe_order_customer(
-  order_id,
-  product_id,
-  first_name,
-  last_name,
-  email)
-SELECT
-  order_id,
-  product_id,
-  first_name,
-  last_name,
-  email
-FROM shoe_orders
-  INNER JOIN shoe_customers_keyed 
-  ON shoe_orders.customer_id = shoe_customers_keyed.customer_id;
-```
-
-Verify that the data was joined successfully. 
-```
-SELECT * FROM shoe_order_customer;
-```
-
-Create a new table for `Order <-> Customer <-> Product` Join
+Create a new table for `Order <-> Customer <-> Product` join result:
 ```
 CREATE TABLE shoe_order_customer_product(
   order_id INT,
@@ -151,7 +113,7 @@ CREATE TABLE shoe_order_customer_product(
 );
 ```
 
-Insert the data into the new table:
+Insert joined data from 3 tables into the new table:
 ```
 INSERT INTO shoe_order_customer_product(
   order_id,
@@ -163,17 +125,20 @@ INSERT INTO shoe_order_customer_product(
   sale_price,
   rating)
 SELECT
-  order_id,
-  first_name,
-  last_name,
-  email,
-  brand,
-  model,
-  sale_price,
-  rating
-FROM shoe_order_customer
-  INNER JOIN shoe_products_keyed
-  ON shoe_order_customer.product_id = shoe_products_keyed.product_id;
+  so.order_id,
+  sc.first_name,
+  sc.last_name,
+  sc.email,
+  sp.brand,
+  sp.model,
+  sp.sale_price,
+  sp.rating
+FROM 
+  shoe_orders so
+  INNER JOIN shoe_customers_keyed sc 
+    ON so.customer_id = sc.customer_id
+  INNER JOIN shoe_products_keyed sp
+    ON so.product_id = sp.product_id;
 ```
 
 Verify that the data was joined successfully. 
