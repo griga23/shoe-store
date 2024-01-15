@@ -3,18 +3,8 @@
 # Workshop Deployment via terraform
 
 IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
-The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east-1` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=us-east-2 and cc_cloud_region=us-east-1 vars and also remember during manual setup)
-      + Environment Schema Registry in `us-east-2`
-      + Confluent Cloud Cluster in `us-east-1`
- - Attendees with Lastname first Letter J-R working in region `us-east-2` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=us-east-2 and cc_cloud_region=us-east-2 vars and also remember during manual setup)
-      + Environment Schema Registry in `us-east-2`
-      + Confluent Cloud Cluster in `us-east-2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` (please change region in terraform [vars.tf](terraform/vars.tf) in sr_cloud_region=eu-central-1 and cc_cloud_region=eu-west-1 vars and also remember during manual setup)
-      + Environment Schema Registry in `eu-central-1`
-      + Confluent Cloud Cluster in `eu-west-1`
+We run in AWS and Azure only. Currently we do support [13 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#cloud-regions) within AWS and Azure cloud. GCP is coming soon.
+Please be aware that the cluster and the Flink Pool need to be in the same Cloud-Provider-Region.
 
 This is the deployment of confluent cloud infrastructure resources to run the Flink SQL Hands-on Workshop.
 We will deploy with terraform:
