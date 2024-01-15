@@ -122,6 +122,14 @@ We will now work with the following SQL Worksheet:
 
 Make sure you work with the correct Flink catalog (=environment) and database (=Kafka cluster).
  ![image](terraform/img/sqlWorksheetDetail.png)
+
+If you are using console client you need to select your catalog and database:
+```
+USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
+```
+```
+USE <MY CONFLUENT KAFKA CLUSTER NAME>;
+```
  
 ```
 SHOW CATALOGS;
@@ -130,13 +138,6 @@ SHOW CATALOGS;
 SHOW DATABASES;
 ```
 
-If you are using console client you need to select your catalog and database. In UI client you can do this in the drop down list in the right corner.
-```
-USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
-```
-```
-USE <MY CONFLUENT KAFKA CLUSTER NAME>;
-```
 List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster:
 ```
 SHOW TABLES;
