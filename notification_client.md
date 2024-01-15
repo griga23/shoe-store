@@ -79,7 +79,7 @@ ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verif
 ...
 ```
 
-Then go to Python Folder and execute Ìnstall Certificate.command`
+Then go to Python Folder and execute `Install Certificate.command`
 ![image](terraform/img/certification_error.png)
 
 End Lab
