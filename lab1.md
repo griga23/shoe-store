@@ -71,7 +71,9 @@ Create a Flink Compute Pool in environment `handson-flink`. Now go back to envir
 * choose AWS region (remember the Lastname rule above), click `continue` and 
 * enter Pool Name: `cc_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
+* 
 The pool will be provisioned and ready to use in a couple of moments.
+AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes as of today (January 2024).
 
 ![image](terraform/img/flinkpool.png)
 
