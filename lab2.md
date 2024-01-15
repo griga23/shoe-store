@@ -156,9 +156,9 @@ SELECT
   email,
   SUM(sale_price) AS total,
   CASE
-    WHEN SUM(sale_price) > 80000000 THEN 'GOLD'
-    WHEN SUM(sale_price) > 7000000 THEN 'SILVER'
-    WHEN SUM(sale_price) > 600000 THEN 'BRONZE'
+    WHEN SUM(sale_price) > 800000 THEN 'GOLD'
+    WHEN SUM(sale_price) > 70000 THEN 'SILVER'
+    WHEN SUM(sale_price) > 6000 THEN 'BRONZE'
     ELSE 'CLIMBING'
   END AS rewards_level
 FROM shoe_order_customer_product
