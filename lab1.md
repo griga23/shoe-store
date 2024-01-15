@@ -129,6 +129,8 @@ SHOW CATALOGS;
 ```
 SHOW DATABASES;
 ```
+
+If you are using console client you need to select your catalog and database. In UI client you can do this in the drop down list in the right corner.
 ```
 USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
 ```
