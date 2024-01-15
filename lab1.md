@@ -52,7 +52,7 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 ## 2. Create Pool
 
 IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
+We run in AWS (Azure has been added recently). Currently we do support [8 AWS Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
 
 ### If you are participating onsite in Berlin
 The complete onsite team is working in region: `eu-central-1`. (No changes in the guides (both Terraform and manual) necessary.)
