@@ -25,18 +25,8 @@ confluent update
 ## Confluent Cloud Resources for the Hands-on Workshop: Manual Setup
 
 IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS only. Currently we do support [4 Regions](https://docs.confluent.io/cloud/current/flink/reference/op-supported-features-and-limitations.html#cloud-regions) within AWS cloud.
-The complete onsite team is working in region: `eu-central-1` (all terraform and manual guide do not need to change)
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east-1`
-      + Environment Schema Registry in `us-east-2`
-      + Confluent Cloud Cluster in `us-east-1`
- - Attendees with Lastname first Letter J-R working in region `us-east-2` 
-      + Environment Schema Registry in `us-east-2`
-      + Confluent Cloud Cluster in `us-east2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
-      + Environment Schema Registry in `eu-central-1`
-      + Confluent Cloud Cluster in `eu-west-1`
+We run in AWS and Azure only. Currently we do support [13 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#cloud-regions) within AWS and Azure cloud. GCP is coming soon.
+Please be aware that the cluster and the Flink Poll need to on the same Cloud-Provider-Region.
 
 You can create each Confluent Cloud resource with the confluent cli tool and/or Confluent Cloud Control Plane GUI.
 Both are using the confluent cloud API in background.
