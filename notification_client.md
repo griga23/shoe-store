@@ -73,7 +73,7 @@ The notification looks like this (only with content).
 
 ## ERROR
 If you get this error:
-bash```
+```bash
 ...
 ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1006)
 ...
@@ -81,6 +81,5 @@ ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verif
 
 Then go to Python Folder and execute Ìnstall Certificate.command`
 ![image](terraform/img/certification_error.png)
-
 
 End Lab
