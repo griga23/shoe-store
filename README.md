@@ -4,7 +4,7 @@ Imagine you are running a shoe shop. You want to get an overview of shoe sales, 
 For a good preparation and first understanding, please read this [Guide to Flink SQL: An In-Depth Exploration](https://www.confluent.io/blog/getting-started-with-apache-flink-sql/) . 
 If you want a refresher of the Kafka basics, we highly recommend our [Kafka Fundamentals Workshop](https://www.confluent.io/resources/online-talk/fundamentals-workshop-apache-kafka-101/) .
 
-In this workshop, we will build a Shoe Store Loyalty Engine. We will use Flink SQL in Confluent Cloud on AWS. YOu can find an architecture diagram below.
+In this workshop, we will build a Shoe Store Loyalty Engine. We will use Flink SQL in Confluent Cloud on AWS or Azure (GCP coming soon). YOu can find an architecture diagram below.
 
 ![image](terraform/img/Flink_Hands-on_Workshop_Complete.png)
 
