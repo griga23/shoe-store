@@ -130,7 +130,8 @@ USE CATALOG <MY CONFLUENT ENVIRONMENT NAME>;
 ```
 USE <MY CONFLUENT KAFKA CLUSTER NAME>;
 ```
- 
+
+Check if you can see your catalog(=Environment) and databases(Kafka Clusters):
 ```
 SHOW CATALOGS;
 ```
