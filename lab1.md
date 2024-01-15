@@ -216,6 +216,10 @@ SELECT brand as brand_name,
 FROM shoe_products
 GROUP BY brand;
 ```
+
+
+NOTE: You can find more information about Flink aggregations functions [here.](https://docs.confluent.io/cloud/current/flink/reference/functions/aggregate-functions.html)
+
 ### 7. Time Windows
 
 Let's try Flink's time windowing functions for shoe order records.
