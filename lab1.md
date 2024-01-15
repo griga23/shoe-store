@@ -241,7 +241,7 @@ FROM TABLE(
 GROUP BY window_start, window_end;
 ```
 
-NOTE: You can find more information about Flink Window aggregations [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/window-agg/)
+NOTE: You can find more information about Flink Window aggregations [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/window-tvf.html)
 
 ### 8. Tables with Primary Key 
 
