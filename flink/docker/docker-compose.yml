@@ -26,33 +26,18 @@ services:
     command: bin/sql-client.sh
     depends_on:
       - taskmanager
+      - mysql
     environment:
       - |
         FLINK_PROPERTIES=
         jobmanager.rpc.address: jobmanager
         rest.address: jobmanager     
-    
-  # postgres:
-  #   image: postgres:11.2-alpine
-  #   restart: always
-  #   container_name: postgres
-  #   volumes:
-  #     - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-  #   ports:
-  #     - 5432:5432
- 
-  db:
-    image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
-
-  adminer:
-    image: adminer
-    restart: always
+  mysql:
+    image: ravitomar7/mysql-debezium:v1 
     ports:
-      - 8080:8080
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
         

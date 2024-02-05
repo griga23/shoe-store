@@ -1,11 +1,21 @@
-FROM flink:latest
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.0.2-1.18/flink-sql-connector-kafka-3.0.2-1.18.jar
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-avro-confluent-registry/1.18.1/flink-sql-avro-confluent-registry-1.18.1.jar
-RUN wget -P /opt/flink/lib https://github.com/knaufk/flink-faker/releases/download/v0.5.3/flink-faker-0.5.3.jar
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.0.2-1.18/flink-sql-connector-kafka-3.0.2-1.18.jar 
-RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-jdbc/3.1.0-1.17/flink-connector-jdbc-3.1.0-1.17.jar
-RUN wget -P /opt/flink/lib https://jdbc.postgresql.org/download/postgresql-42.7.0.jar
+# FROM flink:latest
+# RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.0.2-1.18/flink-sql-connector-kafka-3.0.2-1.18.jar
+# RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-avro-confluent-registry/1.18.1/flink-sql-avro-confluent-registry-1.18.1.jar
+# RUN wget -P /opt/flink/lib https://github.com/knaufk/flink-faker/releases/download/v0.5.3/flink-faker-0.5.3.jar
+# RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-jdbc/3.1.0-1.17/flink-connector-jdbc-3.1.0-1.17.jar
+# # COPY mysql-connector-java-8.0.11.jar /opt/flink/lib
+# #RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-jdbc_2.11/1.11.0/flink-connector-jdbc_2.11-1.11.0.jar;
+# RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar;
+# # RUN touch /tmp/jobmanagergateway.sh
+# # RUN echo "#!/bin/bash \\n/opt/flink/bin/sql-gateway.sh start -Dsql-gateway.endpoint.rest.address=localhost &&\\n/opt/flink/bin/jobmanager.sh start" >> /tmp/jobmanagergateway.sh
+# # RUN chmod 777 /tmp/jobmanagergateway.sh
 
-# RUN touch /tmp/jobmanagergateway.sh
-# RUN echo "#!/bin/bash \\n/opt/flink/bin/sql-gateway.sh start -Dsql-gateway.endpoint.rest.address=localhost &&\\n/opt/flink/bin/jobmanager.sh start" >> /tmp/jobmanagergateway.sh
-# RUN chmod 777 /tmp/jobmanagergateway.sh
+
+
+FROM flink:1.17.2-scala_2.12-java8
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/1.17.2/flink-sql-connector-kafka-1.17.2.jar
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-avro-confluent-registry/1.17.2/flink-sql-avro-confluent-registry-1.17.2.jar
+RUN wget -P /opt/flink/lib https://github.com/knaufk/flink-faker/releases/download/v0.5.3/flink-faker-0.5.3.jar
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-jdbc/3.1.0-1.17/flink-connector-jdbc-3.1.0-1.17.jar
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar;
+COPY flink-sql-connector-mysql-cdc-2.4-SNAPSHOT.jar /opt/flink/lib

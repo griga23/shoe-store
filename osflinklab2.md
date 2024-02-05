@@ -1,9 +1,10 @@
-![image](terraform/img/confluent-logo-300-2.png)
+# Open Source Flink Lab 2
+
 # Lab 2
 Finishing Lab 1 is required for Lab 2. If you have not completed it, go back to [Lab 1](osflinklab1.md).
 
 
-[1. Flink Joins](lab2.md#1-flink-joins)
+[1. Flink Joins](osflinklab2.md#1-flink-joins)
 
 [2. Understand Timestamps](lab2.md#2-understand-timestamps)
 
@@ -22,30 +23,88 @@ Finishing Lab 1 is required for Lab 2. If you have not completed it, go back to 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
 
-You can find more information about Flink SQL Joins [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html)
+You can find more information about Flink SQL Joins [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/)
 
 ### 2. Understand Timestamps
-Let's first look at our data records and their timestamps. Open the Flink SQL workspace.
+This is an important piece to understand in stream procssing. Two types of event times exist:
 
-If you left the Flink SQL Workspace or refreshed the page, `catalog` and `database` dropdowns are reset. Make sure they are selected again. 
+1. **Event Time** : This is the time of event happened, this can be contained inside the payload or we can derive this from the metadata(in kafka connectors) which can be (Create Time/ Ingestion Time based on Producer configs). This produces consistent results despite out-of-order or late events.
 
-![image](terraform/img/catalog-and-database-dropdown.png)
+2. **Processing Time**: This is the Wall Clock Time of system processing the messages. This prooduces non-deterministic events and is useful in some usecases. 
 
-Find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic.
+We will understand both by examples here.
+
+***EVENT TIME***
+
+Let us, find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic.
+
+Open the Flink SQL CLI.
+
+First try this:
 ```
-SELECT id,$rowtime 
+DESCRIBE EXTENDED shoe_customers;
+```
+![Alt text](/images/show_customerswots.png)
+
+Did you observe you dont have any time field here, whereas in confluent flink you will find `$rowtime` automatically created.[Try it on Confluent cloud as well for more understanding!]
+
+Let's add this colum to our existing table now,
+
+Run this command now:
+
+```
+ALTER TABLE shoe_customers ADD (ingestion_time timestamp_ltz(3) NOT NULL metadata from 'timestamp');
+```
+ followed by:
+
+ ```
+DESCRIBE EXTENDED shoe_customers;
+ ```
+
+ Voila! we have added a new column with [TIMESTAMP_LTZ(3)](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/types/#timestamp_ltz) field here, and have learned one new command [ALTER](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/alter/).
+ 
+![Alt text](/images/show_cutomersts.png)
+
+
+Now you can try this command to view event time.
+
+```
+SELECT id,ingestion_time 
 FROM shoe_customers  
 WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+
 NOTE: Check the timestamps from when the customer records were generated.
 
 Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic.
+
+Note: We have already added ingestion_time in `shoe_orders` table in previous lab, so no need to add field here.
 ```
-SELECT order_id, customer_id, $rowtime
+SELECT order_id, customer_id, ingestion_time
 FROM shoe_orders
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Check the timestamps when the orders were generated. This is important for the join operations we will do next.
+
+ ***Processing Time***
+
+ The processing time is automatically inserted in table using predefined `PROCTIME()` method. To understand run following SQLs:
+
+ ```
+ DESCRIBE shoe_orders;
+ ```
+![Alt text](/images/proctime1.png)
+
+Observe, we already have proc_time column created in our prewvious lab in this table.
+
+Now, Run this:
+```
+SELECT order_id,ingestion_time, time_type, proc_time from shoe_orders;
+```
+![Alt text](images/timeview.png)
+
+You should observe `proc_time` column is dispplaying you current system time & ingestion_time will show you the time that the kafka record was produced with time_type(Create Time/LogAppendTime).
+
 
 ### 3. Understand Joins
 Now, we can look at the different types of joins available. 
@@ -53,46 +112,70 @@ We will join `order` records and `customer` records.
 
 Join orders with non-keyed customer records (Regular Join):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
 FROM shoe_orders
 INNER JOIN shoe_customers 
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+
 NOTE: Look at the number of rows returned. There are many duplicates!
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
+
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
 FROM shoe_orders
 INNER JOIN shoe_customers
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
-  shoe_orders.`$rowtime` BETWEEN shoe_customers.`$rowtime` - INTERVAL '1' HOUR AND shoe_customers.`$rowtime`;
+  shoe_orders.`ingestion_time` BETWEEN shoe_customers.`ingestion_time` - INTERVAL '1' HOUR AND shoe_customers.`ingestion_time`;
 ```
 
 Join orders with keyed customer records (Regular Join with Keyed Table):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
 FROM shoe_orders
-INNER JOIN shoe_customers_keyed 
-ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
-WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+INNER JOIN shoe_customers_keyed_os
+ON shoe_orders.customer_id = shoe_customers_keyed_os.customer_id
+WHERE shoe_customers_keyed_os.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Look at the number of rows returned. There are no duplicates! This is because we have only one customer record for each customer id.
 
 Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
 FROM shoe_orders
-INNER JOIN shoe_customers_keyed FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime`
-ON shoe_orders.customer_id = shoe_customers_keyed.customer_id
-WHERE shoe_customers_keyed.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+INNER JOIN shoe_customers_keyed_os FOR SYSTEM_TIME AS OF shoe_orders.`ingestion_time`
+ON shoe_orders.customer_id = shoe_customers_keyed_os.customer_id
+WHERE shoe_customers_keyed_os.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
+
+Facing Error? Any idea?
+![Alt text](/images/versionederror.png)
+
+Here 2 things are missing:
+
+1. **Timestamp column:** As discussed previously, we can use following SQL. Run this
+```
+ALTER TABLE shoe_customers_keyed_os ADD (ingestion_time timestamp_ltz(3) NOT NULL metadata from 'timestamp');
+```
+2. **A ROWTIME attribute:** A row time attribute is a special column in a Flink table that represents the event time of each row. You can define a row time attribute and a watermark strategy using the WATERMARK statement as below or during DDL like we did in `shoe_order` table in previous lab. Run this.
+
+```
+ALTER TABLE shoe_customers_keyed_os ADD WATERMARK FOR ingestion_time AS ingestion_time - INTERVAL '5' SECOND;
+```
+
+Now your table should look like this:
+
+![Alt text](/images/rowtimeattr.png)
+
+
 NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
-NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://docs.confluent.io/cloud/current/flink/reference/queries/joins.html#temporal-joins)
+NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/#temporal-joins)
 
+---------------- Done for now----
 ### 4. Data Enrichment
 We can store the result of a join in a new table. 
 We will join data from: Order, Customer, Product tables together in a single SQL statement.
@@ -107,9 +190,24 @@ CREATE TABLE shoe_order_customer_product(
   brand STRING,
   model STRING,
   sale_price INT,
-  rating DOUBLE
-)WITH (
-    'changelog.mode' = 'retract'
+  rating DOUBLE,
+  PRIMARY KEY (order_id) NOT ENFORCED
+)
+WITH 
+(
+  'connector' = 'upsert-kafka',
+  'topic' = 'shoe_order_customer_product_os',
+  'properties.bootstrap.servers'='pkc-7xoy1.eu-central-1.aws.confluent.cloud:9092',
+  'properties.security.protocol'='SASL_SSL',
+  'properties.sasl.jaas.config'='org.apache.flink.kafka.shaded.org.apache.kafka.common.security.plain.PlainLoginModule required username="WCPMDIVBYNGIIH2C" password="n1n+kx0mPXh+RA2xboO63yKE5mJNBOZDH0FpTtX0/gEon1mlqm5qNlc/eGtAZXGv";',
+  'properties.sasl.mechanism'='PLAIN',
+  'properties.group.id' = 'testGroup',
+  'key.format' = 'raw',
+  'value.format' = 'avro-confluent',
+  'value.avro-confluent.url' = 'https://psrc-xm8wx.eu-central-1.aws.confluent.cloud',
+  'value.fields-include' = 'EXCEPT_KEY',
+  'value.avro-confluent.basic-auth.credentials-source'='USER_INFO',
+  'value.avro-confluent.basic-auth.user-info'='P5MI4D3DM4ZDEOTY:fks9JpuSV2kcYN/t/h4FmASTdoMrr+Wkcpa9aYOhAtviPAhz27BGN6bYvd1qLi8F'
 );
 ```
 
@@ -135,9 +233,9 @@ SELECT
   sp.rating
 FROM 
   shoe_orders so
-  INNER JOIN shoe_customers_keyed sc 
+  INNER JOIN shoe_customers_keyed_os sc 
     ON so.customer_id = sc.customer_id
-  INNER JOIN shoe_products_keyed sp
+  INNER JOIN shoe_products_keyed_os sp
     ON so.product_id = sp.product_id;
 ```
 

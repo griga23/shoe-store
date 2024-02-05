@@ -14,5 +14,8 @@ For performinbg labs based on Open Source Apaceh Flink, we need a local Flink Cl
 ![Alt text](/images/image.png)
 
 
+shoe_order_customer_product_os
+
+
 End of Flink prerequisites, continue with [LAB 1](osflinklab1.md).
 ----

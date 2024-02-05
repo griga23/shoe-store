@@ -92,7 +92,8 @@ WITH
 ```
 
 - Create `shoe_orders` table:
-**we will discuss about three additional metadata fields (ingestion_time/time_type/proc_time)later**
+
+**we will discuss about three additional metadata fields (ingestion_time/time_type/proc_time)later, in comparision to confluent flink example treat `ingestion_time` equivalent to `$rowtime`** 
 ``` 
 CREATE TABLE shoe_orders
 (
@@ -101,7 +102,7 @@ CREATE TABLE shoe_orders
 `product_id` VARCHAR(2147483647) NOT NULL,
 `customer_id` VARCHAR(2147483647) NOT NULL,
 `ts` TIMESTAMP(3) NOT NULL,
-`ingestion_time` TIMESTAMP(3) METADATA FROM 'timestamp',
+`ingestion_time` TIMESTAMP_LTZ(3) METADATA FROM 'timestamp',
 `time_type` STRING METADATA FROM 'timestamp-type',
 `proc_time` AS PROCTIME(),
  WATERMARK FOR ingestion_time AS ingestion_time - INTERVAL '5' SECOND
@@ -324,7 +325,6 @@ WITH
 Compare the new table `shoe_customers_keyed_os` with `shoe_customers`, what is the difference?
 
 Also Observe both the topics!!
-
 
 NOTE: You can find more information about primary key constraints [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/create/#primary-key)
 
