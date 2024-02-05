@@ -2,11 +2,11 @@
 
 All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [StartHere Prerequisites](StartHere.md).
 
-Local Installation of Open Source Apache Flink must be up and runnig to get started with this lab. [Flink prerequisites](localflinksetup.md).
+Local Installation of Open Source Apache Flink must be up and runnig to get started with this lab. [Flink prerequisites](StartHere.md).
 
 ## Content of Lab
 
-[1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
+[1. Verify Confluent Cloud Resources](OpenSourceFlinkLab.md#1-verify-confluent-cloud-resources)
 
 [2. Creating Flink Tables for kafka topics](osflinklab1.md#2-create-flink-tables-for-kafka-topics)
 
@@ -27,6 +27,8 @@ Local Installation of Open Source Apache Flink must be up and runnig to get star
 [1. Understand Timestamps](lab2.md#2-understand-timestamps)
 
 [2. Flink Joins](osflinklab2.md#1-flink-joins)
+
+[3. Connecting MYSQLDB with Flink]()
 
 
 
@@ -526,9 +528,6 @@ SELECT order_id,ingestion_time, time_type, proc_time from shoe_orders;
 You should observe `proc_time` column is dispplaying you current system time & ingestion_time will show you the time that the kafka record was produced with time_type(Create Time/LogAppendTime).
 
 
-### 2. Understand Joins
-
-
 ## 9. Flink Joins
 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
@@ -603,3 +602,58 @@ Now your table should look like this:
 NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
 
 NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/#temporal-joins)
+
+
+
+## 3. Connect MYSQLDB with Flink
+
+### Change Data Capture Mode (This is a Streaming Mode- Unbounded Stream we talked about)
+
+CREATE TABLE category_streaming (
+       `sub_category_id` BIGINT NOT NULL,
+       parent_category_name STRING,
+       PRIMARY KEY (`sub_category_id`) NOT ENFORCED
+     ) WITH (
+ 'hostname' = 'mysql',
+ 'connector' = 'mysql-cdc',
+ 'database-name' = 'flink',
+ 'table-name' = 'category',
+ 'username' = 'root',
+ 'password'='admin');
+
+
+### BATCH Mode (This is Bounded Streaming Mode, we talked about)
+
+ CREATE TABLE category_batch (
+       `sub_category_id` BIGINT NOT NULL,
+       parent_category_name STRING,
+       PRIMARY KEY (`sub_category_id`) NOT ENFORCED
+     ) WITH (
+       'connector' = 'jdbc',
+       'url' = 'jdbc:mysql://mysql:3306/flink',
+   'table-name' = 'category',
+       'username' = 'root',
+     'password' = 'admin');
+
+
+Try this in sequence:
+
+`set 'execution.runtime-mode'='batch'`
+
+`select * from category_batch;`
+`select * from category_streaming`
+
+`set 'execution.runtime-mode'='streaming'`
+
+`select * from category_batch;`
+`select * from category_streaming`
+
+You should see liek this, while connecting to a database like mysqldb, we can connect using a CDC connector in a streaming mode or jdbc connector in a batch mode.
+
+![Alt text](/images/execmode.png)
+
+That's All!
+
+Thankyou, Don't forget to try  Svoboda's [repo](https://github.com/griga23/shoe-store). You will understand how Confluent have made flink really easy! 
+
+All the topics are readily available to query.
