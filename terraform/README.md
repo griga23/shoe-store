@@ -22,6 +22,10 @@ We will deploy with terraform:
     - sr-XXXX with Role EnvironmentAdmin
     - clients-XXXX with Role CloudClusterAdmin
     - connectors-XXXX
+- Topics
+    - shoe_order_customer_product_os
+    - shoe_products_keyed_os
+    - shoe_customers_keyed_os
  
 ![image](img/terraform_deployment.png)
 

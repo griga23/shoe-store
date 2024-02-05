@@ -10,6 +10,27 @@ If you already have Confluent Cloud account use CC60COMM to get 60$ free credits
 
 Let terraform create infrastructure for us, follow this [guide](terraform/README.md).
 
+Once you are done setting up your Confluent Cloud infrastructure using the above steps, you would see, we will now grab few properties we will need to communicate to Confluent Cloud from our local flink: 
+
+![alt text](/images/tfop.png)
+
+Grab these two id's: `cc_hands_env`, `cc_kafka_cluster`, 
+
+Grab these two from terminal: 
+`terraform output -raw SRSecret`
+`terraform output -raw SRKey`
+
+Lastly we will need a global API key to avoid any Authorization issues:
+
+Visit Confluent Cloud -> Env -> Cluster -> API Keys(Left Nav)->Add Keys->Global Access-> Give it a name and Download
+https://confluent.cloud/environments/<cc_hands_env>/clusters/<cc_kafka_cluster>
+
+[Note: This is not recommended in production env, we should use service accounts with granual permissions]
+
+Also copy the Schema Registry URL by visiting, you will find Stream Governance Endpoint on bottom right here:
+
+https://confluent.cloud/environments/<cc_hands_env>/clusters
+
 You will deploy this in your Confluent Cloud account:
 
 ![image](/terraform/img/terraform_deployment.png)
@@ -29,11 +50,11 @@ For performinbg labs based on Open Source Apaceh Flink, we need a local Flink Cl
 
 ![Alt text](/images/image.png)
 
-You will need to create following 3 topics in kafka:
+You will need to create following 3 topics in kafka(if not already created, they should have been created though):
 
 `shoe_order_customer_product_os`
+`shoe_products_keyed_os`
+`shoe_customers_keyed_os`
 
-
-
-End of Flink prerequisites, continue with [LAB 1](osflinklab1.md).
+End of Flink prerequisites, continue with [LAB 1](OpenSourceFlinkLab.md).
 ----

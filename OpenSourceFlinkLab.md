@@ -72,11 +72,11 @@ For this workshop, I have already added following connectors to the image:
 - Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](StartHere.md).
 
 If you ever need to drop a table use `DROP TABLE table_name;`
-You will need to replace following values from your enviournment:
-1. username
-2. password
-3. value.avro-confluent.url
-4. value.avro-confluent.basic-auth.user-info
+You will need to replace following values from your enviornment:
+1. username(Gloabal Key download from poral)
+2. password(Gobal Secret downloaded from portal)
+3. value.avro-confluent.url(fetched from env endpoint)
+4. value.avro-confluent.basic-auth.user-info (Format like this: SRKey:SRSecret)
 
 
 - Create `shoe_product` table: 

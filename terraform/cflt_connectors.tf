@@ -260,6 +260,55 @@ resource "confluent_kafka_topic" "orders" {
   }
 }
 
+
+resource "confluent_kafka_topic" "shoe_products_keyed_os" {
+  kafka_cluster {
+    id = confluent_kafka_cluster.cc_kafka_cluster.id
+  }
+  topic_name    = "shoe_products_keyed_os"
+  partitions_count   = 1
+  rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
+  credentials {
+    key    = confluent_api_key.app_manager_kafka_cluster_key.id
+    secret = confluent_api_key.app_manager_kafka_cluster_key.secret
+  }
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "confluent_kafka_topic" "shoe_customers_keyed_os" {
+  kafka_cluster {
+    id = confluent_kafka_cluster.cc_kafka_cluster.id
+  }
+  topic_name    = "shoe_customers_keyed_os"
+  partitions_count   = 1
+  rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
+  credentials {
+    key    = confluent_api_key.app_manager_kafka_cluster_key.id
+    secret = confluent_api_key.app_manager_kafka_cluster_key.secret
+  }
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "confluent_kafka_topic" "shoe_order_customer_product_os" {
+  kafka_cluster {
+    id = confluent_kafka_cluster.cc_kafka_cluster.id
+  }
+  topic_name    = "shoe_order_customer_product_os"
+  partitions_count   = 1
+  rest_endpoint = confluent_kafka_cluster.cc_kafka_cluster.rest_endpoint
+  credentials {
+    key    = confluent_api_key.app_manager_kafka_cluster_key.id
+    secret = confluent_api_key.app_manager_kafka_cluster_key.secret
+  }
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
 # --------------------------------------------------------
 # Create Tags
 # --------------------------------------------------------
