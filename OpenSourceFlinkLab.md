@@ -1,10 +1,10 @@
 # Open Source Flink Lab 1
 
-All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [Confluent Cloud prerequisites](prereq.md).
+All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [StartHere Prerequisites](StartHere.md).
 
 Local Installation of Open Source Apache Flink must be up and runnig to get started with this lab. [Flink prerequisites](localflinksetup.md).
 
-## Content of Lab 1
+## Content of Lab
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
 
@@ -21,6 +21,14 @@ Local Installation of Open Source Apache Flink must be up and runnig to get star
 [7. Tables with Primary Key](osflinklab1.md#7-tables-with-primary-key)
 
 [8. Flink Jobs](osflinklab1.md#8-flink-jobs)
+
+**Advance Topics**
+
+[1. Understand Timestamps](lab2.md#2-understand-timestamps)
+
+[2. Flink Joins](osflinklab2.md#1-flink-joins)
+
+
 
 ## 1. Verify Confluent Cloud Resources
 Let's verify if all resources were created correctly and we can start using them.
@@ -50,19 +58,29 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 
 ## 2. Create Flink Tables for Kafka Topics
 
-We need to create Flink tables to process the data from kafka, we will see later in upcoming labs that in confluent flink version this step is never required.
+We need to create Flink tables to process the data from kafka, You will see later in Jan's [repo](https://github.com/griga23/shoe-store)labs that in confluent flink version this step is never required.
 
 For this workshop, I have already added following connectors to the image:
 
-1. flink-avro-confluent-registry
-2. will add from dockerfile
+1. flink-sql-connector-kafka-1.17.2.jar
+2. flink-sql-avro-confluent-registry-1.17.2.jar
+3. flink-faker-0.5.3.jar
+4. flink-connector-jdbc-3.1.0-1.17.jar
+5. mysql-connector-java-8.0.19.jar;
 
-- Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](localflinksetup.md).
+
+- Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](StartHere.md).
+
+If you ever need to drop a table use `DROP TABLE table_name;`
+You will need to replace following values from your enviournment:
+1. username
+2. password
+3. value.avro-confluent.url
+4. value.avro-confluent.basic-auth.user-info
+
 
 - Create `shoe_product` table: 
 ``` 
-DROP TABLE IF EXISTS shoe_products;
-
 CREATE TABLE shoe_products (
 key STRING,
 id STRING NOT NULL,
@@ -424,4 +442,164 @@ Try
 ![image](/images/tables.png)
 
 
-This is the end of OS Flink Lab 1, please continue with [OS Flink Lab 2](osflinklab2.md).
+
+# Advance Topics
+
+### 1. Understand Timestamps
+This is an important piece to understand in stream procssing. Two types of event times exist:
+
+1. **Event Time** : This is the time of event happened, this can be contained inside the payload or we can derive this from the metadata(in kafka connectors) which can be (Create Time/ Ingestion Time based on Producer configs). This produces consistent results despite out-of-order or late events.
+
+2. **Processing Time**: This is the Wall Clock Time of system processing the messages. This prooduces non-deterministic events and is useful in some usecases. 
+
+We will understand both by examples here.
+
+***EVENT TIME***
+
+Let us, find all customer records for one customer and display the timestamps from when the events were ingested in the `shoe_customers` Kafka topic.
+
+Open the Flink SQL CLI.
+
+First try this:
+```
+DESCRIBE EXTENDED shoe_customers;
+```
+![Alt text](/images/show_customerswots.png)
+
+Did you observe you dont have any time field here, whereas in confluent flink you will find `$rowtime` automatically created.[Try it on Confluent cloud as well for more understanding!]
+
+Let's add this colum to our existing table now,
+
+Run this command now:
+
+```
+ALTER TABLE shoe_customers ADD (ingestion_time timestamp_ltz(3) NOT NULL metadata from 'timestamp');
+```
+ followed by:
+
+ ```
+DESCRIBE EXTENDED shoe_customers;
+ ```
+
+ Voila! we have added a new column with [TIMESTAMP_LTZ(3)](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/types/#timestamp_ltz) field here, and have learned one new command [ALTER](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/alter/).
+ 
+![Alt text](/images/show_cutomersts.png)
+
+
+Now you can try this command to view event time.
+
+```
+SELECT id,ingestion_time 
+FROM shoe_customers  
+WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+NOTE: Check the timestamps from when the customer records were generated.
+
+Find all orders for one customer and display the timestamps from when the events were ingested in the `shoe_orders` Kafka topic.
+
+Note: We have already added ingestion_time in `shoe_orders` table in previous lab, so no need to add field here.
+```
+SELECT order_id, customer_id, ingestion_time
+FROM shoe_orders
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+NOTE: Check the timestamps when the orders were generated. This is important for the join operations we will do next.
+
+ ***Processing Time***
+
+ The processing time is automatically inserted in table using predefined `PROCTIME()` method. To understand run following SQLs:
+
+ ```
+ DESCRIBE shoe_orders;
+ ```
+![Alt text](/images/proctime1.png)
+
+Observe, we already have proc_time column created in our prewvious lab in this table.
+
+Now, Run this:
+```
+SELECT order_id,ingestion_time, time_type, proc_time from shoe_orders;
+```
+![Alt text](images/timeview.png)
+
+You should observe `proc_time` column is dispplaying you current system time & ingestion_time will show you the time that the kafka record was produced with time_type(Create Time/LogAppendTime).
+
+
+### 2. Understand Joins
+
+
+## 9. Flink Joins
+
+Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
+By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
+
+You can find more information about Flink SQL Joins [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/)
+
+Now, we can look at the different types of joins available. 
+We will join `order` records and `customer` records.
+
+Join orders with non-keyed customer records (Regular Join):
+```
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers 
+ON shoe_orders.customer_id = shoe_customers.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+NOTE: Look at the number of rows returned. There are many duplicates!
+
+Join orders with non-keyed customer records in some time windows (Interval Join):
+
+```
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers
+ON shoe_orders.customer_id = shoe_customers.id
+WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
+  shoe_orders.`ingestion_time` BETWEEN shoe_customers.`ingestion_time` - INTERVAL '1' HOUR AND shoe_customers.`ingestion_time`;
+```
+
+Join orders with keyed customer records (Regular Join with Keyed Table):
+```
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers_keyed_os
+ON shoe_orders.customer_id = shoe_customers_keyed_os.customer_id
+WHERE shoe_customers_keyed_os.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+NOTE: Look at the number of rows returned. There are no duplicates! This is because we have only one customer record for each customer id.
+
+Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table):
+```
+SELECT order_id, shoe_orders.`ingestion_time`, first_name, last_name
+FROM shoe_orders
+INNER JOIN shoe_customers_keyed_os FOR SYSTEM_TIME AS OF shoe_orders.`ingestion_time`
+ON shoe_orders.customer_id = shoe_customers_keyed_os.customer_id
+WHERE shoe_customers_keyed_os.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
+```
+
+Facing Error? Any idea?
+![Alt text](/images/versionederror.png)
+
+Here 2 things are missing:
+
+1. **Timestamp column:** As discussed previously, we can use following SQL. Run this
+```
+ALTER TABLE shoe_customers_keyed_os ADD (ingestion_time timestamp_ltz(3) NOT NULL metadata from 'timestamp');
+```
+2. **A ROWTIME attribute:** A row time attribute is a special column in a Flink table that represents the event time of each row. You can define a row time attribute and a watermark strategy using the WATERMARK statement as below or during DDL like we did in `shoe_order` table in previous lab. Run this.
+
+```
+ALTER TABLE shoe_customers_keyed_os ADD WATERMARK FOR ingestion_time AS ingestion_time - INTERVAL '5' SECOND;
+```
+
+Now your table should look like this:
+
+![Alt text](/images/rowtimeattr.png)
+
+
+NOTE 1: There might be empty result set if keyed customers tables was created after the order records were ingested in the shoe_orders topic. 
+
+NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/#temporal-joins)

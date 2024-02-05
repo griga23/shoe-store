@@ -81,7 +81,7 @@ This tutorial was tested with Confluent CLI v3.41.0.
 Clone the repo on your desktop.
 ```bash
 cd $HOME # or where-ever directory you want to use
-git clone https://github.com/griga23/shoe-store.git
+git clone https://github.com/ravitomar7/shoe-store.git
 cd shoe-store
 ```
 
@@ -116,13 +116,8 @@ You can copy the login instruction also from the UI.
 To continue with the UI:
  - Access Confluent Cloud WebUI: https://confluent.cloud/login
  - Access your Environment: `flink_handson_terraform-XXXXXXXX`
- - Start with [lab1](../lab1.md)
 
-You deployed:
-
-![image](img/terraform_deployment.png)
-
-You are ready to [start with LAB1](../lab1.md)
+Once done you can use below instructions to destroy your infrastructure.
 
 # Destroy the hands.on infrastructure
 ```bash
