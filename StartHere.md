@@ -52,9 +52,9 @@ For performinbg labs based on Open Source Apaceh Flink, we need a local Flink Cl
 
 You will need to create following 3 topics in kafka(if not already created, they should have been created though):
 
-`shoe_order_customer_product_os`
-`shoe_products_keyed_os`
-`shoe_customers_keyed_os`
+* `shoe_order_customer_product_os`
+* `shoe_products_keyed_os`
+* `shoe_customers_keyed_os`
 
 End of Flink prerequisites, continue with [LAB 1](OpenSourceFlinkLab.md).
 ----

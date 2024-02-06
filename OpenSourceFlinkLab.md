@@ -30,6 +30,8 @@ Local Installation of Open Source Apache Flink must be up and runnig to get star
 
 [3. Connecting MYSQLDB with Flink]()
 
+[4. Observe Bounded Unbounded Streams and Watermarks]()
+
 
 
 ## 1. Verify Confluent Cloud Resources
@@ -40,6 +42,10 @@ Check if the following topics exist in your Kafka cluster:
  * shoe_products (for product data aka Product Catalog),
  * shoe_customers (for customer data aka Customer CRM),
  * shoe_orders (for realtime order transactions aka Billing System).
+ * shoe_order_customer_product_os
+ * shoe_products_keyed_os
+ * shoe_customers_keyed_os
+
 
 ### Schemas in Schema Registry
 Check if the following Avro schemas exist in your Schema Registry:
@@ -652,6 +658,96 @@ You should see liek this, while connecting to a database like mysqldb, we can co
 
 ![Alt text](/images/execmode.png)
 
+
+## 4. Observe Bounded Unbounded Streams and Watermarks
+
+[Note: Create a `windowed_data` topic in kafka before running this query]
+
+Also run these two queries to understand watermarking latency vs completeness tradeoff. 
+
+Here, we assume that we may get out of order messages upto 1 minute delay so, We will increase watermark from 5 second to 60 seconds.
+
+Drop existing watermark from the table:
+
+```
+ALTER TABLE shoe_orders DROP WATERMARK
+```
+
+Now, Add a new watermark to the same table,
+
+```
+ALTER TABLE shoe_orders ADD WATERMARK FOR ingestion_time AS ingestion_time - INTERVAL '60' SECOND;
+```
+Create a new table backed by a kafka topic to store, `window_start`, `window_end` and `order_count` columns. Also, note we are using `kafka` connector for this table, this only supports append only stream. The append only stream means it cannot handle upserts.
+
+```
+CREATE TABLE windowed_data (
+`window_start` timestamp(3),`window_end` timestamp(3),
+`order_count` BIGINT NOT NULL)
+ WITH 
+(
+   'connector' = 'kafka',
+   'topic' = 'windowed_data',
+   'properties.bootstrap.servers'='pkc-7xoy1.eu-central-1.aws.confluent.cloud:9092',
+   'properties.security.protocol'='SASL_SSL',
+   'properties.sasl.jaas.config'='org.apache.flink.kafka.shaded.org.apache.kafka.common.security.plain.PlainLoginModule required username="WCPMDIVBYNGIIH2C" password="n1n+kx0mPXh+RA2xboO63yKE5mJNBOZDH0FpTtX0/gEon1mlqm5qNlc/eGtAZXGv";',
+   'properties.sasl.mechanism'='PLAIN',
+   'properties.group.id' = 'testGroup',
+   'scan.startup.mode' = 'earliest-offset',
+     'value.format' = 'avro-confluent',
+   'value.avro-confluent.url' = 'https://psrc-xm8wx.eu-central-1.aws.confluent.cloud',
+   'value.fields-include' = 'EXCEPT_KEY',
+   'value.avro-confluent.basic-auth.credentials-source'='USER_INFO',
+   'value.avro-confluent.basic-auth.user-info'='P5MI4D3DM4ZDEOTY:fks9JpuSV2kcYN/t/h4FmASTdoMrr+Wkcpa9aYOhAtviPAhz27BGN6bYvd1qLi8F'
+ );
+```
+
+See the incremental updates happening in this table, based on the watermark specified in source table `shoe_orders`
+
+```
+SELECT
+  window_start, window_end,
+  COUNT(DISTINCT order_id) AS `order_count`
+ FROM TABLE( TUMBLE(TABLE shoe_orders, DESCRIPTOR(`ingestion_time`), INTERVAL '5' MINUTES))
+ GROUP BY window_start,window_end;
+```
+The below subsection will help you differentiate between bounded and unbounded streams.
+
+Remember the bounded stream have a start & end time, while unbounded do not have.
+
+### Bounded Stream
+
+Now, when you run this query, you will see it is sucessfully submitted and you will start getting data in `windowed_data` table.
+
+```
+INSERT into windowed_data SELECT
+  window_start, window_end,
+  COUNT(DISTINCT order_id) AS `order_count`
+ FROM TABLE( TUMBLE(TABLE shoe_orders, DESCRIPTOR(`ingestion_time`), INTERVAL '5' MINUTES))
+ GROUP BY window_start,window_end;
+ ```
+Try:
+
+```
+SELECT * from windowed_data
+```
+
+Do you see all buckets since last minute?
+
+Now open the webUI at http://localhost:8080, and see this job under running jobs.
+
+You should see a watermark been updated here.
+
+### Unbounded Stream
+
+In the above query if we remove the `window_start` from TUMBLE Table, you will see an error.
+```
+INSERT into windowed_data SELECT
+  window_start, window_end,
+  COUNT(DISTINCT order_id) AS `order_count`
+ FROM TABLE( TUMBLE(TABLE shoe_orders, DESCRIPTOR(`ingestion_time`), INTERVAL '5' MINUTES))
+ GROUP BY window_end;
+```
 That's All!
 
 Thankyou, Don't forget to try  Svoboda's [repo](https://github.com/griga23/shoe-store). You will understand how Confluent have made flink really easy! 
