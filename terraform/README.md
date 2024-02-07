@@ -23,6 +23,9 @@ We will deploy with terraform:
     - clients-XXXX with Role CloudClusterAdmin
     - connectors-XXXX
 - Topics
+    - shoe_orders
+    - shoe_products
+    - shoe_customers
     - shoe_order_customer_product_os
     - shoe_products_keyed_os
     - shoe_customers_keyed_os
@@ -120,6 +123,9 @@ You can copy the login instruction also from the UI.
 To continue with the UI:
  - Access Confluent Cloud WebUI: https://confluent.cloud/login
  - Access your Environment: `flink_handson_terraform-XXXXXXXX`
+
+**You can continue [here](../StartHere.md#grab-your-credentials)**
+
 
 Once done you can use below instructions to destroy your infrastructure.
 

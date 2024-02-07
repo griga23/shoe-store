@@ -1,12 +1,14 @@
 # STEP 1: Setup Confluent Enviournment using the below instructions.
 
-[You can skip this section if you have local setup of kafka running, but then you will have to replace all bootstrap, credentials etc yourself. We recommend you create a confluent account to get started easily and switch later]
+[You can skip this section if you have local setup of kafka running, but then you will have to replace all bootstrap, credentials etc yourself. You also will need to populate your topics. We recommend you create a confluent account to get started easily and switch later]
 
-Sign-up with Confluent Cloud is very easy and you will get a $400 budget for our Hands-on Workshop.
+Sign-up with Confluent Cloud is very easy and you will get a $400 budget for this Hands-on Workshop.
 
 If you already have Confluent Cloud account use CC60COMM to get 60$ free credits.[Thanks Ena for this]
 
 Let terraform create infrastructure for us, follow this [guide](terraform/README.md).
+
+# Grab your Credentials
 
 Once you are done setting up your Confluent Cloud infrastructure using the above steps, you would see, we will now grab few properties we will need to communicate to Confluent Cloud from our local flink: 
 

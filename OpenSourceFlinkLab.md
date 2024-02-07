@@ -1,8 +1,8 @@
 # Open Source Flink Lab 1
 
-All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [StartHere Prerequisites](StartHere.md).
+All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [StartHere Prerequisites](StartHere.md#step-1-setup-confluent-enviournment-using-the-below-instructions).
 
-Local Installation of Open Source Apache Flink must be up and runnig to get started with this lab. [Flink prerequisites](StartHere.md).
+Local Installation of Open Source Apache Flink must be up and runnig to get started with this lab. [Flink prerequisites](StartHere.md#step-2-prerequisite-for-open-source-flink).
 
 ## Content of Lab
 
@@ -42,9 +42,9 @@ Check if the following topics exist in your Kafka cluster:
  * shoe_products (for product data aka Product Catalog),
  * shoe_customers (for customer data aka Customer CRM),
  * shoe_orders (for realtime order transactions aka Billing System).
- * shoe_order_customer_product_os
- * shoe_products_keyed_os
- * shoe_customers_keyed_os
+ * shoe_order_customer_product_os (will be used to key tables)
+ * shoe_products_keyed_os (will be used to key tables)
+ * shoe_customers_keyed_os (will be used to key tables)
 
 
 ### Schemas in Schema Registry
@@ -68,7 +68,7 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 
 We need to create Flink tables to process the data from kafka, You will see later in Jan's [repo](https://github.com/griga23/shoe-store)labs that in confluent flink version this step is never required.
 
-For this workshop, I have already added following connectors to the image:
+For this workshop, I have already added following connectors to the docker image:
 
 1. flink-sql-connector-kafka-1.17.2.jar
 2. flink-sql-avro-confluent-registry-1.17.2.jar
@@ -76,10 +76,9 @@ For this workshop, I have already added following connectors to the image:
 4. flink-connector-jdbc-3.1.0-1.17.jar
 5. mysql-connector-java-8.0.19.jar;
 
+ Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](StartHere.md#setup-using-docker).
 
-- Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](StartHere.md).
-
-If you ever need to drop a table use `DROP TABLE table_name;`
+Remember, If you ever need to drop a table use `DROP TABLE table_name;`
 
 SQL-CLIENT currently do not support variables, so you will need to replace following values from your enviornment in all the queries:
 1. username(Gloabal Key download from poral)
@@ -88,7 +87,7 @@ SQL-CLIENT currently do not support variables, so you will need to replace follo
 4. value.avro-confluent.basic-auth.user-info (Format like this: SRKey:SRSecret)
 
 
-- Create `shoe_product` table: 
+### Create `shoe_product` table: 
 ``` 
 CREATE TABLE shoe_products (
 key STRING,
@@ -118,9 +117,10 @@ WITH
 );
 ```
 
-- Create `shoe_orders` table:
+### Create `shoe_orders` table:
 
-**we will discuss about three additional metadata fields (ingestion_time/time_type/proc_time)later, in comparision to confluent flink example treat `ingestion_time` equivalent to `$rowtime`** 
+*Don't worry about three additional metadata fields (ingestion_time/time_type/proc_time), we will discuss it later in lab. In comparision to confluent flink example treat `ingestion_time` equivalent to `$rowtime`*
+
 ``` 
 CREATE TABLE shoe_orders
 (
@@ -153,7 +153,7 @@ WITH
   'value.avro-confluent.basic-auth.user-info'='P5MI4D3DM4ZDEOTY:fks9JpuSV2kcYN/t/h4FmASTdoMrr+Wkcpa9aYOhAtviPAhz27BGN6bYvd1qLi8F'
 );
 ```
-- Create `shoe_customers` table:
+### Create `shoe_customers` table:
 
 ```
 CREATE TABLE shoe_customers (
@@ -190,12 +190,13 @@ WITH
 ```
 
 ## 3. Flink Tables
-Let's see how our created tables looks in flink. As discussed before, in open source flink we need to explicitly create/define tables on topics we want to process. However, similar to CC Flink,any table created in Flink(using kafka connector) is visible as a topic in Kafka. This is how, Flink provides a SQL interface on top of Kafka.
+
+Let's see how our created tables looks in Flink. For some sources there exists a concept of Catalog and Database, where all  the source exist automatically in Flink. You can observe that in Confluent Cloud Flink, all tables are automaticaly created inside database(cluster) and catalog(Environment). We are not configuring catalog in this workshop and hence we use defaults. 
 
 In our example following mapping exists:
 | Attribute          | OS Flink     | Confluent Flink |
 | :------------   |:---------| :--- |
-| Catalog    | default_catalog   | Envoirnment
+| Catalog    | default_catalog   | Environment
 | Database        | default_database  | Cluster
 | Table | Table Names     | Table+Schema|
 
@@ -264,6 +265,8 @@ SELECT order_id, product_id, customer_id, event_time
   WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a'
   LIMIT 10;
 ```
+
+Don't you find it similar to SQL you have used before?
 
 ### 5. Aggregations
 Let's try to run more advanced queries.
