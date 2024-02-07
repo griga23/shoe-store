@@ -1,2 +1,0 @@
-FROM debezium/example-mysql:1.1
-COPY category.sql /docker-entrypoint-initdb.d/
