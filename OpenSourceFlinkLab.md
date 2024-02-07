@@ -8,29 +8,29 @@ Local Installation of Open Source Apache Flink must be up and runnig to get star
 
 [1. Verify Confluent Cloud Resources](OpenSourceFlinkLab.md#1-verify-confluent-cloud-resources)
 
-[2. Creating Flink Tables for kafka topics](osflinklab1.md#2-create-flink-tables-for-kafka-topics)
+[2. Creating Flink Tables for kafka topics](OpenSourceFlinkLab.md#2-create-flink-tables-for-kafka-topics)
 
-[3. Flink Tables](osflinklab1.md#3-flink-tables)
+[3. Flink Tables](OpenSourceFlinkLab.md#3-flink-tables)
 
-[4. Select Queries](osflinklab1.md#4-select-queries)
+[4. Select Queries](OpenSourceFlinkLab.md#4-select-queries)
 
-[5. Aggregations](losflinklab1.md#5-aggregations)
+[5. Aggregations](OpenSourceFlinkLab.md#5-aggregations)
 
-[6. Time Windows](osflinklab1.md#6-time-windows)
+[6. Time Windows](OpenSourceFlinkLab.md#6-time-windows)
 
-[7. Tables with Primary Key](osflinklab1.md#7-tables-with-primary-key)
+[7. Tables with Primary Key](OpenSourceFlinkLab.md#7-tables-with-primary-key)
 
-[8. Flink Jobs](osflinklab1.md#8-flink-jobs)
+[8. Flink Jobs](OpenSourceFlinkLab.md#8-flink-jobs)
 
 **Advance Topics**
 
-[1. Understand Timestamps](lab2.md#2-understand-timestamps)
+[1. Understand Timestamps](OpenSourceFlinkLab.md#1-understand-timestamps)
 
-[2. Flink Joins](osflinklab2.md#1-flink-joins)
+[2. Flink Joins](OpenSourceFlinkLab.md#2-flink-joins)
 
-[3. Connecting MYSQLDB with Flink]()
+[3. Connecting MYSQLDB with Flink](OpenSourceFlinkLab.md#3-connect-mysqldb-with-flink)
 
-[4. Observe Bounded Unbounded Streams and Watermarks]()
+[4. Observe Bounded Unbounded Streams and Watermarks](OpenSourceFlinkLab.md#4-observe-bounded-unbounded-streams-and-watermarks)
 
 
 
@@ -80,7 +80,8 @@ For this workshop, I have already added following connectors to the image:
 - Open the terminal where sql-client is already running.[You must have done completed this flinksetup, if not please do](StartHere.md).
 
 If you ever need to drop a table use `DROP TABLE table_name;`
-You will need to replace following values from your enviornment:
+
+SQL-CLIENT currently do not support variables, so you will need to replace following values from your enviornment in all the queries:
 1. username(Gloabal Key download from poral)
 2. password(Gobal Secret downloaded from portal)
 3. value.avro-confluent.url(fetched from env endpoint)
@@ -534,7 +535,7 @@ SELECT order_id,ingestion_time, time_type, proc_time from shoe_orders;
 You should observe `proc_time` column is dispplaying you current system time & ingestion_time will show you the time that the kafka record was produced with time_type(Create Time/LogAppendTime).
 
 
-## 9. Flink Joins
+## 2. Flink Joins
 
 Flink SQL supports complex and flexible join operations over dynamic tables. There are a number of different types of joins to account for the wide variety of semantics that queries may require.
 By default, the order of joins is not optimized. Tables are joined in the order in which they are specified in the FROM clause.
