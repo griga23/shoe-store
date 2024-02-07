@@ -2,8 +2,6 @@
 
 [You can skip this section if you have local setup of kafka running, but then you will have to replace all bootstrap, credentials etc yourself. We recommend you create a confluent account to get started easily and switch later]
 
-[Note and Credits] We are using fork of Jan Svoboda's [repo](https://github.com/griga23/shoe-store). After completing this excercise you are highly encouraged to try Confluent Flink with the same example.
-
 Sign-up with Confluent Cloud is very easy and you will get a $400 budget for our Hands-on Workshop.
 
 If you already have Confluent Cloud account use CC60COMM to get 60$ free credits.[Thanks Ena for this]
@@ -23,17 +21,27 @@ Grab these two from terminal:
 Lastly we will need a global API key to avoid any Authorization issues:
 
 Visit Confluent Cloud -> Env -> Cluster -> API Keys(Left Nav)->Add Keys->Global Access-> Give it a name and Download
+
+OR 
+
+You can directly navigate here after login to confluent cloud:
 https://confluent.cloud/environments/<cc_hands_env>/clusters/<cc_kafka_cluster>
 
-[Note: This is not recommended in production env, we should use service accounts with granual permissions]
+`[Note: This is not recommended in production env, we should use service accounts with granual permissions]`
 
-Also copy the Schema Registry URL by visiting, you will find Stream Governance Endpoint on bottom right here:
+Also copy the `Schema Registry URL` by visiting, you will find Stream Governance Endpoint on bottom right here:
 
 https://confluent.cloud/environments/<cc_hands_env>/clusters
 
 You will deploy this in your Confluent Cloud account:
 
 ![image](/terraform/img/terraform_deployment.png)
+
+You will need following values to perform the labs:
+1. username (Gloabal Key download from poral)
+2. password (Gobal Secret downloaded from portal)
+3. value.avro-confluent.url (fetched from env endpoint)
+4. value.avro-confluent.basic-auth.user-info (Format like this: SRKey:SRSecret)
 
 # STEP 2: Prerequisite for Open Source Flink
 For performinbg labs based on Open Source Apaceh Flink, we need a local Flink Cluster running:
@@ -56,5 +64,5 @@ You will need to create following 3 topics in kafka(if not already created, they
 * `shoe_products_keyed_os`
 * `shoe_customers_keyed_os`
 
-End of Flink prerequisites, continue with [LAB 1](OpenSourceFlinkLab.md).
+End of Flink prerequisites, continue with [LAB](OpenSourceFlinkLab.md).
 ----
