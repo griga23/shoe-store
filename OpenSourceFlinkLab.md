@@ -615,7 +615,7 @@ NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.
 ## 3. Connect MYSQLDB with Flink
 
 ### Change Data Capture Mode (This is a Streaming Mode- Unbounded Stream we talked about)
-
+```
 CREATE TABLE category_streaming (
        `sub_category_id` BIGINT NOT NULL,
        parent_category_name STRING,
@@ -627,10 +627,10 @@ CREATE TABLE category_streaming (
  'table-name' = 'category',
  'username' = 'root',
  'password'='admin');
-
+```
 
 ### BATCH Mode (This is Bounded Streaming Mode, we talked about)
-
+```
  CREATE TABLE category_batch (
        `sub_category_id` BIGINT NOT NULL,
        parent_category_name STRING,
@@ -642,18 +642,21 @@ CREATE TABLE category_streaming (
        'username' = 'root',
      'password' = 'admin');
 
-
+```
 Try this in sequence:
 
-`set 'execution.runtime-mode'='batch'`
 
-`select * from category_batch;`
-`select * from category_streaming`
+```set 'execution.runtime-mode'='batch';```
 
-`set 'execution.runtime-mode'='streaming'`
+```select * from category_batch;```
 
-`select * from category_batch;`
-`select * from category_streaming`
+```select * from category_streaming;```
+
+```set 'execution.runtime-mode'='streaming';```
+
+```select * from category_batch;```
+
+```select * from category_streaming;```
 
 You should see liek this, while connecting to a database like mysqldb, we can connect using a CDC connector in a streaming mode or jdbc connector in a batch mode.
 
@@ -671,7 +674,7 @@ Here, we assume that we may get out of order messages upto 1 minute delay so, We
 Drop existing watermark from the table:
 
 ```
-ALTER TABLE shoe_orders DROP WATERMARK
+ALTER TABLE shoe_orders DROP WATERMARK;
 ```
 
 Now, Add a new watermark to the same table,
@@ -712,6 +715,9 @@ SELECT
  FROM TABLE( TUMBLE(TABLE shoe_orders, DESCRIPTOR(`ingestion_time`), INTERVAL '5' MINUTES))
  GROUP BY window_start,window_end;
 ```
+
+If you see error related to batch mode use this ```set 'execution.runtime-mode'='streaming';```
+
 The below subsection will help you differentiate between bounded and unbounded streams.
 
 Remember the bounded stream have a start & end time, while unbounded do not have.
@@ -730,7 +736,7 @@ INSERT into windowed_data SELECT
 Try:
 
 ```
-SELECT * from windowed_data
+SELECT * from windowed_data;
 ```
 
 Do you see all buckets since last minute?
