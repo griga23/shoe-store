@@ -269,7 +269,7 @@ SELECT order_id, product_id, customer_id, event_time
 Don't you find it similar to SQL you have used before?
 
 ### 5. Aggregations
-Let's try to run more advanced queries.
+Let's try to run some ad-hoc advanced queries.
 
 First find out the number of customers records and then the number of unique customers.
 ```
