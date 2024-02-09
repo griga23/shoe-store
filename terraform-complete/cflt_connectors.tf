@@ -372,7 +372,7 @@ resource "confluent_connector" "datagen_products" {
   config_sensitive = {}
   config_nonsensitive = {
     "connector.class"          = "DatagenSource"
-    "name"                     = "DSoC_products"
+    "name"                     = "${var.use_prefix}${var.cc_connector_dsoc_products_name}"
     "kafka.auth.mode"          = "SERVICE_ACCOUNT"
     "kafka.service.account.id" = confluent_service_account.connectors.id
     "kafka.topic"              = confluent_kafka_topic.products.topic_name
@@ -406,7 +406,7 @@ resource "confluent_connector" "datagen_customers" {
   config_sensitive = {}
   config_nonsensitive = {
     "connector.class"          = "DatagenSource"
-    "name"                     = "DSoC_customers"
+    "name"                     = "${var.use_prefix}${var.cc_connector_dsoc_customers_name}"
     "kafka.auth.mode"          = "SERVICE_ACCOUNT"
     "kafka.service.account.id" = confluent_service_account.connectors.id
     "kafka.topic"              = confluent_kafka_topic.customers.topic_name
@@ -440,7 +440,7 @@ resource "confluent_connector" "datagen_orders" {
   config_sensitive = {}
   config_nonsensitive = {
     "connector.class"          = "DatagenSource"
-    "name"                     = "DSoC_orders"
+    "name"                     = "${var.use_prefix}${var.cc_connector_dsoc_orders_name}"
     "kafka.auth.mode"          = "SERVICE_ACCOUNT"
     "kafka.service.account.id" = confluent_service_account.connectors.id
     "kafka.topic"              = confluent_kafka_topic.orders.topic_name
