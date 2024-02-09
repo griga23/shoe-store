@@ -30,7 +30,7 @@ Local Installation of Open Source Apache Flink must be up and runnig to get star
 
 [3. Connecting MYSQLDB with Flink](OpenSourceFlinkLab.md#3-connect-mysqldb-with-flink)
 
-[4. Observe Bounded Unbounded Streams and Watermarks](OpenSourceFlinkLab.md#4-observe-bounded-unbounded-streams-and-watermarks)
+[4. Observe Watermarks in UI](OpenSourceFlinkLab.md#4-observe-watermarks)
 
 
 
@@ -285,7 +285,7 @@ For each shoe brand, find the number of shoe models, average rating and maximum 
 SELECT brand as brand_name, 
     COUNT(DISTINCT name) as models_by_brand, 
     ROUND(AVG(rating),2) as avg_rating,
-    MAX(sale_price)/100 as max_price
+    MAX(sale_price) as max_price
 FROM shoe_products
 GROUP BY brand;
 ```
@@ -350,11 +350,10 @@ WITH
   'value.avro-confluent.basic-auth.user-info'='P5MI4D3DM4ZDEOTY:fks9JpuSV2kcYN/t/h4FmASTdoMrr+Wkcpa9aYOhAtviPAhz27BGN6bYvd1qLi8F'
 );
 ```
-**Observe upsert kafka connector, and read [here](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/table/upsert-kafka/). Remember we have created a new topic `shoe_customers_keyed_os` as a part of Flink OS pre-requisite**
-
 Compare the new table `shoe_customers_keyed_os` with `shoe_customers`, what is the difference?
 
-Also Observe both the topics!!
+**Observe upsert kafka connector, and read [here](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/table/upsert-kafka/). Remember we have created a new topic `shoe_customers_keyed_os` as a part of Flink OS pre-requisite**
+
 
 NOTE: You can find more information about primary key constraints [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/create/#primary-key)
 
@@ -432,7 +431,7 @@ INSERT INTO shoe_products_keyed_os
 Check if only a single record is returned for some product.
 ```
 SELECT * 
- FROM shoe_products_keyed  
+ FROM shoe_products_keyed_os 
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
@@ -527,7 +526,7 @@ NOTE: Check the timestamps when the orders were generated. This is important for
  ```
 ![Alt text](/images/proctime1.png)
 
-Observe, we already have proc_time column created in our prewvious lab in this table.
+Observe, we already have proc_time column created during our `create table shoe_order`command. 
 
 Now, Run this:
 ```
@@ -613,7 +612,7 @@ NOTE 1: There might be empty result set if keyed customers tables was created af
 
 NOTE 2: You can find more information about Temporal Joins with Flink SQL [here.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sql/queries/joins/#temporal-joins)
 
-
+HINT: Stop INSERT into customer_keyed_os and then start the insert again with `ingestion_time`. Then rerun the query, you should see output! Think and try this, this will clear many concepts.
 
 ## 3. Connect MYSQLDB with Flink
 
@@ -666,11 +665,11 @@ You should see liek this, while connecting to a database like mysqldb, we can co
 ![Alt text](/images/execmode.png)
 
 
-## 4. Observe Bounded Unbounded Streams and Watermarks
+## 4. Observe Watermarks
 
 [Note: Create a `windowed_data` topic in kafka before running this query]
 
-Also run these two queries to understand watermarking latency vs completeness tradeoff. 
+Also run these  queries to understand watermarking latency vs completeness tradeoff. 
 
 Here, we assume that we may get out of order messages upto 1 minute delay so, We will increase watermark from 5 second to 60 seconds.
 
@@ -721,13 +720,9 @@ SELECT
 
 If you see error related to batch mode use this ```set 'execution.runtime-mode'='streaming';```
 
-The below subsection will help you differentiate between bounded and unbounded streams.
-
 Remember the bounded stream have a start & end time, while unbounded do not have.
 
-### Bounded Stream
-
-Now, when you run this query, you will see it is sucessfully submitted and you will start getting data in `windowed_data` table.
+Now, when you run this query, you will see it is sucessfully submitted and you will start getting data in `windowed_data` table and appended in the topic.
 
 ```
 INSERT into windowed_data SELECT
@@ -751,15 +746,14 @@ You should see a watermark been updated here.
 ### Unbounded Stream
 
 In the above query if we remove the `window_start` from TUMBLE Table, you will see an error.
+Try this yourself, create a `unbounded_windowed_data` table similar to above and run this query, it will fail because this query will emit upserts which are not possible through kafka connector. 
 ```
-INSERT into windowed_data SELECT
-  window_start, window_end,
+INSERT into unbounded_windowed_data SELECT
+  window_end,
   COUNT(DISTINCT order_id) AS `order_count`
  FROM TABLE( TUMBLE(TABLE shoe_orders, DESCRIPTOR(`ingestion_time`), INTERVAL '5' MINUTES))
  GROUP BY window_end;
 ```
-That's All!
+That's All! I know this have been a lot, but it will take some time!
 
 Thankyou, Don't forget to try  Svoboda's [repo](https://github.com/griga23/shoe-store). You will understand how Confluent have made flink really easy! 
-
-All the topics are readily available to query.
