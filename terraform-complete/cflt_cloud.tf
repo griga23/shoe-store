@@ -2,7 +2,7 @@
 # Confluent Cloud Environment
 # -------------------------------------------------------
 resource "confluent_environment" "cc_handson_env" {
-  display_name = "${var.cc_env_name}-${random_id.id.hex}"
+  display_name = "${var.use_prefix}${var.cc_env_name}-${random_id.id.hex}"
   lifecycle {
     prevent_destroy = false
   }
@@ -33,7 +33,7 @@ resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
 # Confluent Cloud Kafka Cluster
 # --------------------------------------------------------
 resource "confluent_kafka_cluster" "cc_kafka_cluster" {
-  display_name = var.cc_cluster_name
+  display_name = "${var.use_prefix}${var.cc_cluster_name}"
   availability = var.cc_availability
   cloud        = var.cc_cloud_provider
   region       = var.cc_cloud_region
@@ -50,7 +50,7 @@ resource "confluent_kafka_cluster" "cc_kafka_cluster" {
 # Flink Compute Pool
 # --------------------------------------------------------
 resource "confluent_flink_compute_pool" "cc_flink_compute_pool" {
-  display_name = "${var.cc_dislay_name}-${random_id.id.hex}"
+  display_name = "${var.use_prefix}${var.cc_dislay_name}-${random_id.id.hex}"
   cloud        = var.cc_cloud_provider
   region       = var.cc_cloud_region
   max_cfu      = var.cc_compute_pool_cfu

@@ -94,6 +94,16 @@ confluent_cloud_api_secret = "{Cloud API Key Secret}"
 EOF
 ```
 
+### Optional: Prefix your resources
+
+In some cases you may want to prefix your resources, to do so use:
+
+```bash
+cat >> $PWD/terraform/terraform.tfvars <<EOF
+use_prefix = "{choose your prefix}"
+EOF
+```
+
 ## Deploy via terraform
 run the following commands:
 ```Bash

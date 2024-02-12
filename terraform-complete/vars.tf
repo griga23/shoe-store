@@ -11,6 +11,15 @@ resource "random_id" "id" {
 }
 
 # ----------------------------------------
+# Generic prefix to use in a common organization
+# ----------------------------------------
+variable "use_prefix" {
+  description = "If a common organization is being used, and default names are not updated, choose a prefix"
+  type        = string
+  default     = ""
+}
+
+# ----------------------------------------
 # Confluent Cloud Kafka cluster variables
 # ----------------------------------------
 variable "confluent_cloud_api_key" {
@@ -88,4 +97,22 @@ variable "cc_compute_pool_cfu" {
 variable "cc_compute_pool_region" {
   type    = string
   default = "aws.eu-central-1"
+}
+
+# --------------------------------------------
+# Confluent Cloud Connectors name
+# --------------------------------------------
+variable "cc_connector_dsoc_products_name" {
+  type    = string
+  default = "DSoC_products"
+}
+
+variable "cc_connector_dsoc_customers_name" {
+  type    = string
+  default = "DSoC_customers"
+}
+
+variable "cc_connector_dsoc_orders_name" {
+  type    = string
+  default = "DSoC_orders"
 }
