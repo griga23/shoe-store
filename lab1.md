@@ -25,7 +25,7 @@
 Let's verify if all resources were created correctly and we can start using them in the environment `sbb-flink`.
 
 ### Kafka Topics
-Check if the following topics exist in your Kafka cluster cluster_0 in in the environment `sbb-flink`:
+Check if the following topics exist in your Kafka cluster `cluster_0` in in the environment `sbb-flink`:
  * shoe_products (for product data aka Product Catalog),
  * shoe_customers (for customer data aka Customer CRM),
  * shoe_orders (for realtime order transactions aka Billing System).
