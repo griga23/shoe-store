@@ -20,7 +20,6 @@ The hands-on consists of two labs (see below), and these require Confluent Cloud
   *  [Lab2](lab2.md): Join Statements, Data Enrichment, Statement Sets  
 
 Together, the Labs will design a loyality program within Flink SQL. You can see the complete Mapping of dynamic Tables and Topics in the next graphic.
-> [!NOTE]
 
 ![image](terraform/img/flink_sql_diagram.png)
 
