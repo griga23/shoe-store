@@ -1,8 +1,6 @@
 ![image](terraform/img/confluent-logo-300-2.png)
 # Lab 1
 
-All required resources in Confluent Cloud must be already created for this lab to work correctly. If you haven't already, please follow the [prerequisites](prereq.md).
-
 ## Content of Lab 1
 
 [1. Verify Confluent Cloud Resources](lab1.md#1-verify-confluent-cloud-resources)
@@ -24,16 +22,16 @@ All required resources in Confluent Cloud must be already created for this lab t
 [9. Flink Jobs](lab1.md#9-flink-jobs)
 
 ## 1. Verify Confluent Cloud Resources
-Let's verify if all resources were created correctly and we can start using them.
+Let's verify if all resources were created correctly and we can start using them in the environment `sbb-flink`.
 
 ### Kafka Topics
-Check if the following topics exist in your Kafka cluster:
+Check if the following topics exist in your Kafka cluster cluster_0 in in the environment `sbb-flink`:
  * shoe_products (for product data aka Product Catalog),
  * shoe_customers (for customer data aka Customer CRM),
  * shoe_orders (for realtime order transactions aka Billing System).
 
 ### Schemas in Schema Registry
-Check if the following Avro schemas exist in your Schema Registry:
+Check if the following Avro schemas exist in your Schema Registry in the environment `sbb-flink`:
  * shoe_products-value,
  * shoe_customers-value,
  * shoe_orders-value.
@@ -51,29 +49,14 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 
 ## 2. Create Pool
 
-IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS (Azure has been added recently). Currently we do support [8 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#flink-sql-cloud-regions) within AWS cloud.
-
-### If you are participating onsite in Berlin
-The complete onsite team is working in region: `eu-central-1`. (No changes in the guides (both Terraform and manual) necessary.)
-
-### If you are participating online via zoom
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east-1` 
-     * Flink SQL Pool in `us-east-1`
- - Attendees with Lastname first Letter J-R working in region `us-east-2` 
-     * Flink SQL Pool in `us-east-2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
-     * Flink SQL Pool in `eu-west-1`
-
 ### Create Flink Compute Pool
-Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
-* choose AWS region (remember the Lastname rule above), click `continue` and 
-* enter Pool Name: `cc_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
+Create a Flink Compute Pool in environment `sbb-flink`. Now go back to environment `sbb-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
+* choose AWS region, click `continue` and 
+* enter Pool Name: `<yourname>_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
 * 
 The pool will be provisioned and ready to use in a couple of moments.
-AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes as of today (January 2024).
+AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes.
 
 ![image](terraform/img/flinkpool.png)
 
@@ -82,8 +65,8 @@ AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes as of today (Januar
 You can use your web browser or console to enter Flink SQL statements.
   * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool
     You now have to set which catalog and database you want to use:
-    - Set the environment name `handson-flink` as catalog,
-    - and the cluster name `cc_handson_cluster` as database
+    - Set the environment name `sbb-flink` as catalog,
+    - and the cluster name `cluster_0` as database
     
     via the dropdown boxes, see graphic below
     
