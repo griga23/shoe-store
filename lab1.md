@@ -50,13 +50,8 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 ## 2. Create Pool
 
 ### Create Flink Compute Pool
-Create a Flink Compute Pool in environment `sbb-flink`. Now go back to environment `sbb-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
-* choose AWS region, click `continue` and 
-* enter Pool Name: `<yourname>_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
-* click `Continue` button and then `Finish`.
-* 
-The pool will be provisioned and ready to use in a couple of moments.
-AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes.
+Flink Compute Pools are in environment `sbb-flink`. Now go back to environment `sbb-flink` and choose the `Flink (preview)` Tab. From there you can see Flink compute pools:
+* We have created Flink Compute Pools for you. Please start using your assigned compute pool.
 
 ![image](terraform/img/flinkpool.png)
 
@@ -242,6 +237,8 @@ CREATE TABLE shoe_customers_keyed_<yourname>(
   last_name STRING,
   email STRING,
   PRIMARY KEY (customer_id) NOT ENFORCED
+  )WITH (
+    'kafka.partitions' = '1'
   );
 ```
 Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
@@ -290,6 +287,8 @@ CREATE TABLE shoe_products_keyed_<yourname>(
   sale_price INT,
   rating DOUBLE,
   PRIMARY KEY (product_id) NOT ENFORCED
+  )WITH (
+    'kafka.partitions' = '1'
   );
 ```
 
