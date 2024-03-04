@@ -234,9 +234,9 @@ NOTE: You can find more information about Flink Window aggregations [here.](http
 
 Flink allows you to define a primary key for your table. The primary key is a column whose value is unique for each record.
 
-Let's create a new table that will store unique customers only.
+Let's create a new table that will store unique customers only. Please remember that we are using shared Kafka cluster to store the Flink table data. That's why we need to use unique Flink table names (with <yourname>)
 ```
-CREATE TABLE shoe_customers_keyed(
+CREATE TABLE shoe_customers_keyed_<yourname>(
   customer_id STRING,
   first_name STRING,
   last_name STRING,
@@ -247,7 +247,7 @@ CREATE TABLE shoe_customers_keyed(
 Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
 
 ```bash
-SHOW CREATE TABLE shoe_customers_keyed;
+SHOW CREATE TABLE shoe_customers_keyed_<yourname>;
 ```
 We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
 
@@ -255,20 +255,20 @@ NOTE: You can find more information about primary key constraints [here.](https:
 
 Create a new Flink job to copy customer data from the original table to the new table.
 ```
-INSERT INTO shoe_customers_keyed
+INSERT INTO shoe_customers_keyed_<yourname>
   SELECT id, first_name, last_name, email
     FROM shoe_customers;
 ```
 
 Show the amount of cutomers in `shoe_customers_keyed`.
 ```
-SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed;
+SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed_<yourname>;
 ```
 
 Look up one specific customer:
 ```
 SELECT * 
- FROM shoe_customers_keyed  
+ FROM shoe_customers_keyed_<yourname>  
  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
@@ -283,7 +283,7 @@ We also need to create Primary Key table for our product catalog.
 
 Prepare a new table that will store unique products only:
 ```
-CREATE TABLE shoe_products_keyed(
+CREATE TABLE shoe_products_keyed_<yourname>(
   product_id STRING,
   brand STRING,
   model STRING,
@@ -295,7 +295,7 @@ CREATE TABLE shoe_products_keyed(
 
 Create a new Flink job to copy product data from the original table to the new table. 
 ```
-INSERT INTO shoe_products_keyed
+INSERT INTO shoe_products_keyed_<yourname>
   SELECT id, brand, `name`, sale_price, rating 
     FROM shoe_products;
 ```
@@ -303,7 +303,7 @@ INSERT INTO shoe_products_keyed
 Check if only a single record is returned for some product.
 ```
 SELECT * 
- FROM shoe_products_keyed  
+ FROM shoe_products_keyed_<yourname>  
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
 ```
 
