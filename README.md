@@ -12,9 +12,8 @@ In this workshop, we will build a Shoe Store Loyalty Engine. We will use Flink S
 
 ## Required Confluent Cloud Resources 
 The hands-on consists of two labs (see below), and these require Confluent Cloud infrastructure that has to be provisioned before we can start with the actual workshop. 
- *  Preparation of required Confluent Cloud Resources: You can either create your infrastructure manually with this [guide](prereq.md) or you can use Terraform for an automatated creation: [Terraform guide](terraform/README.md).
+ *  We have prepared resources for you. As part of the Lab1 we will check all required resources
 
- *  The complete finished Hands-on can be created automatically with terraform as well. Please use this [guide](terraform-complete/README.md)
 
 ## Workshop Labs
   *  [Lab1](lab1.md): Flink Tables, Select Statements, Aggregations, Time Windows 
