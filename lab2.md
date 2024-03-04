@@ -73,7 +73,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
 
 Join orders with keyed customer records (Regular Join with Keyed Table):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, o.`$rowtime`, first_name, last_name
 FROM shoe_orders o
 INNER JOIN shoe_customers_keyed_<yourname> c
 ON o.customer_id = c.customer_id
@@ -83,9 +83,9 @@ NOTE: Look at the number of rows returned. There are no duplicates! This is beca
 
 Join orders with keyed customer records at the time when order was created (Temporal Join with Keyed Table):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, o.`$rowtime`, first_name, last_name
 FROM shoe_orders o
-INNER JOIN shoe_customers_keyed_<yourname> FOR SYSTEM_TIME AS OF shoe_orders.`$rowtime` c
+INNER JOIN shoe_customers_keyed_<yourname> FOR SYSTEM_TIME AS OF o.`$rowtime` c
 ON o.customer_id = c.customer_id
 WHERE c.customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
@@ -108,8 +108,8 @@ CREATE TABLE shoe_order_customer_product_<yourname>(
   model STRING,
   sale_price INT,
   rating DOUBLE
-)WITH 
-    'kafka.partitions' = '1'
+)WITH (
+    'kafka.partitions' = '1',
     'changelog.mode' = 'retract'
 );
 ```
@@ -126,14 +126,14 @@ INSERT INTO shoe_order_customer_product_<yourname>(
   sale_price,
   rating)
 SELECT
-  so.order_id,
-  sc.first_name,
-  sc.last_name,
-  sc.email,
-  sp.brand,
-  sp.model,
-  sp.sale_price,
-  sp.rating
+  o.order_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  p.brand,
+  p.model,
+  p.sale_price,
+  p.rating
 FROM 
   shoe_orders o
   INNER JOIN shoe_customers_keyed_<yourname> c 
@@ -258,7 +258,7 @@ INSERT INTO shoe_promotions_<yourname>
 SELECT
    email,
    'next_free' AS promotion_name
-FROM shoe_order_customer_product
+FROM shoe_order_customer_product_<yourname>
 WHERE brand = 'Jones-Stokes'
 GROUP BY email
 HAVING COUNT(*) % 10 = 0;
@@ -267,7 +267,7 @@ INSERT INTO shoe_promotions_<yourname>
 SELECT
      email,
      'bundle_offer' AS promotion_name
-  FROM shoe_order_customer_product
+  FROM shoe_order_customer_product_<yourname>
   WHERE brand IN ('Braun-Bruen', 'Will Inc')
   GROUP BY email
   HAVING COUNT(DISTINCT brand) = 2 AND COUNT(brand) > 10;
