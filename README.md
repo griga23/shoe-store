@@ -4,7 +4,7 @@ Imagine you are running a shoe shop. You want to get an overview of shoe sales, 
 For a good preparation and first understanding, please read this [Guide to Flink SQL: An In-Depth Exploration](https://www.confluent.io/blog/getting-started-with-apache-flink-sql/) . 
 If you want a refresher of the Kafka basics, we highly recommend our [Kafka Fundamentals Workshop](https://www.confluent.io/resources/online-talk/fundamentals-workshop-apache-kafka-101/) .
 
-In this workshop, we will build a Shoe Store Loyalty Engine. We will use Flink SQL in Confluent Cloud on AWS or Azure (GCP coming soon). YOu can find an architecture diagram below.
+In this workshop, we will build a Shoe Store Loyalty Engine. We will use Flink SQL in Confluent Cloud on AWS. You can find an architecture diagram below.
 
 ![image](terraform/img/Flink_Hands-on_Workshop_Complete.png)
 
@@ -21,15 +21,8 @@ The hands-on consists of two labs (see below), and these require Confluent Cloud
 
 Together, the Labs will design a loyality program within Flink SQL. You can see the complete Mapping of dynamic Tables and Topics in the next graphic.
 > [!NOTE]
-> Please be aware that we do not execute Flink SQL Jobs with a Service Account, that's why the jobs stoppped automatically after 4 hours.
 
 ![image](terraform/img/flink_sql_diagram.png)
-
-Optional:
-You can deploy the complete finished workshop with Terraform. Please follow this [guide](terraform-complete/README.md) for a complete and finished Loyalty-Program. Only the notification need to be setup manually.
-
-## Notification Client 
-You can find the Python Notification client in this [guide.](notification_client.md) 
 
 ## Costs of this Confluent Cloud - Flink SQL Shoe Store Workshop
 The lab execution do not consume much money. We calculated an amount of less than 10$ for a couple of hours of testing. If you create the cluster one day before, we recommend to pause all connectors.
