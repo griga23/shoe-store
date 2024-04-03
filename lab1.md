@@ -52,7 +52,7 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 ## 2. Create Pool
 
 ### Create Flink Compute Pool
-Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
+Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink` Tab. From there we create a new compute pool:
 * choose a cloud region, click `continue` and 
 * enter Pool Name: `cc_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
