@@ -51,29 +51,14 @@ Your Kafka cluster should have three Datagen Source Connectors running. Check if
 
 ## 2. Create Pool
 
-IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS (Azure has been added recently). Currently we do support [8 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#flink-sql-cloud-regions) within AWS cloud.
-
-### If you are participating onsite in Berlin
-The complete onsite team is working in region: `eu-central-1`. (No changes in the guides (both Terraform and manual) necessary.)
-
-### If you are participating online via zoom
-The online team is working in different regions:
- - Attendees with Lastname first Letter A-I working in region `us-east-1` 
-     * Flink SQL Pool in `us-east-1`
- - Attendees with Lastname first Letter J-R working in region `us-east-2` 
-     * Flink SQL Pool in `us-east-2`
- - Attendees with Lastname first Letter S-Z working in region `eu-west-1` 
-     * Flink SQL Pool in `eu-west-1`
-
 ### Create Flink Compute Pool
 Create a Flink Compute Pool in environment `handson-flink`. Now go back to environment `handson-flink` and choose the `Flink (preview)` Tab. From there we create a new compute pool:
-* choose AWS region (remember the Lastname rule above), click `continue` and 
+* choose a cloud region, click `continue` and 
 * enter Pool Name: `cc_flink_compute_pool` with 10 Confluent Flink Units (CFU) and 
 * click `Continue` button and then `Finish`.
 * 
 The pool will be provisioned and ready to use in a couple of moments.
-AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes as of today (January 2024).
+AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes.
 
 ![image](terraform/img/flinkpool.png)
 
