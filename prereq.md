@@ -23,8 +23,6 @@ confluent update
 
 ## Confluent Cloud Resources for the Hands-on Workshop: Manual Setup
 
-IMPORTANT TO KNOW FOR THE WORKSHOP:
-We run in AWS and Azure only. Currently we do support [13 Regions](https://docs.confluent.io/cloud/current/flink/op-supported-features-and-limitations.html#cloud-regions) within AWS and Azure cloud. GCP is coming soon.
 Please be aware that the cluster and the Flink Pool need to be in the same Cloud-Provider-Region.
 
 You can create each Confluent Cloud resource with the confluent cli tool and/or Confluent Cloud Control Plane GUI.
