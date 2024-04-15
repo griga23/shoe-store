@@ -69,7 +69,8 @@ You can use your web browser or console to enter Flink SQL statements.
     Select you environment `handson-flink` and click button 'Create workspace'
     - select your cloud provider and region you want to use
     - click 'Create workspace'
-    
+
+    ![image](terraform/img/flinkCreateWorkspace.png)
     ![image](terraform/img/sqlworksheet.png)
 
 
