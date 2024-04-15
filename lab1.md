@@ -71,7 +71,6 @@ You can use your web browser or console to enter Flink SQL statements.
     - click 'Create workspace'
 
     ![image](terraform/img/flinkCreateWorkspace.png)
-    ![image](terraform/img/sqlworksheet.png)
 
 
   * **Console** - copy/paste the command from your Flink Compute Pool to the command line.    
