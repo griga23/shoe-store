@@ -65,12 +65,10 @@ AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes.
 
 ## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - click on the button `Open SQL workspace` on your Flink Compute Pool
-    You now have to set which catalog and database you want to use:
-    - Set the environment name `handson-flink` as catalog,
-    - and the cluster name `cc_handson_cluster` as database
-    
-    via the dropdown boxes, see graphic below
+  * **Web UI** - from the Home page click on the `Stream Processing` on the left side nvigation
+    Select you environment `handson-flink` and click button 'Create workspace'
+    - select your cloud provider and region you want to use
+    - click 'Create workspace'
     
     ![image](terraform/img/sqlworksheet.png)
 
