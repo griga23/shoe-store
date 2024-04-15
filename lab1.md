@@ -165,7 +165,7 @@ SELECT * FROM shoe_customers
   WHERE `state` = 'Texas' AND `last_name` LIKE 'B%';
 ```
 
-Check all attributes of the `shoe_orders` table including hidden attributes.
+Check all attributes of the `shoe_orders` table including hidden attributes. This will show regular DESCRIBE and system columns.
 ```
 DESCRIBE EXTENDED shoe_orders;
 ```
