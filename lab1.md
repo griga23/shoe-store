@@ -65,7 +65,7 @@ AWS Pools take 1-2 minutes. Azure Pools can take 5-7 minutes.
 
 ## 3. Connecting to Flink 
 You can use your web browser or console to enter Flink SQL statements.
-  * **Web UI** - from the Home page click on the `Stream Processing` on the left side nvigation
+  * **Web UI** - from the Home page click on the `Stream Processing` on the left side navigation
     Select you environment `handson-flink` and click button 'Create workspace'
     - select your cloud provider and region you want to use
     - click 'Create workspace'
