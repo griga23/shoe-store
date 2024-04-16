@@ -82,9 +82,6 @@ You can use your web browser or console to enter Flink SQL statements.
 
 NOTE: You can also access your Flink Compute Pool from the Data Portal as shown below. Just click on `Data Portal` in the main menu on the left side. Then select your Environment. You should see your topics. When you click on any of the topic tiles you can query the topic's data using Flink. 
 
-Data Portal: Kafka Topics Tiles
-![image](terraform/img/dataPortal1.png)
-
 Data Portal: `shoe_order` topic selected. Click on `Query` button to access your Flink Compute Pool.
 ![image](terraform/img/dataPortal2.png)
 
