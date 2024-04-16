@@ -232,9 +232,12 @@ NOTE: You can find more information about Flink Window aggregations [here.](http
 
 ### 8. Tables with Primary Key 
 
-Flink allows you to define a primary key for your table. The primary key is a column whose value is unique for each record.
+When you define a primary key in Flink SQL, you specify one or more columns in a table that uniquely identify each row. This is particularly important in streaming scenarios, where state must be correctly maintained.
 
-Let's create a new table that will store unique customers only.
+Let's create a new table to deduplicate records from our customers stream.
+ * customer_id is defined as the primary key
+ * PRIMARY KEY (customer_id) NOT ENFORCED specifies the primary key constraint. In Flink SQL, primary keys are currently not enforced by default due to the challenges of ensuring uniqueness across distributed systems. The NOT ENFORCED clause reflects this, indicating that while the primary key is used for optimizations and correct processing, it does not guarantee data uniqueness constraints as a traditional database might.
+ * 
 ```
 CREATE TABLE shoe_customers_keyed(
   customer_id STRING,
