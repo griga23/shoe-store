@@ -235,9 +235,6 @@ NOTE: You can find more information about Flink Window aggregations [here.](http
 When you define a primary key in Flink SQL, you specify one or more columns in a table that uniquely identify each row. This is particularly important in streaming scenarios, where state must be correctly maintained.
 
 Let's create a new table to deduplicate records from our customers stream.
- * customer_id is defined as the primary key
- * PRIMARY KEY (customer_id) NOT ENFORCED specifies the primary key constraint. In Flink SQL, primary keys are currently not enforced by default due to the challenges of ensuring uniqueness across distributed systems. The NOT ENFORCED clause reflects this, indicating that while the primary key is used for optimizations and correct processing, it does not guarantee data uniqueness constraints as a traditional database might.
- * 
 ```
 CREATE TABLE shoe_customers_keyed(
   customer_id STRING,
@@ -247,7 +244,9 @@ CREATE TABLE shoe_customers_keyed(
   PRIMARY KEY (customer_id) NOT ENFORCED
   );
 ```
-Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
+
+ * customer_id is defined as the primary key
+ * PRIMARY KEY (customer_id) NOT ENFORCED specifies the primary key constraint. In Flink SQL, primary keys are currently not enforced by default due to the challenges of ensuring uniqueness across distributed systems. The NOT ENFORCED clause reflects this, indicating that while the primary key is used for optimizations and correct processing, it does not guarantee data uniqueness constraints as a traditional database might.
 
 ```bash
 SHOW CREATE TABLE shoe_customers_keyed;
@@ -256,7 +255,7 @@ We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/
 
 NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
 
-Create a new Flink job to copy customer data from the original table to the new table.
+Create a new Flink job to copy customer records from the original table to the new table.
 ```
 INSERT INTO shoe_customers_keyed
   SELECT id, first_name, last_name, email
@@ -282,7 +281,7 @@ SELECT *
  WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-We also need to create Primary Key table for our product catalog.
+We also need to dedupplicate records for our product catalog.
 
 Prepare a new table that will store unique products only:
 ```
