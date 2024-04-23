@@ -212,7 +212,7 @@ SELECT
  COUNT(DISTINCT order_id) AS num_orders
 FROM TABLE(
    TUMBLE(TABLE shoe_orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTES))
-GROUP BY window_end;
+GROUP BY window_start, window_end;
 ```
 
 Find the amount of orders for ten minute intervals advanced by five minutes (hopping window aggregation).
