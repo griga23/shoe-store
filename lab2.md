@@ -62,13 +62,14 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 NOTE: Look at the number of rows returned. There are many duplicates!
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
+Check if there is a customer record that was created within 10 minutes after the order was created. Did customer tried to change his email after placing the order?
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT order_id, shoe_orders.`$rowtime` AS order_time, shoe_customers.`$rowtime` AS customer_record_time, email
 FROM shoe_orders
 INNER JOIN shoe_customers
 ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a' AND
-  shoe_orders.`$rowtime` BETWEEN shoe_customers.`$rowtime` - INTERVAL '1' HOUR AND shoe_customers.`$rowtime`;
+  shoe_orders.`$rowtime` BETWEEN shoe_customers.`$rowtime` - INTERVAL '10' MINUTES AND shoe_customers.`$rowtime`;
 ```
 
 Join orders with keyed customer records (Regular Join with Keyed Table):
