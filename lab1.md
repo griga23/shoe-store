@@ -308,7 +308,7 @@ SELECT *
 
 ### 9. Flink Jobs 
 
-Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink (Preview)` in environments and choose `Flink Statements`. Check what you can do here.
+Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink (New)` in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
 
 You can also  use the Confluent CLI:
