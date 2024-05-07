@@ -106,7 +106,7 @@ CREATE TABLE shoe_order_customer_product(
   last_name STRING,
   email STRING,
   brand STRING,
-  model STRING,
+  `model` STRING,
   sale_price INT,
   rating DOUBLE
 )WITH (
@@ -122,7 +122,7 @@ INSERT INTO shoe_order_customer_product(
   last_name,
   email,
   brand,
-  model,
+  `model`,
   sale_price,
   rating)
 SELECT
@@ -131,7 +131,7 @@ SELECT
   sc.last_name,
   sc.email,
   sp.brand,
-  sp.model,
+  sp.`model`,
   sp.sale_price,
   sp.rating
 FROM 
