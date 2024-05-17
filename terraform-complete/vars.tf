@@ -91,7 +91,7 @@ variable "cc_compute_pool_name" {
 
 variable "cc_compute_pool_cfu" {
   type    = number
-  default = 5
+  default = 10
 }
 
 variable "cc_compute_pool_region" {
