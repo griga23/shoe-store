@@ -50,7 +50,7 @@ resource "confluent_kafka_cluster" "cc_kafka_cluster" {
 # Flink Compute Pool
 # --------------------------------------------------------
 resource "confluent_flink_compute_pool" "cc_flink_compute_pool" {
-  display_name = "${var.use_prefix}${var.cc_dislay_name}-${random_id.id.hex}"
+  display_name = "${var.use_prefix}${var.cc_dislay_name}"
   cloud        = var.cc_cloud_provider
   region       = var.cc_cloud_region
   max_cfu      = var.cc_compute_pool_cfu
