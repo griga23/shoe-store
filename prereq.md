@@ -65,7 +65,7 @@ NOTE: We use Datagen with following templates:
 * Shoe Orders https://github.com/confluentinc/kafka-connect-datagen/blob/master/src/main/resources/shoe_orders.avro
 
 Choose the `Connectors` menu entry (left site) and search for `Sample Data`. Click on the Sample Data Icon.
-* Choose topic: `shoe_products` and click `Continue`
+* Under "Additional configuration" choose topic: `shoe_products` and click `Continue`
 * Click Global Access (which is already selected by default) and download the API Key. Typically, you will give the connector restrictive access to your resources (what we did in the terraform setup). But for now, it seems to be good enough for hands-on. Click `Generate API Key & Download`, enter a description `Datagen Connector Products` abd click `continue`
 * Select format `AVRO`, because Flink requires AVRO for now, and a template (Show more Option) `Shoes` and  click `Continue`
 * Check Summary, we will go with one Task (slider) and click `Continue`
