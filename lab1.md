@@ -283,7 +283,7 @@ Prepare a new table that will store unique products only:
 CREATE TABLE shoe_products_keyed_<yourname>(
   product_id STRING,
   brand STRING,
-  model STRING,
+  'model' STRING,
   sale_price INT,
   rating DOUBLE,
   PRIMARY KEY (product_id) NOT ENFORCED
