@@ -250,7 +250,7 @@ SHOW CREATE TABLE shoe_customers_keyed;
 ```
 We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
 
-NOTE: You can find more information about primary key constraints [here.](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint)
+NOTE: You can find more information about changelog mode [here.](https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#changelog-entries)
 
 Create a new Flink job to copy customer records from the original table to the new table.
 ```
