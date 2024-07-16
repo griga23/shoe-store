@@ -60,6 +60,7 @@ ON shoe_orders.customer_id = shoe_customers.id
 WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 NOTE: Look at the number of rows returned. There are many duplicates!
+Look at Time-to-live https://docs.confluent.io/cloud/current/flink/operate-and-deploy/best-practices.html#implement-state-time-to-live-ttl
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
 Check if there is a customer record that was created within 10 minutes after the order was created. Did customer tried to change his email after placing the order?
