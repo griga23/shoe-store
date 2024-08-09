@@ -237,8 +237,6 @@ CREATE TABLE shoe_customers_keyed_<yourname>(
   last_name STRING,
   email STRING,
   PRIMARY KEY (customer_id) NOT ENFORCED
-  )WITH (
-    'kafka.partitions' = '1'
   );
 ```
 Compare the new table `shoe_customers_keyed` with `shoe_customers`, what is the difference?
@@ -287,8 +285,6 @@ CREATE TABLE shoe_products_keyed_<yourname>(
   sale_price INT,
   rating DOUBLE,
   PRIMARY KEY (product_id) NOT ENFORCED
-  )WITH (
-    'kafka.partitions' = '1'
   );
 ```
 
