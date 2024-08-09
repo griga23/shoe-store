@@ -174,8 +174,6 @@ CREATE TABLE shoe_loyalty_levels_<yourname>(
   total BIGINT,
   rewards_level STRING,
   PRIMARY KEY (email) NOT ENFORCED
-) WITH (
-    'kafka.partitions' = '1'
 );
 ```
 
@@ -241,8 +239,6 @@ CREATE TABLE shoe_promotions_<yourname>(
   email STRING,
   promotion_name STRING,
   PRIMARY KEY (email) NOT ENFORCED
-) WITH (
-    'kafka.partitions' = '1'
 );
 ```
 
