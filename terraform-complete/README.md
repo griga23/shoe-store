@@ -6,7 +6,7 @@ This is the deployment of confluent cloud infrastructure resources including all
 We will deploy with terraform:
  - Environment:
      - Name: flink_hands-on+UUID
-     - with enabled Schema Registry (essentails) in AWS region (eu-central-1)
+     - with enabled Schema Registry (essentials) in AWS region (eu-central-1)
  - Confluent Cloud Basic Cloud: cc_handson_cluster
     - in AWS in region (eu-central-1)
  - Connectors:
@@ -44,7 +44,8 @@ We will deploy with terraform:
 # Installation (only need to do that once)
 
 ## Install Terraform on MacOS
-```
+
+```sh
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 brew update
@@ -86,8 +87,10 @@ cd shoe-store
 - Add your API key to the Terraform variables by creating a tfvars file
 ```bash
 cat > $PWD/terraform-complete/terraform.tfvars <<EOF
-confluent_cloud_api_key = "{Cloud API Key}"
-confluent_cloud_api_secret = "{Cloud API Key Secret}"
+confluent_cloud_api_key = "{Confluent Cloud API Key}"
+confluent_cloud_api_secret = "{Confluent Cloud API Key Secret}"
+cc_cloud_provider = "{the_selected_cloud_provider}"
+cc_cloud_region= "{the_selected_region_of_the_confluent_cloud}"
 EOF
 ```
 

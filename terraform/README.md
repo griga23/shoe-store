@@ -10,7 +10,7 @@ This is the deployment of confluent cloud infrastructure resources to run the Fl
 We will deploy with terraform:
  - Environment:
      - Name: flink_hands-on+UUID
-     - with enabled Schema Registry (essentails) in AWS region (eu-central-1)
+     - with enabled Schema Registry (essentials) in AWS region (eu-central-1)
  - Confluent Cloud Basic Cloud: cc_handson_cluster
     - in AWS in region (eu-central-1)
  - Connectors:
@@ -70,11 +70,13 @@ If you are running on Ubuntu (or WSL2 with Ubuntu), please follow the instructio
 
 ## Install Confluent Cli
 Please install the Confluent CLI, with these [instructions](https://docs.confluent.io/confluent-cli/current/install.html) 
-```
+
+```sh
+# For Mac
 brew install confluentinc/tap/cli
 ```
 
-This tutorial was tested with Confluent CLI v3.41.0.
+This tutorial was developed with Confluent CLI v3.41.0 and run on lates: v4.9.8
 
 # Provision services for the demo
 
@@ -85,12 +87,19 @@ git clone https://github.com/griga23/shoe-store.git
 cd shoe-store
 ```
 
+## Create Confluent Cloud Resource management API Keys
+
+Go to the Confluent Console via the url [https://confluent.cloud/settings/api-keys](https://confluent.cloud/settings/api-keys) then, use the "+ Add API key" button on the right side of the page. Select "My account", >> "Next" then select the "Cloud resource management" tile, complete and download the API key. It will be use to get Terraform plan and provision resources.   
+
 ## Set environment variables
 - Add your API key to the Terraform variables by creating a tfvars file
+
 ```bash
 cat > $PWD/terraform/terraform.tfvars <<EOF
-confluent_cloud_api_key = "{Cloud API Key}"
-confluent_cloud_api_secret = "{Cloud API Key Secret}"
+confluent_cloud_api_key = "{Confluent Cloud API Key}"
+confluent_cloud_api_secret = "{Confluent Cloud API Key Secret}"
+cc_cloud_provider = "{the_selected_cloud_provider}"
+cc_cloud_region= "{the_selected_region_of_the_confluent_cloud}"
 EOF
 ```
 

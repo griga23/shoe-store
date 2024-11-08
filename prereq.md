@@ -10,6 +10,7 @@ I have recorded short video to show you how are the required resources created:
 [<img width="600px" src="terraform/img/prereq_video.png">](https://confluent.zoom.us/rec/share/UnZgprUTrQdk5BJMCpEBSa7US0oGXW-R0IOlznRhANPbbHN6Ea16ljvlGpH1t8lc.nG0ynr0vmWwq0xfN)
 
 Now you have two possibilities to create the Hands-On Workshop Confluent Cloud resources:
+
 1. Let terraform create it: If you are comfortable running terraform, then follow this [guide](terraform/README.md).
 2. Create all resources manually.
 
@@ -26,16 +27,18 @@ Login into Confluent Cloud and create an environment with Schema Registry:
 * Click `Add cloud environment`  button
 * Enter a New environment name e.g. `handson-flink` and push `create` button
 * Choose Essentials Stream Governance package and click `Begin configuration`
+
         * Choose AWS with region eu-central-1 (Compare rule with your lastname, see above), currently flink SQL (Preview) is only available in AWS, but will be soon available for all Azure and Google regions.
         * Click button `Enable`
 
-Environment is ready to work and includes a Schema Registry in AWS in choosed region.
+Environment is ready to work and includes a Schema Registry in the AWS region.
 ![image](terraform/img/environment.png)
 
 ### Create Kafka Cluster in Environment `handson-flink`
 
 The next step is to create a Basic Cluster in AWS region based on the rule above (Compare rule with your lastname, see above).
 Click button `Create cluster` 
+
 * choose BASIC `Begin configuration` button to start the cluster creation config.
 * Choose AWS and the region with Single zone and click `Continue`
 * Give the cluster a name , e.g. `cc_handson_cluster` and check rate card overview and configs, then press `Launch cluster` 
