@@ -76,6 +76,7 @@ You can use your web browser or console to enter Flink SQL statements.
   * **Console** - copy/paste the command from your Flink Compute Pool to the command line.    
   Of course you could also use the the Flink SQL Shell. For this, you need to have Confluent Cloud Console tool installed and be logged in with correct access rights.
   Copy the command out of the Compute Pool Window and execute it in your terminal (we prefer iterm2). 
+
   ```bash
   confluent flink shell --compute-pool <pool id> --environment <env-id>
   ```
@@ -179,16 +180,19 @@ SELECT order_id, product_id, customer_id, $rowtime
 Let's try to run more advanced queries.
 
 First find out the number of customers records and then the number of unique customers.
-```
+
+```sql
 SELECT COUNT(id) AS num_customers FROM shoe_customers;
 ```
-```
+
+```sql
 SELECT COUNT(DISTINCT id) AS num_customers FROM shoe_customers;
 ```
 
 We can try some basic aggregations with the product catalog records.
-For each shoe brand, find the number of shoe models, average rating and maximum model price. 
-```
+For each shoe brand, find the number of shoe models, the average rating and the maximum model price. 
+
+```sql
 SELECT brand as brand_name, 
     COUNT(DISTINCT name) as models_by_brand, 
     ROUND(AVG(rating),2) as avg_rating,
@@ -206,7 +210,8 @@ Let's try Flink's time windowing functions for shoe order records.
 Column names “window_start” and “window_end” are commonly used in Flink's window operations, especially when dealing with event time windows.
 
 Find the amount of orders for one minute intervals (tumbling window aggregation).
-```
+
+```sql
 SELECT
  window_end,
  COUNT(DISTINCT order_id) AS num_orders
@@ -216,7 +221,8 @@ GROUP BY window_start, window_end;
 ```
 
 Find the amount of orders for ten minute intervals advanced by five minutes (hopping window aggregation).
-```
+
+```sql
 SELECT
  window_start, window_end,
  COUNT(DISTINCT order_id) AS num_orders
@@ -232,7 +238,8 @@ NOTE: You can find more information about Flink Window aggregations [here.](http
 When you define a primary key in Flink SQL, you specify one or more columns in a table that uniquely identify each row. This is particularly important in streaming scenarios, where state must be correctly maintained.
 
 Let's create a new table to deduplicate records from our customers stream.
-```
+
+```sql
 CREATE TABLE shoe_customers_keyed(
   customer_id STRING,
   first_name STRING,
@@ -248,40 +255,45 @@ CREATE TABLE shoe_customers_keyed(
 ```bash
 SHOW CREATE TABLE shoe_customers_keyed;
 ```
+
 We do have a different [changelog.mode](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#changelog-mode) and a [primary key](https://docs.confluent.io/cloud/current/flink/reference/statements/create-table.html#primary-key-constraint) constraint. What does this mean?
 
 NOTE: You can find more information about changelog mode [here.](https://docs.confluent.io/cloud/current/flink/concepts/dynamic-tables.html#changelog-entries)
 
 Create a new Flink job to copy customer records from the original table to the new table.
-```
+
+```sql
 INSERT INTO shoe_customers_keyed
   SELECT id, first_name, last_name, email
     FROM shoe_customers;
 ```
 
-Show the amount of cutomers in `shoe_customers_keyed`.
+Show the amount of customers in `shoe_customers_keyed`.
 ```
 SELECT COUNT(*) as AMOUNTROWS FROM shoe_customers_keyed;
 ```
 
-Look up one specific customer:
-```
+Look up one specific customer (change the id if needed):
+
+```sql
 SELECT * 
  FROM shoe_customers_keyed  
  WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
 Compare it with all customer records for one specific customer:
-```
+
+```sql
 SELECT *
  FROM shoe_customers
  WHERE id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 ```
 
-We also need to dedupplicate records for our product catalog.
+We also need to deduplicate records for our product catalog.
 
 Prepare a new table that will store unique products only:
-```
+
+```sql
 CREATE TABLE shoe_products_keyed(
   product_id STRING,
   brand STRING,
@@ -293,14 +305,16 @@ CREATE TABLE shoe_products_keyed(
 ```
 
 Create a new Flink job to copy product data from the original table to the new table. 
-```
+
+```sql
 INSERT INTO shoe_products_keyed
   SELECT id, brand, `name`, sale_price, rating 
     FROM shoe_products;
 ```
 
 Check if only a single record is returned for some product.
-```
+
+```sql
 SELECT * 
  FROM shoe_products_keyed  
  WHERE product_id = '0fd15be0-8b95-4f19-b90b-53aabf4c49df';
@@ -311,7 +325,8 @@ SELECT *
 Now, you can finally check which jobs are still running, which jobs failed, and which stopped. Go to `Flink (New)` in environments and choose `Flink Statements`. Check what you can do here.
 ![image](terraform/img/flink_jobs.png)
 
-You can also  use the Confluent CLI:
+You can also  use the Confluent CLI (replace cloud and region values as needed):
+
 ```bash
 confluent login
 confluent flink statement list --cloud aws --region eu-central-1 --environment <your env-id> --compute-pool <your pool id>
@@ -328,7 +343,7 @@ confluent flink statement list --cloud aws --region eu-central-1 --environment <
 # ....
 # Exceptions
 confluent flink statement exception list <name> --cloud aws --region eu-central-1 --environment <your env-id>
-# Descriobe Statements
+# Describe Statements
 confluent flink statement describe <name> --cloud aws --region eu-central-1 --environment <your env-id>
 ```
 
