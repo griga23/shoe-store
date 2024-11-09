@@ -247,7 +247,6 @@ CREATE TABLE shoe_promotions(
 ```
 
 Write both calculated promotions in a single statement set to the `shoe_promotions` table.
-NOTE: There is a bug in the Web UI. Remove the first two lines and the last line to be able to run the statement.
 
 ```
 EXECUTE STATEMENT SET 
