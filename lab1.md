@@ -99,6 +99,7 @@ Following mappings exist:
 | Topic + Schema | Table     |
 
 We will now work with the following SQL Worksheet:
+
 ![image](terraform/img/sql_worksheet.png)
 
 Make sure you work with the correct Flink catalog (=environment) and database (=Kafka cluster).
@@ -125,6 +126,8 @@ List all Flink Tables (=Kafka topics) in your Confluent Cloud cluster:
 SHOW TABLES;
 ```
 Do you see tables `shoe_products`, `shoe_customers`, `shoe_orders`?
+
+![image](terraform/img/show_tables.png)
 
 You can add multiple query boxes by clicking the `+` button on the left.
 
