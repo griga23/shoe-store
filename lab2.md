@@ -62,6 +62,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 NOTE: Look at the number of rows returned. There are many duplicates!
 
 Joining infinite data streams can cause your state to grow indefinitely. Look at Time-to-live to limit the state size [here.](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/best-practices.html#implement-state-time-to-live-ttl)
+/*+ STATE_TTL('shoe_orders'='6h', 'shoe_customers'='2d') */ 
 
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
