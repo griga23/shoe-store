@@ -53,7 +53,8 @@ We will join `order` records and `customer` records.
 
 Join orders with non-keyed customer records (Regular Join):
 ```
-SELECT order_id, shoe_orders.`$rowtime`, first_name, last_name
+SELECT /*+ STATE_TTL('shoe_orders'='6h', 'shoe_customers'='2d') */ 
+order_id, shoe_orders.`$rowtime`, first_name, last_name
 FROM shoe_orders
 INNER JOIN shoe_customers 
 ON shoe_orders.customer_id = shoe_customers.id
@@ -62,8 +63,7 @@ WHERE customer_id = 'b523f7f3-0338-4f1f-a951-a387beeb8b6a';
 NOTE: Look at the number of rows returned. There are many duplicates!
 
 Joining infinite data streams can cause your state to grow indefinitely. Look at Time-to-live to limit the state size [here.](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/best-practices.html#implement-state-time-to-live-ttl)
-/*+ STATE_TTL('shoe_orders'='6h', 'shoe_customers'='2d') */ 
-
+TTL Hints configuraiton examples [More info here.](https://docs.confluent.io/cloud/current/flink/reference/statements/hints.html)
 
 Join orders with non-keyed customer records in some time windows (Interval Join):
 Check if there is a customer record that was created within 10 minutes after the order was created. Did customer tried to change his email after placing the order?
