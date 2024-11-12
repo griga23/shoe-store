@@ -51,7 +51,7 @@ NOTE: Check the timestamps when the orders were generated. This is important for
 Now, we can look at the different types of joins available. 
 We will join `order` records and `customer` records.
 
-Join orders with non-keyed customer records (Regular Join):
+Join orders with non-keyed customer records (Regular Join). Joining unbounded data streams requires Time-To-Live configuration:
 ```
 SELECT /*+ STATE_TTL('shoe_orders'='6h', 'shoe_customers'='2d') */ 
 order_id, shoe_orders.`$rowtime`, first_name, last_name
