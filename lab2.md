@@ -253,7 +253,7 @@ Write both calculated promotions in a single statement set to the `shoe_promotio
 EXECUTE STATEMENT SET 
 BEGIN
 
-INSERT INTO shoe_promotions
+INSERT INTO shoe_promotions(email, promotion_name)
 SELECT
    email,
    'next_free' AS promotion_name
@@ -262,7 +262,7 @@ WHERE brand = 'Jones-Stokes'
 GROUP BY email
 HAVING COUNT(*) % 10 = 0;
 
-INSERT INTO shoe_promotions
+INSERT INTO shoe_promotions(email, promotion_name)
 SELECT
      email,
      'bundle_offer' AS promotion_name
