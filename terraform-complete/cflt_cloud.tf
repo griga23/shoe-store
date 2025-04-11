@@ -231,17 +231,14 @@ resource "confluent_api_key" "env-manager-flink-api-key" {
     api_version = confluent_service_account.app_manager.api_version
     kind        = confluent_service_account.app_manager.kind
   }
-
   managed_resource {
-    id          = "${var.cc_compute_pool_region}"
-    api_version = "fcpm/v2"
-    kind        = "Region"
-
+    id          = data.confluent_flink_region.main.id
+    api_version = data.confluent_flink_region.main.api_version
+    kind        = data.confluent_flink_region.main.kind
     environment {
       id = confluent_environment.cc_handson_env.id
     }
   }
-
   lifecycle {
     prevent_destroy = false
   }
