@@ -11,22 +11,14 @@ resource "confluent_environment" "cc_handson_env" {
 # --------------------------------------------------------
 # Schema Registry
 # --------------------------------------------------------
-data "confluent_schema_registry_region" "cc_handson_sr" {
-  cloud   = var.sr_cloud_provider
-  region  = var.sr_cloud_region
-  package = var.sr_package
-}
-resource "confluent_schema_registry_cluster" "cc_sr_cluster" {
-  package = data.confluent_schema_registry_region.cc_handson_sr.package
+data "confluent_schema_registry_cluster" "cc_sr_cluster" {
   environment {
     id = confluent_environment.cc_handson_env.id
   }
-  region {
-    id = data.confluent_schema_registry_region.cc_handson_sr.id
-  }
-  lifecycle {
-    prevent_destroy = false
-  }
+
+  depends_on = [
+    confluent_kafka_cluster.cc_kafka_cluster
+  ]
 }
 
 # --------------------------------------------------------
@@ -136,9 +128,9 @@ resource "confluent_api_key" "sr_cluster_key" {
     kind        = confluent_service_account.sr.kind
   }
   managed_resource {
-    id          = confluent_schema_registry_cluster.cc_sr_cluster.id
-    api_version = confluent_schema_registry_cluster.cc_sr_cluster.api_version
-    kind        = confluent_schema_registry_cluster.cc_sr_cluster.kind
+    id          = data.confluent_schema_registry_cluster.cc_sr_cluster.id
+    api_version = data.confluent_schema_registry_cluster.cc_sr_cluster.api_version
+    kind        = data.confluent_schema_registry_cluster.cc_sr_cluster.kind
     environment {
       id = confluent_environment.cc_handson_env.id
     }
