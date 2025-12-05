@@ -77,6 +77,29 @@ variable "sr_package" {
 }
 
 # --------------------------------------------
+# Confluent Cloud Flink Compute Pool variables
+# --------------------------------------------
+variable "cc_dislay_name" {
+  type    = string
+  default = "standard_compute_pool"
+}
+
+variable "cc_compute_pool_name" {
+  type    = string
+  default = "cc_handson_flink"
+}
+
+variable "cc_compute_pool_cfu" {
+  type    = number
+  default = 10
+}
+
+variable "cc_compute_pool_region" {
+  type    = string
+  default = "aws.eu-central-1"
+}
+
+# --------------------------------------------
 # Confluent Cloud Connectors name
 # --------------------------------------------
 variable "cc_connector_dsoc_products_name" {
