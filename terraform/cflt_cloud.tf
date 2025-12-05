@@ -1,23 +1,31 @@
 # -------------------------------------------------------
 # Confluent Cloud Environment
 # -------------------------------------------------------
+
 resource "confluent_environment" "cc_handson_env" {
-  display_name = "${var.use_prefix}${var.cc_env_name}-${random_id.id.hex}"
-  lifecycle {
-    prevent_destroy = false
+  display_name = "${var.use_prefix}flink_handson_terraform"
+
+  # ADD THIS STREAM GOVERNANCE BLOCK
+  stream_governance {
+    package = "ESSENTIALS"
   }
 }
 
 # --------------------------------------------------------
 # Schema Registry
 # --------------------------------------------------------
-data "confluent_schema_registry_cluster" "cc_sr_cluster" {
+
+
+# ADD THIS NEW BLOCK
+# ADD THIS RESOURCE BLOCK
+#  USE THIS CORRECT DATA BLOCK
+
+data "confluent_schema_registry_cluster" "cc_handson_sr" {
   environment {
     id = confluent_environment.cc_handson_env.id
   }
-
   depends_on = [
-    confluent_kafka_cluster.cc_kafka_cluster
+    confluent_environment.cc_handson_env
   ]
 }
 
@@ -33,6 +41,25 @@ resource "confluent_kafka_cluster" "cc_kafka_cluster" {
   environment {
     id = confluent_environment.cc_handson_env.id
   }
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+# --------------------------------------------------------
+# Flink Compute Pool
+# --------------------------------------------------------
+resource "confluent_flink_compute_pool" "cc_flink_compute_pool" {
+  display_name = "${var.use_prefix}${var.cc_dislay_name}"
+  cloud        = var.cc_cloud_provider
+  region       = var.cc_cloud_region
+  max_cfu      = var.cc_compute_pool_cfu
+  environment {
+    id = confluent_environment.cc_handson_env.id
+  }
+  depends_on = [
+    confluent_kafka_cluster.cc_kafka_cluster
+  ]
   lifecycle {
     prevent_destroy = false
   }
@@ -74,6 +101,32 @@ resource "confluent_role_binding" "app_manager_environment_admin" {
     prevent_destroy = false
   }
 }
+resource "confluent_role_binding" "app_manager_flinkdeveloper" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "FlinkDeveloper"
+  crn_pattern = confluent_environment.cc_handson_env.resource_name
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_role_binding" "app_manager_flinkadmin" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "FlinkAdmin"
+  crn_pattern = confluent_environment.cc_handson_env.resource_name
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_role_binding" "app_manager_assigner" {
+  principal   = "User:${confluent_service_account.app_manager.id}"
+  role_name   = "Assigner"
+  crn_pattern = "${data.confluent_organization.ccloud.resource_name}/service-account=${confluent_service_account.app_manager.id}"
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+
 resource "confluent_role_binding" "sr_environment_admin" {
   principal   = "User:${confluent_service_account.sr.id}"
   role_name   = "EnvironmentAdmin"
@@ -128,9 +181,9 @@ resource "confluent_api_key" "sr_cluster_key" {
     kind        = confluent_service_account.sr.kind
   }
   managed_resource {
-    id          = data.confluent_schema_registry_cluster.cc_sr_cluster.id
-    api_version = data.confluent_schema_registry_cluster.cc_sr_cluster.api_version
-    kind        = data.confluent_schema_registry_cluster.cc_sr_cluster.kind
+    id          = data.confluent_schema_registry_cluster.cc_handson_sr.id
+    api_version = data.confluent_schema_registry_cluster.cc_handson_sr.api_version
+    kind        = data.confluent_schema_registry_cluster.cc_handson_sr.kind
     environment {
       id = confluent_environment.cc_handson_env.id
     }
@@ -162,6 +215,30 @@ resource "confluent_api_key" "clients_kafka_cluster_key" {
   depends_on = [
     confluent_role_binding.clients_cluster_admin
   ]
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+# --------------------------------------------------------
+# Flink API Keys
+# --------------------------------------------------------
+resource "confluent_api_key" "env-manager-flink-api-key" {
+  display_name = "env-manager-flink-api-${confluent_environment.cc_handson_env.display_name}-key-${random_id.id.hex}"
+  description  = "Flink API Key that is owned by 'env-manager' service account"
+  owner {
+    id          = confluent_service_account.app_manager.id
+    api_version = confluent_service_account.app_manager.api_version
+    kind        = confluent_service_account.app_manager.kind
+  }
+  managed_resource {
+    id          = data.confluent_flink_region.main.id
+    api_version = data.confluent_flink_region.main.api_version
+    kind        = data.confluent_flink_region.main.kind
+    environment {
+      id = confluent_environment.cc_handson_env.id
+    }
+  }
   lifecycle {
     prevent_destroy = false
   }
