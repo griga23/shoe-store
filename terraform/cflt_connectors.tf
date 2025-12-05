@@ -261,6 +261,103 @@ resource "confluent_kafka_topic" "orders" {
 }
 
 # --------------------------------------------------------
+# Create Tags
+# --------------------------------------------------------
+resource "confluent_tag" "pii" {
+  schema_registry_cluster {
+    id = data.confluent_schema_registry_cluster.cc_handson_sr.id
+  }
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_handson_sr.rest_endpoint
+  credentials {
+    key    = confluent_api_key.sr_cluster_key.id
+    secret = confluent_api_key.sr_cluster_key.secret
+  }
+
+  name = "PII"
+  description = "PII tag"
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "confluent_tag" "public" {
+  schema_registry_cluster {
+    id = data.confluent_schema_registry_cluster.cc_handson_sr.id
+  }
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_handson_sr.rest_endpoint
+  credentials {
+    key    = confluent_api_key.sr_cluster_key.id
+    secret = confluent_api_key.sr_cluster_key.secret
+  }
+
+  name = "Public"
+  description = "Public tag"
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+# --------------------------------------------------------
+# Bind Tags to Topics
+# --------------------------------------------------------
+resource "confluent_tag_binding" "customers" {
+  schema_registry_cluster {
+    id = data.confluent_schema_registry_cluster.cc_handson_sr.id
+  }
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_handson_sr.rest_endpoint
+  credentials {
+    key    = confluent_api_key.sr_cluster_key.id
+    secret = confluent_api_key.sr_cluster_key.secret
+  }
+
+  tag_name = "PII"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_handson_sr.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.customers.topic_name}"
+  entity_type = "kafka_topic"
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "confluent_tag_binding" "products" {
+  schema_registry_cluster {
+    id = data.confluent_schema_registry_cluster.cc_handson_sr.id
+  }
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_handson_sr.rest_endpoint
+  credentials {
+    key    = confluent_api_key.sr_cluster_key.id
+    secret = confluent_api_key.sr_cluster_key.secret
+  }
+
+  tag_name = "Public"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_handson_sr.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.products.topic_name}"
+  entity_type = "kafka_topic"
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "confluent_tag_binding" "orders" {
+  schema_registry_cluster {
+    id = data.confluent_schema_registry_cluster.cc_handson_sr.id
+  }
+  rest_endpoint = data.confluent_schema_registry_cluster.cc_handson_sr.rest_endpoint
+  credentials {
+    key    = confluent_api_key.sr_cluster_key.id
+    secret = confluent_api_key.sr_cluster_key.secret
+  }
+
+  tag_name = "Public"
+  entity_name = "${data.confluent_schema_registry_cluster.cc_handson_sr.id}:${confluent_kafka_cluster.cc_kafka_cluster.id}:${confluent_kafka_topic.orders.topic_name}"
+  entity_type = "kafka_topic"
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+# --------------------------------------------------------
 # Connectors
 # --------------------------------------------------------
 
